@@ -1,32 +1,37 @@
-# Prerequisites
-*.d
+# visual studio
+*.sdf
+*.opensdf
+*.suo
+.vs
+*.VC.db
+*.VC.opendb
+*.ncb
+*.user
+*.aps
+*.vspscc
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# build output
+*.tlog
+*.lastbuildstate
+*.unsuccessfulbuild
 *.lib
-
-# Executables
+*.log
+*.obj
+*.idb
+*.pdb
+*.res
+*.cache
+BuildLog.htm
 *.exe
-*.out
-*.app
+*.dll
+*.exp
+*.ilk
+
+# scripts
+scripts/build_bin
+scripts/build_src
+scripts/compiler
+scripts/merged
+
+# cmake
+build/*
