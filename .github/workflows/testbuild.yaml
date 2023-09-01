@@ -1,0 +1,11 @@
+name: testbuild
+on: [push]
+jobs:
+    run-testbuild:
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                path: sfse
+            - run: cmake -B sfse/build -S sfse -DCMAKE_INSTALL_PREFIX=extern sfse
+            - run: cmake --build sfse/build --config Release
