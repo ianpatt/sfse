@@ -88,80 +88,55 @@ void SFSE_Preinit()
 	if(runOnce) return;
 	runOnce = true;
 
-#ifndef _DEBUG
-	__try {
-#endif
+	SYSTEMTIME now;
+	GetSystemTime(&now);
 
-		SYSTEMTIME now;
-		GetSystemTime(&now);
+	_MESSAGE("SFSE runtime: initialize (version = %d.%d.%d %08X %04d-%02d-%02d %02d:%02d:%02d, os = %s)",
+		SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA, RUNTIME_VERSION,
+		now.wYear, now.wMonth, now.wDay, now.wHour, now.wMinute, now.wSecond,
+		getOSInfoStr().c_str());
 
-		_MESSAGE("SFSE runtime: initialize (version = %d.%d.%d %08X %04d-%02d-%02d %02d:%02d:%02d, os = %s)",
-			SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA, RUNTIME_VERSION,
-			now.wYear, now.wMonth, now.wDay, now.wHour, now.wMinute, now.wSecond,
-			getOSInfoStr().c_str());
-
-		_MESSAGE("imagebase = %016I64X", g_moduleHandle);
-		_MESSAGE("reloc mgr imagebase = %016I64X", RelocationManager::s_baseAddr);
+	_MESSAGE("imagebase = %016I64X", g_moduleHandle);
+	_MESSAGE("reloc mgr imagebase = %016I64X", RelocationManager::s_baseAddr);
 
 #ifdef _DEBUG
-		SetPriorityClass(GetCurrentProcess(), IDLE_PRIORITY_CLASS);
+	SetPriorityClass(GetCurrentProcess(), IDLE_PRIORITY_CLASS);
 
-		WaitForDebugger();
+	WaitForDebugger();
 #endif
 
-		if(!g_branchTrampoline.create(1024 * 64))
-		{
-			_ERROR("couldn't create branch trampoline. this is fatal. skipping remainder of init process.");
-			return;
-		}
-
-		if(!g_localTrampoline.create(1024 * 64, g_moduleHandle))
-		{
-			_ERROR("couldn't create codegen buffer. this is fatal. skipping remainder of init process.");
-			return;
-		}
-
-		// scan plugin folder
-		g_pluginManager.init();
-
-		// preload plugins
-		g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
-
-#ifndef _DEBUG
-	}
-	__except(EXCEPTION_EXECUTE_HANDLER)
+	if(!g_branchTrampoline.create(1024 * 64))
 	{
-		_ERROR("exception thrown during preinit");
+		_ERROR("couldn't create branch trampoline. this is fatal. skipping remainder of init process.");
+		return;
 	}
-#endif
+
+	if(!g_localTrampoline.create(1024 * 64, g_moduleHandle))
+	{
+		_ERROR("couldn't create codegen buffer. this is fatal. skipping remainder of init process.");
+		return;
+	}
+
+	// scan plugin folder
+	g_pluginManager.init();
+
+	// preload plugins
+	g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
 
 	_MESSAGE("preinit complete");
 }
 
-static bool isInit = false;
-
 void SFSE_Initialize()
 {
-	if(isInit) return;
-	isInit = true;
+	static bool runOnce = false;
+	if(runOnce) return;
+	runOnce = true;
 
-#ifndef _DEBUG
-	__try {
-#endif
+	// load plugins
+	g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
+	g_pluginManager.loadComplete();
 
-		// load plugins
-		g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
-		g_pluginManager.loadComplete();
-
-		FlushInstructionCache(GetCurrentProcess(), NULL, 0);
-
-#ifndef _DEBUG
-	}
-	__except(EXCEPTION_EXECUTE_HANDLER)
-	{
-		_ERROR("exception thrown during init");
-	}
-#endif
+	FlushInstructionCache(GetCurrentProcess(), NULL, 0);
 
 	_MESSAGE("init complete");
 }
