@@ -143,6 +143,8 @@ void SFSE_Initialize()
 	FlushInstructionCache(GetCurrentProcess(), NULL, 0);
 
 	_MESSAGE("init complete");
+
+	DebugLog::flush();
 }
 
 extern "C" {

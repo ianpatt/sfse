@@ -57,3 +57,9 @@ void DebugLog::log(LogLevel level, const char * fmt, va_list args)
 			fputs(s_formatBuf, s_stdout);
 	}
 }
+
+void DebugLog::flush()
+{
+	if(s_log)
+		fflush(s_log);
+}

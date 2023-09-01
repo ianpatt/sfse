@@ -21,6 +21,8 @@ public:
 
 	static void log(LogLevel level, const char * fmt, va_list args);
 
+	static void flush();
+
 private:
 	static FILE * s_log;
 
