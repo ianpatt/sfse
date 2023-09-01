@@ -50,6 +50,7 @@ source_group(
 source_group(
 	${PROJECT_NAME}/api
 	FILES
+		GameReflection.h
 )
 
 source_group(
