@@ -40,11 +40,12 @@ enum
 
 struct SFSEInterface
 {
-	enum {
+	enum
+	{
 		kInterfaceVersion = 1
 	};
 
-	std::uint32_t	skseVersion;
+	std::uint32_t	sfseVersion;
 	std::uint32_t	runtimeVersion;
 	std::uint32_t	interfaceVersion;
 	void *	(* QueryInterface)(std::uint32_t id);
@@ -54,7 +55,7 @@ struct SFSEInterface
 	PluginHandle		(* GetPluginHandle)(void);
 
 	// returns the plugin info structure for a plugin by name, only valid to be called after PostLoad message
-	const PluginInfo*	(* GetPluginInfo)(const char* name);
+	const PluginInfo*	(* GetPluginInfo)(const char * name);
 };
 
 /**** Messaging API docs ********************************************************************
@@ -120,11 +121,11 @@ struct SFSETrampolineInterface
 
 	std::uint32_t interfaceVersion;
 
-	void* (*AllocateFromBranchPool)(PluginHandle plugin, size_t size);
-	void* (*AllocateFromLocalPool)(PluginHandle plugin, size_t size);
+	void * (* AllocateFromBranchPool)(PluginHandle plugin, size_t size);
+	void * (* AllocateFromLocalPool)(PluginHandle plugin, size_t size);
 };
 
-typedef bool(*_SFSEPlugin_Load)(const SFSEInterface * skse);
+typedef bool (* _SFSEPlugin_Load)(const SFSEInterface * sfse);
 
 /**** plugin versioning ********************************************************
  *
@@ -192,7 +193,7 @@ struct SFSEPluginVersionData
 	char			author[256];		// null-terminated ASCII plugin author name
 	
 	// version compatibility
-	std::uint32_t	addressIndependence;	// describe how you find your addressese using the kAddressIndependence_ enums
+	std::uint32_t	addressIndependence;	// describe how you find your addresses using the kAddressIndependence_ enums
 	std::uint32_t	structureIndependence;	// describe how you handle structure layout using the kStructureIndependence_ enums
 	std::uint32_t	compatibleVersions[16];	// zero-terminated list of RUNTIME_VERSION_ defines your plugin is compatible with
 	
@@ -207,7 +208,7 @@ struct SFSEPluginVersionData
  *	The base API is pretty simple. Add version data as shown in the
  *	SFSEPluginVersionData docs above, and export this function:
  *	
- *	void SFSEPlugin_Load(const SFSEInterface * skse)
+ *	void SFSEPlugin_Load(const SFSEInterface * sfse)
  *	
  *	In this function, use the interfaces above to register your commands, patch
  *	memory, generally do whatever you need to for integration with the runtime.
@@ -224,7 +225,7 @@ struct SFSEPluginVersionData
  *	If your plugin needs to make modifications before global initializers, add
  *	and export this:
  *	
- *	void SFSEPlugin_Preload(const SFSEInterface * skse)
+ *	void SFSEPlugin_Preload(const SFSEInterface * sfse)
  *	
  *	Game and SFSE functionality may be limited during preload.
  *	

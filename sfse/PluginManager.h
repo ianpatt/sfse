@@ -68,7 +68,7 @@ private:
 	bool	findPluginDirectory(void);
 	void	scanPlugins(void);
 
-	const char *	safeCallLoadPlugin(LoadedPlugin * plugin, const SFSEInterface * skse, u32 phase);
+	const char *	safeCallLoadPlugin(LoadedPlugin * plugin, const SFSEInterface * sfse, u32 phase);
 
 	void			sanitize(SFSEPluginVersionData * version);
 	const char *	checkPluginCompatibility(const SFSEPluginVersionData & version);
@@ -109,7 +109,7 @@ private:
 extern BranchTrampolineManager g_branchTrampolineManager;
 extern BranchTrampolineManager g_localTrampolineManager;
 
-void* AllocateFromSFSEBranchPool(PluginHandle plugin, size_t size);
-void* AllocateFromSFSELocalPool(PluginHandle plugin, size_t size);
+void * AllocateFromSFSEBranchPool(PluginHandle plugin, size_t size);
+void * AllocateFromSFSELocalPool(PluginHandle plugin, size_t size);
 
 extern PluginManager	g_pluginManager;

@@ -288,7 +288,7 @@ bool PluginManager::findPluginDirectory(void)
 {
 	bool	result = false;
 
-	// find the path <runtime directory>/data/skse/
+	// find the path <runtime directory>/data/sfse/
 	std::string	runtimeDirectory = getRuntimeDirectory();
 
 	if(!runtimeDirectory.empty())
@@ -392,11 +392,11 @@ const char * PluginManager::checkAddressLibrary(void)
 	return s_status;
 }
 
-const char * PluginManager::safeCallLoadPlugin(LoadedPlugin * plugin, const SFSEInterface * skse, u32 phase)
+const char * PluginManager::safeCallLoadPlugin(LoadedPlugin * plugin, const SFSEInterface * sfse, u32 phase)
 {
 	__try
 	{
-		if(!plugin->load[phase](skse))
+		if(!plugin->load[phase](sfse))
 		{
 			return "reported as incompatible during load";
 		}
@@ -616,7 +616,7 @@ void PluginManager::updateAddressLibraryPrompt()
 
 	if(result == IDYES)
 	{
-//		ShellExecute(0, nullptr, "https://www.nexusmods.com/skyrimspecialedition/mods/32444", nullptr, nullptr, 0);
+//		ShellExecute(0, nullptr, "https://www.nexusmods.com/starfield/mods/123456789", nullptr, nullptr, 0);
 		TerminateProcess(GetCurrentProcess(), 0);
 	}
 }
