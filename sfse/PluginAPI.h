@@ -44,7 +44,7 @@ struct SFSEInterface
 		kInterfaceVersion = 1
 	};
 
-	std::uint32_t	skseVersion;
+	std::uint32_t	sfseVersion;
 	std::uint32_t	runtimeVersion;
 	std::uint32_t	interfaceVersion;
 	void *	(* QueryInterface)(std::uint32_t id);
@@ -124,7 +124,7 @@ struct SFSETrampolineInterface
 	void* (*AllocateFromLocalPool)(PluginHandle plugin, size_t size);
 };
 
-typedef bool(*_SFSEPlugin_Load)(const SFSEInterface * skse);
+typedef bool(*_SFSEPlugin_Load)(const SFSEInterface * sfse);
 
 /**** plugin versioning ********************************************************
  *
@@ -207,7 +207,7 @@ struct SFSEPluginVersionData
  *	The base API is pretty simple. Add version data as shown in the
  *	SFSEPluginVersionData docs above, and export this function:
  *	
- *	void SFSEPlugin_Load(const SFSEInterface * skse)
+ *	void SFSEPlugin_Load(const SFSEInterface * sfse)
  *	
  *	In this function, use the interfaces above to register your commands, patch
  *	memory, generally do whatever you need to for integration with the runtime.
@@ -224,7 +224,7 @@ struct SFSEPluginVersionData
  *	If your plugin needs to make modifications before global initializers, add
  *	and export this:
  *	
- *	void SFSEPlugin_Preload(const SFSEInterface * skse)
+ *	void SFSEPlugin_Preload(const SFSEInterface * sfse)
  *	
  *	Game and SFSE functionality may be limited during preload.
  *	

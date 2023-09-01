@@ -68,7 +68,7 @@ private:
 	bool	findPluginDirectory(void);
 	void	scanPlugins(void);
 
-	const char *	safeCallLoadPlugin(LoadedPlugin * plugin, const SFSEInterface * skse, u32 phase);
+	const char *	safeCallLoadPlugin(LoadedPlugin * plugin, const SFSEInterface * sfse, u32 phase);
 
 	void			sanitize(SFSEPluginVersionData * version);
 	const char *	checkPluginCompatibility(const SFSEPluginVersionData & version);
