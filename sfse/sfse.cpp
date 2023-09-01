@@ -135,7 +135,7 @@ void SFSE_Initialize()
 	runOnce = true;
 
 	// load plugins
-	g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
+	g_pluginManager.installPlugins(PluginManager::kPhase_Load);
 	g_pluginManager.loadComplete();
 
 	Hooks_Version_Apply();
