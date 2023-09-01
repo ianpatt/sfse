@@ -14,15 +14,17 @@
 
 int main(int argc, char ** argv)
 {
-	//gLog.OpenRelative(CSIDL_MYDOCUMENTS, "\\My Games\\" SAVE_FOLDER_NAME "\\SFSE\\sfse_loader.log");
+	DebugLog::openRelative(CSIDL_MYDOCUMENTS, "\\My Games\\" SAVE_FOLDER_NAME "\\SFSE\\Logs\\sfse_loader.txt");
 	//gLog.SetPrintLevel(IDebugLog::kLevel_FatalError);
 	//gLog.SetLogLevel(IDebugLog::kLevel_DebugMessage);
 
-	FILETIME	now;
-	GetSystemTimeAsFileTime(&now);
+	SYSTEMTIME now;
+	GetSystemTime(&now);
 
-	_MESSAGE("sfse loader %08X %08X%08X %s",
-		PACKED_SFSE_VERSION, now.dwHighDateTime, now.dwLowDateTime, GetOSInfoStr().c_str());
+	_MESSAGE("SFSE loader: initialize (version = %d.%d.%d %08X %04d-%02d-%02d %02d:%02d:%02d, os = %s)",
+		SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA, RUNTIME_VERSION,
+		now.wYear, now.wMonth, now.wDay, now.wHour, now.wMinute, now.wSecond,
+		getOSInfoStr().c_str());
 
 	if(!g_options.Read(argc, argv))
 	{
@@ -61,7 +63,7 @@ int main(int argc, char ** argv)
 	}
 	else
 	{
-		procName = GetConfigOption("Loader", "RuntimeName");
+		procName = getConfigOption("Loader", "RuntimeName");
 		if(!procName.empty())
 		{
 			_MESSAGE("using runtime name from config: %s", procName.c_str());
@@ -72,7 +74,7 @@ int main(int argc, char ** argv)
 			procName = "Starfield.exe";
 
 			// check to see if someone screwed up their install
-			std::string appName = GetRuntimeName();
+			std::string appName = getRuntimeName();
 			if(!_stricmp(appName.c_str(), procName.c_str()))
 			{
 				PrintLoaderError("You have renamed sfse_loader and have not specified the name of the runtime.");
@@ -82,7 +84,7 @@ int main(int argc, char ** argv)
 		}
 	}
 
-	const std::string & runtimeDir = GetRuntimeDirectory();
+	const std::string & runtimeDir = getRuntimeDirectory();
 	std::string procPath = runtimeDir + "\\" + procName;
 
 	if(g_options.m_altEXE.size())

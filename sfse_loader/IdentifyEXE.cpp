@@ -195,7 +195,8 @@ static bool IsUPXImage(const u8 * base)
 
 static bool IsWinStoreImage(const u8 * base)
 {
-	return GetImageSection(base, ".xbld") != NULL;
+	// .xbld section shows up in the steam version, need to look for some other import
+	return false;
 }
 
 static bool IsGOGImage(const u8 * base)
@@ -317,13 +318,13 @@ bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, 
 
 	if(hookInfo->procType == kProcType_WinStore)
 	{
-		PrintLoaderError("The Windows Store (gamepass) version of Skyrim is not supported.");
+		PrintLoaderError("The Windows Store (gamepass) version of Starfield is not supported.");
 		return false;
 	}
 	
 	if(hookInfo->procType == kProcType_Epic)
 	{
-		PrintLoaderError("The Epic Store version of Skyrim is not supported.");
+		PrintLoaderError("The Epic Store version of Starfield is not supported.");
 		return false;
 	}
 
@@ -403,7 +404,7 @@ bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, 
 	else if(version > kCurVersion)
 	{
 		PrintLoaderError(
-			"You are using a newer version of Skyrim than this version of SFSE supports.\n"
+			"You are using a newer version of Starfield than this version of SFSE supports.\n"
 			"If this version just came out, please be patient while we update our code.\n"
 			"In the meantime, please check http://sfse.silverlock.org for updates.\n"
 			"Do not email about this!\n"

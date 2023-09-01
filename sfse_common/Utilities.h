@@ -175,7 +175,7 @@
 
 // this is the solution to getting a pointer-to-member-function pointer
 template <typename T>
-uintptr_t GetFnAddr(T src)
+uintptr_t getFnAddr(T src)
 {
 	union
 	{
@@ -188,19 +188,18 @@ uintptr_t GetFnAddr(T src)
 	return data.u;
 }
 
-std::string GetRuntimePath();
-std::string GetRuntimeName();
-const std::string & GetRuntimeDirectory();
+std::string getRuntimePath();
+std::string getRuntimeName();
+const std::string & getRuntimeDirectory();
 
-const std::string & GetConfigPath();
-std::string GetConfigOption(const char * section, const char * key);
-bool GetConfigOption_u32(const char * section, const char * key, u32 * dataOut);
+const std::string & getConfigPath();
+std::string getConfigOption(const char * section, const char * key);
+bool getConfigOption_u32(const char * section, const char * key, u32 * dataOut);
 
-const std::string & GetOSInfoStr();
+const std::string & getOSInfoStr();
 
-void * GetIATAddr(void * module, const char * searchDllName, const char * searchImportName);
-const void * GetResourceLibraryProcAddress(const void * module, const char * exportName);
-bool Is64BitDLL(const void * module);
+void * getIATAddr(void * module, const char * searchDllName, const char * searchImportName);
+const void * getResourceLibraryProcAddress(const void * module, const char * exportName);
+bool is64BitDLL(const void * module);
 
-const char * GetObjectClassName(void * objBase);
-void DumpClass(void * theClassPtr, size_t nIntsToDump);
+const char * getObjectClassName(void * objBase);

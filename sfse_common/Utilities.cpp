@@ -4,7 +4,7 @@
 #include <string>
 #include <Windows.h>
 
-std::string GetRuntimePath()
+std::string getRuntimePath()
 {
 	static char	appPath[4096] = { 0 };
 
@@ -16,9 +16,9 @@ std::string GetRuntimePath()
 	return appPath;
 }
 
-std::string GetRuntimeName()
+std::string getRuntimeName()
 {
-	std::string appPath = GetRuntimePath();
+	std::string appPath = getRuntimePath();
 
 	std::string::size_type slashOffset = appPath.rfind('\\');
 	if(slashOffset == std::string::npos)
@@ -27,13 +27,13 @@ std::string GetRuntimeName()
 	return appPath.substr(slashOffset + 1);
 }
 
-const std::string & GetRuntimeDirectory()
+const std::string & getRuntimeDirectory()
 {
 	static std::string s_runtimeDirectory;
 
 	if(s_runtimeDirectory.empty())
 	{
-		std::string	runtimePath = GetRuntimePath();
+		std::string	runtimePath = getRuntimePath();
 
 		// truncate at last slash
 		std::string::size_type	lastSlash = runtimePath.rfind('\\');
@@ -50,13 +50,13 @@ const std::string & GetRuntimeDirectory()
 	return s_runtimeDirectory;
 }
 
-const std::string & GetConfigPath()
+const std::string & getConfigPath()
 {
 	static std::string s_configPath;
 
 	if(s_configPath.empty())
 	{
-		std::string	runtimePath = GetRuntimeDirectory();
+		std::string	runtimePath = getRuntimeDirectory();
 		if(!runtimePath.empty())
 		{
 			s_configPath = runtimePath + "Data\\SFSE\\sfse.ini";
@@ -68,11 +68,11 @@ const std::string & GetConfigPath()
 	return s_configPath;
 }
 
-std::string GetConfigOption(const char * section, const char * key)
+std::string getConfigOption(const char * section, const char * key)
 {
 	std::string	result;
 
-	const std::string & configPath = GetConfigPath();
+	const std::string & configPath = getConfigPath();
 	if(!configPath.empty())
 	{
 		char	resultBuf[256];
@@ -86,16 +86,16 @@ std::string GetConfigOption(const char * section, const char * key)
 	return result;
 }
 
-bool GetConfigOption_u32(const char * section, const char * key, u32 * dataOut)
+bool getConfigOption_u32(const char * section, const char * key, u32 * dataOut)
 {
-	std::string	data = GetConfigOption(section, key);
+	std::string	data = getConfigOption(section, key);
 	if(data.empty())
 		return false;
 
 	return (sscanf_s(data.c_str(), "%u", dataOut) == 1);
 }
 
-const std::string & GetOSInfoStr()
+const std::string & getOSInfoStr()
 {
 	static std::string	result;
 
@@ -123,7 +123,7 @@ const std::string & GetOSInfoStr()
 	return result;
 }
 
-void * GetIATAddr(void * module, const char * searchDllName, const char * searchImportName)
+void * getIATAddr(void * module, const char * searchDllName, const char * searchImportName)
 {
 	u8						* base = (u8 *)module;
 	IMAGE_DOS_HEADER		* dosHeader = (IMAGE_DOS_HEADER *)base;
@@ -163,7 +163,7 @@ void * GetIATAddr(void * module, const char * searchDllName, const char * search
 	return NULL;
 }
 
-const void * GetResourceLibraryProcAddress(const HMODULE module, const char * exportName)
+const void * getResourceLibraryProcAddress(const HMODULE module, const char * exportName)
 {
 	auto * base = (const u8 *)(uintptr_t(module) & ~3);
 	auto * dosHeader = (const IMAGE_DOS_HEADER *)base;
@@ -198,7 +198,7 @@ const void * GetResourceLibraryProcAddress(const HMODULE module, const char * ex
 	return result;
 }
 
-bool Is64BitDLL(const HMODULE module)
+bool is64BitDLL(const HMODULE module)
 {
 	auto * base = (const u8 *)(uintptr_t(module) & ~3);
 	auto * dosHeader = (const IMAGE_DOS_HEADER *)base;
@@ -226,7 +226,7 @@ struct RTTILocator
 #pragma warning (pop)
 
 // use the RTTI information to return an object's class name
-const char * GetObjectClassName(void * objBase)
+const char * getObjectClassName(void * objBase)
 {
 	const char	* result = "<no rtti>";
 	__try
@@ -258,47 +258,4 @@ const char * GetObjectClassName(void * objBase)
 	}
 
 	return result;
-}
-
-void DumpClass(void * theClassPtr, size_t nIntsToDump)
-{
-	u64 * basePtr = (u64 *)theClassPtr;
-
-	_MESSAGE("DumpClass: %016I64X", basePtr);
-
-	//gLog.Indent();
-
-	if (!theClassPtr) return;
-	for (u64 ix = 0; ix < nIntsToDump; ix++ ) {
-		u64 * curPtr = basePtr+ix;
-		const char* curPtrName = NULL;
-		u64 otherPtr = 0;
-		float otherFloat1 = 0.0;
-		float otherFloat2 = 0.0;
-		const char* otherPtrName = NULL;
-		if (curPtr) {
-			curPtrName = GetObjectClassName((void*)curPtr);
-
-			__try
-			{
-				otherPtr = *curPtr;
-				u32 lowerFloat = otherPtr & 0xFFFFFFFF;
-				u32 upperFloat = (otherPtr >> 32) & 0xFFFFFFFF;
-				otherFloat1 = *(float*)&lowerFloat;
-				otherFloat2 = *(float*)&upperFloat;
-			}
-			__except(EXCEPTION_EXECUTE_HANDLER)
-			{
-				//
-			}
-
-			if (otherPtr) {
-				otherPtrName = GetObjectClassName((void*)otherPtr);
-			}
-		}
-
-		_MESSAGE("%3d +%03X ptr: 0x%016I64X: %32s *ptr: 0x%016I64x | %f, %f: %32s", ix, ix*8, curPtr, curPtrName, otherPtr, otherFloat2, otherFloat1, otherPtrName);
-	}
-
-	//gLog.Outdent();
 }

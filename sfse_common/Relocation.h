@@ -23,25 +23,25 @@ public:
 
 	operator T *() const
 	{
-		return GetPtr();
+		return getPtr();
 	}
 
 	T * operator->() const
 	{
-		return GetPtr();
+		return getPtr();
 	}
 
-	T * GetPtr() const
+	T * getPtr() const
 	{
 		return reinterpret_cast <T *>(m_offset);
 	}
 
-	const T * GetConst() const
+	const T * getConst() const
 	{
 		return reinterpret_cast <T *>(m_offset);
 	}
 
-	uintptr_t GetUIntPtr() const
+	uintptr_t getUIntPtr() const
 	{
 		return m_offset;
 	}
@@ -50,9 +50,9 @@ private:
 	uintptr_t	m_offset;
 
 	// hide
-	RelocPtr();
-	RelocPtr(RelocPtr & rhs);
-	RelocPtr & operator=(RelocPtr & rhs);
+	RelocPtr() = delete;
+	RelocPtr(RelocPtr & rhs) = delete;
+	RelocPtr & operator=(RelocPtr & rhs) = delete;
 };
 
 // use this for direct addresses to types T. needed to avoid ambiguity
@@ -71,7 +71,7 @@ public:
 		return reinterpret_cast <T>(m_offset);
 	}
 
-	uintptr_t GetUIntPtr() const
+	uintptr_t getUIntPtr() const
 	{
 		return reinterpret_cast <uintptr_t>(m_offset);
 	}
@@ -85,7 +85,7 @@ private:
 	BlockConversionType * m_offset;
 
 	// hide
-	RelocAddr();
-	RelocAddr(RelocAddr & rhs);
-	RelocAddr & operator=(RelocAddr & rhs);
+	RelocAddr() = delete;
+	RelocAddr(RelocAddr & rhs) = delete;
+	RelocAddr & operator=(RelocAddr & rhs) = delete;
 };
