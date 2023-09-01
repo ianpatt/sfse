@@ -8,6 +8,8 @@
 #include "sfse_common/BranchTrampoline.h"
 #include "PluginManager.h"
 
+#include "Hooks_Version.h"
+
 HINSTANCE g_moduleHandle = nullptr;
 
 void SFSE_Preinit();
@@ -135,6 +137,8 @@ void SFSE_Initialize()
 	// load plugins
 	g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
 	g_pluginManager.loadComplete();
+
+	Hooks_Version_Apply();
 
 	FlushInstructionCache(GetCurrentProcess(), NULL, 0);
 

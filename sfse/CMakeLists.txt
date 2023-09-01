@@ -55,6 +55,8 @@ source_group(
 source_group(
 	${PROJECT_NAME}/hooks
 	FILES
+		Hooks_Version.cpp
+		Hooks_Version.h
 )
 
 source_group(
