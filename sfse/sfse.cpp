@@ -6,9 +6,11 @@
 #include "sfse_common/Utilities.h"
 #include "sfse_common/SafeWrite.h"
 #include "sfse_common/BranchTrampoline.h"
+#include "PluginManager.h"
 
 HINSTANCE g_moduleHandle = nullptr;
 
+void SFSE_Preinit();
 void SFSE_Initialize();
 
 // api-ms-win-crt-runtime-l1-1-0.dll
@@ -23,7 +25,7 @@ int __initterm_e_Hook(_PIFV * a, _PIFV * b)
 {
 	// could be used for plugin optional preload
 
-	_MESSAGE("pre global init");
+	SFSE_Preinit();
 
 	return _initterm_e_Original(a, b);
 }
@@ -80,12 +82,11 @@ void WaitForDebugger(void)
 	Sleep(1000 * 2);
 }
 
-static bool isInit = false;
-
-void SFSE_Initialize(void)
+void SFSE_Preinit()
 {
-	if(isInit) return;
-	isInit = true;
+	static bool runOnce = false;
+	if(runOnce) return;
+	runOnce = true;
 
 #ifndef _DEBUG
 	__try {
@@ -120,13 +121,45 @@ void SFSE_Initialize(void)
 			return;
 		}
 
+		// scan plugin folder
+		g_pluginManager.init();
+
+		// preload plugins
+		g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
+
+#ifndef _DEBUG
+	}
+	__except(EXCEPTION_EXECUTE_HANDLER)
+	{
+		_ERROR("exception thrown during preinit");
+	}
+#endif
+
+	_MESSAGE("preinit complete");
+}
+
+static bool isInit = false;
+
+void SFSE_Initialize()
+{
+	if(isInit) return;
+	isInit = true;
+
+#ifndef _DEBUG
+	__try {
+#endif
+
+		// load plugins
+		g_pluginManager.installPlugins(PluginManager::kPhase_Preload);
+		g_pluginManager.loadComplete();
+
 		FlushInstructionCache(GetCurrentProcess(), NULL, 0);
 
 #ifndef _DEBUG
 	}
 	__except(EXCEPTION_EXECUTE_HANDLER)
 	{
-		_ERROR("exception thrown during startup");
+		_ERROR("exception thrown during init");
 	}
 #endif
 

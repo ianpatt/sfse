@@ -40,6 +40,7 @@ source_group(
 	FILES
 		${headers}
 		${sources}
+		${sfse_common_SOURCE_DIR}/sfse_version.rc
 )
 
 # ---- Create library ----

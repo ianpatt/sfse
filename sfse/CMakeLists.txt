@@ -44,7 +44,7 @@ source_group(
 	FILES
 		sfse.cpp
 		sfse.def
-		sfse_version.rc
+		${sfse_common_SOURCE_DIR}/sfse_version.rc
 )
 
 source_group(
@@ -60,6 +60,9 @@ source_group(
 source_group(
 	${PROJECT_NAME}/internal
 	FILES
+		PluginAPI.h
+		PluginManager.cpp
+		PluginManager.h
 )
 
 source_group(

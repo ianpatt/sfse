@@ -163,7 +163,7 @@ void * getIATAddr(void * module, const char * searchDllName, const char * search
 	return NULL;
 }
 
-const void * getResourceLibraryProcAddress(const HMODULE module, const char * exportName)
+const void * getResourceLibraryProcAddress(const void * module, const char * exportName)
 {
 	auto * base = (const u8 *)(uintptr_t(module) & ~3);
 	auto * dosHeader = (const IMAGE_DOS_HEADER *)base;
@@ -198,7 +198,7 @@ const void * getResourceLibraryProcAddress(const HMODULE module, const char * ex
 	return result;
 }
 
-bool is64BitDLL(const HMODULE module)
+bool is64BitDLL(const void * module)
 {
 	auto * base = (const u8 *)(uintptr_t(module) & ~3);
 	auto * dosHeader = (const IMAGE_DOS_HEADER *)base;
