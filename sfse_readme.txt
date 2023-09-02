@@ -24,7 +24,7 @@ SFSE will support the latest version of Starfield available on Steam, currently 
 * Can I modify and release my own version of SFSE based on the included source code?
 - No; the suggested method for extending SFSE is to write a plugin. If this does not meet your needs, please email the contact addresses listed below.
 
-* Can I include SKSE as part of a mod pack/collection or otherwise rehost the files?
+* Can I include SFSE as part of a mod pack/collection or otherwise rehost the files?
 - No. Providing a link to https://www.nexusmods.com/starfield/mods/106 is the suggested method of distribution. Exceptions may be given under applicable circumstances; contact us at the email addresses below. This means that if you see this file available for download anywhere other than https://www.github.com/ianpatt/sfse, or on Nexus by any user other than https://www.nexusmods.com/users/2166624, that service is violating copyright. I don't like having to explicitly spell this out, but my hand has been forced.
 
 * Where did the log files go?
