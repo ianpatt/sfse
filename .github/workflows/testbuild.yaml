@@ -9,3 +9,9 @@ jobs:
                 path: sfse
             - run: cmake -B sfse/build -S sfse -DCMAKE_INSTALL_PREFIX=extern sfse
             - run: cmake --build sfse/build --config Release
+            - name: 'Upload Artifact'
+              uses: actions/upload-artifact@v3
+              with:
+                name: SFSE
+                path: sfse/build/sfse/Release
+                retention-days: 30
