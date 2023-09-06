@@ -85,7 +85,7 @@ int main(int argc, char ** argv)
 	}
 
 	const std::string & runtimeDir = getRuntimeDirectory();
-	std::string procPath = runtimeDir + "\\" + procName;
+	std::string procPath = runtimeDir + procName;
 
 	if(g_options.m_altEXE.size())
 	{
