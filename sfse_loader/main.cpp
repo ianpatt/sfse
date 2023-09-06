@@ -150,7 +150,7 @@ int main(int argc, char ** argv)
 	}
 	else
 	{
-		dllPath = runtimeDir + "\\" + baseDllName + "_" + dllSuffix + ".dll";
+		dllPath = runtimeDir + baseDllName + "_" + dllSuffix + ".dll";
 	}
 
 	_MESSAGE("dll = %s", dllPath.c_str());
