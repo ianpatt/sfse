@@ -2,6 +2,7 @@
 ## Building
 ```
 git clone https://github.com/ianpatt/sfse
+git submodule update --init --recursive
 cmake -B sfse/build -S sfse
 cmake --build sfse/build --config Release
 ```
