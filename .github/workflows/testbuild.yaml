@@ -15,3 +15,17 @@ jobs:
                 name: SFSE
                 path: sfse/build/sfse/Release
                 retention-days: 30
+    run-testbuild_loader:
+        runs-on: windows-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                path: sfse
+            - run: cmake -B sfse/build_loader -S sfse_loader -DCMAKE_INSTALL_PREFIX=extern sfse
+            - run: cmake --build sfse/build_loader --config Release
+            - name: 'Upload Artifact'
+              uses: actions/upload-artifact@v3
+              with:
+                name: Loader
+                path: sfse/build_loader/sfse_loader/Release
+                retention-days: 30
