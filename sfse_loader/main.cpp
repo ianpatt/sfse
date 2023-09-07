@@ -176,6 +176,7 @@ int main(int argc, char ** argv)
 
 		// set this no matter what to work around launch issues
 		SetEnvironmentVariable("SteamGameId", kAppID);
+		SetEnvironmentVariable("SteamClientLaunch", "1");
 
 		if(g_options.m_skipLauncher)
 		{
