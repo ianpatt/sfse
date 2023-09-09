@@ -53,4 +53,12 @@ class BasicType : public IType
 //	float		4		4		00	FF	09	1
 //	double		8		8		00	FF	0A	1
 
+class IObject
+{
+public:
+	virtual void Unk_00();  // 00
+
+	virtual ~IObject();  // 01
+};
+
 }

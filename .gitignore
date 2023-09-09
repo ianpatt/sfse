@@ -35,3 +35,6 @@ scripts/merged
 
 # cmake
 build/*
+
+out/*
+CMakeSettings.json

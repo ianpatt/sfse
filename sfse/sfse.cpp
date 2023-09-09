@@ -9,6 +9,7 @@
 #include "PluginManager.h"
 
 #include "Hooks_Version.h"
+#include "Hooks_Script.h"
 
 HINSTANCE g_moduleHandle = nullptr;
 
@@ -139,6 +140,7 @@ void SFSE_Initialize()
 	g_pluginManager.loadComplete();
 
 	Hooks_Version_Apply();
+	Hooks_Script_Apply();
 
 	FlushInstructionCache(GetCurrentProcess(), NULL, 0);
 
