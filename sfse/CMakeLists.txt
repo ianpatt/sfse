@@ -98,7 +98,7 @@ source_group(
 source_group(
 	${PROJECT_NAME}/papyrus/vm
 	FILES
-		PapyrusNativeFunction.h
+		PapyrusNativeFunctions.h
 )
 
 source_group(
