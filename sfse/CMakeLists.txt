@@ -50,7 +50,21 @@ source_group(
 source_group(
 	${PROJECT_NAME}/api
 	FILES
+		GameConsole.cpp
+		GameConsole.h
+		GameEvents.h
+		GameFormComponents.h
+		GameForms.h
+		GameObjects.h
+		GameReferences.h
 		GameReflection.h
+		GameRTTI.cpp
+		GameRTTI.h
+		GameScript.cpp
+		GameScript.h
+		GameSettings.cpp
+		GameSettings.h
+		GameTypes.h
 )
 
 source_group(
@@ -58,6 +72,8 @@ source_group(
 	FILES
 		Hooks_Version.cpp
 		Hooks_Version.h
+		Hooks_Script.cpp
+		Hooks_Script.h
 )
 
 source_group(
@@ -71,6 +87,7 @@ source_group(
 source_group(
 	${PROJECT_NAME}/netimmerse
 	FILES
+		NiTypes.h
 )
 
 source_group(
@@ -81,6 +98,7 @@ source_group(
 source_group(
 	${PROJECT_NAME}/papyrus/vm
 	FILES
+		PapyrusNativeFunction.h
 )
 
 source_group(
