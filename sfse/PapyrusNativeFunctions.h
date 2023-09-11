@@ -159,7 +159,7 @@ STATIC_ASSERT(sizeof(NativeFunctionBase) == 0x50);
 
 // 58
 // this should be fully functional for deriving
-class NativeFunction: public NativeFunctionBase
+class NativeFunction : public NativeFunctionBase
 {
 public:
 	NativeFunction() = delete;

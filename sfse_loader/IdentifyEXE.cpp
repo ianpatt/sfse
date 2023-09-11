@@ -195,8 +195,7 @@ static bool IsUPXImage(const u8 * base)
 
 static bool IsWinStoreImage(const u8 * base)
 {
-	// .xbld section shows up in the steam version, need to look for some other import
-	return false;
+	return HasImportedLibrary(base, "XCurl.dll");	// or api-ms-win-core-psm-appnotify-l1-1-0.dll
 }
 
 static bool IsGOGImage(const u8 * base)
