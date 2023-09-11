@@ -2,6 +2,7 @@
 #include "sfse/GameReflection.h"
 #include "sfse_common/Types.h"
 #include "sfse_common/Utilities.h"
+#include "sfse_common/Errors.h"
 
 // this is all inside the BSScript namespace
 
@@ -9,6 +10,7 @@ typedef const char * BSFixedString;
 class VMClassInfo;
 class VMClassRegistry;
 class VMState;
+class VMValue;
 
 // 10
 class IFunction
@@ -35,7 +37,7 @@ public:
 	virtual u64 *			GetParam(u32 idx, BSFixedString * nameOut, u64 * typeOut) = 0;
 	virtual u64				GetNumParams2(void) = 0;
 	virtual bool			IsNative(void) = 0;
-	virtual u8				GetUnk40(void) = 0;
+	virtual bool			IsStatic(void) = 0;
 	virtual bool			Unk_0A(void) = 0;
 	virtual u32				Unk_0B(void) = 0;
 	virtual u32				GetUnk44(void) = 0;
@@ -94,7 +96,7 @@ public:
 	}
 	virtual u64				GetNumParams2(void) override { return m_params.unk0A; }
 	virtual bool			IsNative(void) override { return true; }
-	virtual u8				GetUnk40(void) override { return unk40; }
+	virtual bool			IsStatic(void) override { return m_isStatic; }
 	virtual bool			Unk_0A(void) override { return false; }
 	virtual u32				Unk_0B(void) override { return 0; }
 	virtual u32				GetUnk44(void) override { return unk44; }
@@ -129,8 +131,8 @@ public:
 	}
 	virtual u8				GetUnk41(void) override { return unk41; }
 	virtual void			SetUnk41(u8 arg) override { unk41 = arg; }
-	virtual void			Unk_18() = 0;
-	virtual void			Unk_19() = 0;
+	virtual bool			HasCallback() = 0;
+	virtual void			Run() = 0;
 
 	MEMBER_FN_PREFIX(NativeFunctionBase);
 	DEFINE_MEMBER_FN(Impl_Invoke, u32, 0x030772B4, u64 unk0, u64 unk1, VMClassRegistry * registry, VMState * unk3);
@@ -145,10 +147,38 @@ protected:
 	BSFixedString	unk20;			// 20
 	u64				m_retnType;		// 28
 	ParameterInfo	m_params;		// 30
-	u8				unk40;			// 40
+	bool			m_isStatic;		// 40
 	u8				unk41;			// 41
 	u8				m_isLatent;		// 42
 	u8				pad43;			// 43
 	u32				unk44;			// 44
 	BSFixedString	unk48;			// 48
 };
+
+STATIC_ASSERT(sizeof(NativeFunctionBase) == 0x50);
+
+// 58
+// this should be fully functional for deriving
+class NativeFunction: public NativeFunctionBase
+{
+public:
+	NativeFunction() = delete;
+	NativeFunction(const char * fnName, const char * className, u8 isStatic, u32 numParams)
+	{
+		CALL_MEMBER_FN(this, Impl_ctor)(fnName, className, isStatic, numParams);
+	}
+
+	virtual ~NativeFunction()	{ CALL_MEMBER_FN(this, Impl_dtor)(); }
+
+	virtual bool	HasCallback(void) override { return m_callback != 0; }
+	virtual bool	Run(VMValue * baseValue, VMClassRegistry * registry, u32 arg2, VMValue * resultValue, VMState * state) = 0;
+
+	MEMBER_FN_PREFIX(NativeFunction);
+	DEFINE_MEMBER_FN(Impl_ctor, NativeFunction *, 0x03077138, const char * fnName, const char * className, u8 unk0, u32 numParams);
+	DEFINE_MEMBER_FN(Impl_dtor, void, 0x030771F4);	// same as NativeFunctionBase dtor
+
+protected:
+	void * m_callback;	// 50
+};
+
+STATIC_ASSERT(sizeof(NativeFunction) == 0x58);
