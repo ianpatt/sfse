@@ -143,4 +143,4 @@ public:
 static_assert(sizeof(OBJ_REFR) == 0x30);
 
 //using _LookupByEDID = TESForm * (*)(const char* a_edid);
-//inline RelocAddr<_LookupByEDID> LookupByEDID(0x014D7F7C);
+//inline RelocAddr<_LookupByEDID> LookupByEDID(0x014D7F0C);

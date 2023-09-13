@@ -254,9 +254,9 @@ public:
 	u8				unk10B;         // 10B
 
 	MEMBER_FN_PREFIX(TESObjectREFR);
-	DEFINE_MEMBER_FN(IsInSpaceship, bool, 0x02B3A8D4)
-	DEFINE_MEMBER_FN(IsInSpace, bool, 0x01A0E208)
-	DEFINE_MEMBER_FN(HasKeyword, bool, 0x0139EE28, BGSKeyword*);
+	DEFINE_MEMBER_FN(IsInSpaceship, bool, 0x02B3A714)
+	DEFINE_MEMBER_FN(IsInSpace, bool, 0x01A0E1C8)
+	DEFINE_MEMBER_FN(HasKeyword, bool, 0x0139EDB8, BGSKeyword*);
 };
 static_assert(sizeof(TESObjectREFR) == 0x110);
 
@@ -384,4 +384,4 @@ public:
 	// More...
 };
 
-//inline RelocPtr<Actor*>     g_playerCharacter(0x05594D28);
+//inline RelocPtr<Actor*>     g_playerCharacter(0x05595BA8);

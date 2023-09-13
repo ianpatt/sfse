@@ -1,11 +1,11 @@
-Starfield Script Extender v0.1.0 pre-alpha
-by Ian Patterson
+Starfield Script Extender v0.1.1 pre-alpha
+by Ian Patterson, Stephen Abel, and Expired
 
 The Starfield Script Extender, or SFSE for short, is a modder's resource that expands the scripting capabilities of Starfield. As the game has literally just released, it's mostly a plugin loader for now. Depending on where modders show interest, this will expand to Scaleform and Papyrus (or other things) over time.
 
 [ Compatibility ]
 
-SFSE will support the latest version of Starfield available on Steam, currently 1.7.23. The Gamepass/MS Store version is unsupported. Do not email asking for support.
+SFSE will support the latest version of Starfield available on Steam, currently 1.7.29. The Gamepass/MS Store version is unsupported. Do not email asking for support.
 
 [ Installation ]
 
@@ -25,7 +25,7 @@ SFSE will support the latest version of Starfield available on Steam, currently 
 - No; the suggested method for extending SFSE is to write a plugin. If this does not meet your needs, please email the contact addresses listed below.
 
 * Can I include SFSE as part of a mod pack/collection or otherwise rehost the files?
-- No. Providing a link to https://www.nexusmods.com/starfield/mods/106 is the suggested method of distribution. Exceptions may be given under applicable circumstances; contact us at the email addresses below. This means that if you see this file available for download anywhere other than https://www.github.com/ianpatt/sfse, or on Nexus by any user other than https://www.nexusmods.com/users/2166624, that service is violating copyright. I don't like having to explicitly spell this out, but my hand has been forced.
+- No. Providing a link to https://www.nexusmods.com/starfield/mods/106 is the suggested method of distribution. Exceptions may be given under applicable circumstances; contact us at the email addresses below. This means that if you see this file available for download anywhere other than https://sfse.silverlock.org, https://www.github.com/ianpatt/sfse, or on Nexus by any user other than https://www.nexusmods.com/users/2166624, that service is violating copyright. I don't like having to explicitly spell this out, but my hand has been forced.
 
 * Where did the log files go?
 - <My Documents>\My Games\Starfield\SFSE\Logs\

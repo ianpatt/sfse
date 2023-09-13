@@ -11,7 +11,7 @@ const char * kHook_ShowVersion_FormatString =
 	"%08x v%s [SFSE " __PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER) "."
 	__PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER_MINOR) "."
 	__PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER_BETA) "]";
-RelocAddr <uintptr_t> kHook_ShowVersion_Offset(0x02079A7D);
+RelocAddr <uintptr_t> kHook_ShowVersion_Offset(0x02079A4D);
 
 void Hooks_Version_Apply()
 {

@@ -60,6 +60,7 @@ source_group(
 		GameReflection.h
 		GameRTTI.cpp
 		GameRTTI.h
+		GameRTTI.inl
 		GameScript.cpp
 		GameScript.h
 		GameSettings.cpp

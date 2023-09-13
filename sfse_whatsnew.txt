@@ -1,3 +1,10 @@
+0.1.1
+- GetSFSEVersion console command
+- preliminary custom papyrus native function support
+- internal class decoding
+- support for 1.7.29
+
 0.1.0
 - plugin manager
 - SFSE version shown in pause menu
+- support for 1.7.23
