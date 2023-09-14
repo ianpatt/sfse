@@ -2,6 +2,14 @@
 
 #include "sfse/GameForms.h"
 #include "sfse/GameFormComponents.h"
+#include "sfse/GameEvents.h"
+
+class TESClass;
+class TESCombatStyle;
+class BGSOutfit;
+class BGSListForm;
+class TESFaction;
+class BGSHeadPart;
 
 class TESObject : public TESForm
 {
@@ -92,52 +100,73 @@ public:
     virtual void    Unk_83(); // 83
     virtual void    Unk_84(); // 84
     virtual void    Unk_85(); // 85
-
-    /*
-    TESActorBaseData actorBaseData; // 118
-    TESContainer     container;     // 188
-    TESSpellList     spellList;     // 1A0
-    TESAIForm        aiForm;        // 1B8
-    TESFullName      fullName;      // 1F8
-    ActorValueOwner  actorValue;    // 208
-    BGSDestructibleObjectForm   destructibleObject; // 210
-    BGSSkinForm      skinForm;  // 220
-    BGSKeywordForm   keywords;  // 230
-    BGSAttackDataForm   attackData; // 260
-    BGSPerkRankArray    perkRankArray;  // 270
-    BGSPropertySheet    propertySheet;  // 288
-    */
 };
-/*static_assert(offsetof(TESActorBase, actorBaseData) == 0x118);
-static_assert(offsetof(TESActorBase, container) == 0x188);
-static_assert(offsetof(TESActorBase, spellList) == 0x1A0);
-static_assert(offsetof(TESActorBase, aiForm) == 0x1B8);
-static_assert(offsetof(TESActorBase, fullName) == 0x1F8);
-static_assert(offsetof(TESActorBase, actorValue) == 0x208);
-static_assert(offsetof(TESActorBase, destructibleObject) == 0x210);
-static_assert(offsetof(TESActorBase, skinForm) == 0x220);
-static_assert(offsetof(TESActorBase, keywords) == 0x230);
-static_assert(offsetof(TESActorBase, attackData) == 0x260);
-static_assert(offsetof(TESActorBase, perkRankArray) == 0x270);
-static_assert(offsetof(TESActorBase, propertySheet) == 0x288);*/
 
 class TESNPC : 
     public TESActorBase,
-    public TESRaceForm,                 // 298
-    public BGSOverridePackCollection,   // 2A8
-    public BGSForcedLocRefType,         // 2F0
-    public BGSNativeTerminalForm        // 308
+    public TESRaceForm,                     // 298
+    public BGSOverridePackCollection,       // 2A8
+    public BGSForcedLocRefType,             // 2F0
+    public BGSNativeTerminalForm,           // 308
+    public BSTEventSink<MenuOpenCloseEvent> // 318
 {
 public:
-    /*TESRaceForm                 raceForm;   // 298
-    BGSOverridePackCollection   overridePackCollection; // 2A8
-    BGSForcedLocRefType         forcedLocRefType;   // 2F0
-    BGSNativeTerminalForm       terminalForm;       // 308
-    */
-
-    // More here, havent decoded this yet
+    BGSAttachParentArray AttachParents;  // 320
+    u64 unk338; // 338
+    u32 unk340; // 340
+    u32 unk344; // 344
+    TESClass* pCl;  // 348
+    u64 unk350; // 350
+    u64 unk358; // 358
+    TESCombatStyle* pCombatStyle;   // 360
+    u32 unk368; // 368
+    u32 unk36C; // 36C
+    u64 unk370; // 370
+    u64 unk378; // 378
+    u32 unk380; // 380
+    float   unk384; // 384
+    float   unk388; // 388
+    float   unk38C; // 38C
+    float   unk390; // 390
+    u32     unk394; // 394
+    u64     unk398; // 398
+    u64     unk3A0; // 3A0
+    u64     unk3A8; // 3A8
+    void*   unk3B0; // 3B0
+    u64     unk3B8; // 3B8
+    u64     unk3C0; // 3C0
+    BGSOutfit* pDefOutfit;  // 3C8
+    BGSOutfit* pSleepOutfit;    // 3D0
+    BGSListForm* pDefaultPackList;  // 3D8
+    TESFaction* pCrimeFaction;  // 3E0
+    u64 unk3F8; // 3E8
+    BSTArray<BGSHeadPart*> HeadPartsA;  // 3F0
+    u64 unk400;
+    void* unk408;
+    void* unk410;
+    void* unk418;
+    struct HeadPartData
+    {
+        u32 unk00;
+        u32 unk04;
+        BSFixedString unk08;
+        BSFixedString unk10;
+        BSFixedString texture;
+        u32 unk20;
+        u32 unk24;
+    };
+    BSTArray<HeadPartData> HeadPartDataA;    // 420
+    u32 unk430; // 430
+    u32 unk434; // 434
+    u64 unk438;   // 438
+    u64 unk440; // 440
+    BSFixedString unk448;
+    BSFixedString unk450;
+    BSFixedString unk458;
+    BSFixedString unk460;
+    u64 unk468;
+    u64 unk470;
+    u64 unk478;
+    u64 unk480;
 };
-/*static_assert(offsetof(TESNPC, raceForm) == 0x298);
-static_assert(offsetof(TESNPC, overridePackCollection) == 0x2A8);
-static_assert(offsetof(TESNPC, forcedLocRefType) == 0x2F0);
-static_assert(offsetof(TESNPC, terminalForm) == 0x308);*/
+static_assert(sizeof(TESNPC) == 0x488);

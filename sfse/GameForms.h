@@ -7,7 +7,7 @@
 class TESFile;
 class TESObjectREFR;
 
-class TESForm : public BaseFormComponent, public TESFormRefCount, public BSReflection::IObject
+class TESForm : public BaseFormComponent, public BSReflection::IObject, public TESFormRefCount
 {
 public:
 	virtual ~TESForm();  // 00
@@ -144,3 +144,20 @@ static_assert(sizeof(OBJ_REFR) == 0x30);
 
 //using _LookupByEDID = TESForm * (*)(const char* a_edid);
 //inline RelocAddr<_LookupByEDID> LookupByEDID(0x014D7F0C);
+
+class BGSListForm :
+	public TESForm
+{
+public:
+	BSTArray<TESForm*> ArrayOfForms;		// 38
+	u64	unk48;	// 48
+	u64	unk50;	// 50
+	u64	unk58;	// 58
+	u64	unk60;	// 60
+	u64	unk68;	// 68
+	u64	unk70;	// 70
+	u64	unk78;	// 78
+	u64	unk80;	// 80
+	u64	unk88;	// 88
+};
+static_assert(sizeof(BGSListForm) == 0x90);

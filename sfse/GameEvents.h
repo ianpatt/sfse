@@ -4,6 +4,7 @@ namespace BSTEventDetail
 {
     class SinkBase
     {
+    public:
         virtual ~SinkBase() = 0;
     };
 }

@@ -200,7 +200,7 @@ static_assert(sizeof(TESAIForm) == 0x40);
 class TESFullName : public BaseFormComponent
 {
 public:
-	void* strFullName;	// 08
+	BSFixedString strFullName;	// 08
 };
 static_assert(sizeof(TESFullName) == 0x10);
 
@@ -326,3 +326,11 @@ public:
 	BGSTerminal* pTerminal;	// 08
 };
 static_assert(sizeof(BGSNativeTerminalForm) == 0x10);
+
+class BGSAttachParentArray : public BaseFormComponent
+{
+public:
+	void*/*BGSTypedKeywordValue<2>*/ pArray;	// 08
+	u32	uiSize;	// 10
+};
+static_assert(sizeof(BGSAttachParentArray) == 0x18);
