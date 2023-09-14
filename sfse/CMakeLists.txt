@@ -155,13 +155,19 @@ target_link_libraries(
 		xbyak::xbyak
 )
 
+target_compile_options(
+	${PROJECT_NAME}
+	PUBLIC
+		/wd4200
+)
+
 # ---- Configure all targets ----
 
 set_target_properties(
 	${PROJECT_NAME}
 	sfse_common
 	PROPERTIES
-		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
 )
 
 # ---- Create an installable target ----

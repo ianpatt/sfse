@@ -89,7 +89,7 @@ set_target_properties(
 	${PROJECT_NAME}
 	sfse_common
 	PROPERTIES
-		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
+		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
 )
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/installation.cmake)
