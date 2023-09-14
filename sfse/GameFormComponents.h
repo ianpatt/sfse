@@ -12,13 +12,6 @@ class TESRace;
 class BGSLocationRefType;
 class BGSTerminal;
 
-struct TESFormRefCount
-{
-public:
-	// members
-	volatile u64 refCount;  // 00
-};
-
 class BaseFormComponent
 {
 public:
@@ -34,6 +27,12 @@ public:
 	virtual void Unk_07();                                 // 07
 };
 static_assert(sizeof(BaseFormComponent) == 0x08);
+
+class TESFormRefCount : public BaseFormComponent
+{
+public:
+	volatile u64 refCount;  // 00
+};
 
 class BGSSnapTemplateComponent : public BaseFormComponent
 {

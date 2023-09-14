@@ -7,7 +7,7 @@
 class TESFile;
 class TESObjectREFR;
 
-class TESForm : public BaseFormComponent, public BSReflection::IObject, public TESFormRefCount
+class TESForm : public TESFormRefCount, public BSReflection::IObject
 {
 public:
 	virtual ~TESForm();  // 00
@@ -124,6 +124,7 @@ public:
 	u8  unk35;        // 35
 	u8  formType;     // 36
 };
+static_assert(offsetof(TESForm, refCount) == 0x08);
 static_assert(sizeof(TESForm) == 0x38);
 
 class BGSKeyword : public TESForm
