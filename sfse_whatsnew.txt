@@ -1,3 +1,7 @@
+0.1.2
+- switch to DLL CRT so defender stops complaining
+- internal class decoding
+
 0.1.1
 - GetSFSEVersion console command
 - preliminary custom papyrus native function support
