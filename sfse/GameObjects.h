@@ -122,17 +122,15 @@ public:
     u32 unk368; // 368
     u32 unk36C; // 36C
     u64 unk370; // 370
-    u64 unk378; // 378
-    u32 unk380; // 380
-    float   unk384; // 384
-    float   unk388; // 388
-    float   unk38C; // 38C
-    float   unk390; // 390
+    TESNPC* pFaceNPC; // 378
+    NiPoint3 MorphWeight; // 380
+    float fHeight; // 38C
+    float fHeightMax; // 390
     u32     unk394; // 394
     u64     unk398; // 398
     u64     unk3A0; // 3A0
     u64     unk3A8; // 3A8
-    void*   unk3B0; // 3B0
+    BSFixedString   unk3B0; // 3B0
     u64     unk3B8; // 3B8
     u64     unk3C0; // 3C0
     BGSOutfit* pDefOutfit;  // 3C8
@@ -141,10 +139,27 @@ public:
     TESFaction* pCrimeFaction;  // 3E0
     u64 unk3F8; // 3E8
     BSTArray<BGSHeadPart*> HeadPartsA;  // 3F0
-    u64 unk400;
-    void* unk408;
-    void* unk410;
-    void* unk418;
+    u64 unk400; // 400
+    void* unk408;   // 408
+    void* unk410;   // 410 -- 5 floats entries?
+    struct Unk418
+    {
+        struct Data
+        {
+            u32 unk00;
+            u32 unk04;
+            u64 unk08;
+            s32 unk10;
+            s32 unk14;
+        };
+        u64 unk00;   // 00
+        u64 unk08;   // 08
+        u64 unk10;   // 10
+        Data* unk18;   // 18
+        u64 start; // 20 count = end - start
+        u64 end;   // 28
+    };
+    Unk418* unk418;   // 418 -- Unk418?
     struct HeadPartData
     {
         u32 unk00;
@@ -158,15 +173,16 @@ public:
     BSTArray<HeadPartData> HeadPartDataA;    // 420
     u32 unk430; // 430
     u32 unk434; // 434
-    u64 unk438;   // 438
-    u64 unk440; // 440
-    BSFixedString unk448;
-    BSFixedString unk450;
-    BSFixedString unk458;
-    BSFixedString unk460;
-    u64 unk468;
-    u64 unk470;
-    u64 unk478;
-    u64 unk480;
+    BSFixedString unk438;   // 438
+    BSFixedString unk440;   // 440
+    BSFixedString unk448;   // 448
+    BSFixedString unk450;   // 450
+    BSFixedString unk458;   // 458
+    BSFixedString unk460;   // 460
+    u64 unk468; // 468
+    BSFixedString unk470; // 470
+    u64 unk478; // 478
+    u8 unk480;  // 480
+    u8 pad481[7]; // 481
 };
 static_assert(sizeof(TESNPC) == 0x488);
