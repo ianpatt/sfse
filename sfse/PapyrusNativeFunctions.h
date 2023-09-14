@@ -6,7 +6,6 @@
 
 // this is all inside the BSScript namespace
 
-typedef const char * BSFixedString;
 class VMClassInfo;
 class VMClassRegistry;
 class VMState;
