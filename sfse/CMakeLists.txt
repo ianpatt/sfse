@@ -138,7 +138,7 @@ target_compile_definitions(
 target_compile_features(
 	${PROJECT_NAME}
 	PUBLIC
-		cxx_std_11
+		cxx_std_17
 )
 
 target_include_directories(
