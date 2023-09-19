@@ -11,7 +11,7 @@ void Console_Print(const char* fmt, ...)
 		va_list args;
 		va_start(args, fmt);
 
-		CALL_MEMBER_FN(mgr, VPrint)(fmt, args);
+		mgr->VPrint(fmt, args);
 
 		va_end(args);
 	}

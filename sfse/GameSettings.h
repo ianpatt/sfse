@@ -2,6 +2,7 @@
 
 #include "sfse_common/Types.h"
 #include "sfse_common/Relocation.h"
+#include "sfse_common/Utilities.h"
 #include "sfse/GameTypes.h"
 
 class Setting
@@ -60,9 +61,6 @@ public:
 	char				pSettingFile[260];	// 008
 	u32					pad10C;				// 10C
 	void*				pHandle;			// 110
-	BSSimpleList<T>		SettingsA;			// 118
-	u64					unk128;				// 128
-	u64					unk130;				// 130
 };
 
 template<typename T>
@@ -70,6 +68,26 @@ class SettingCollectionList : public SettingCollection<T>
 {
 public:
 	virtual ~SettingCollectionList();
+
+	BSSimpleList<T>		SettingsA;			// 118
+	u64					unk128;				// 128
+	u64					unk130;				// 130
+};
+
+template<typename T>
+class SettingCollectionMap : public SettingCollection<T>
+{
+public:
+	virtual ~SettingCollectionMap();
+
+	u64	unk118; // BSTBTree ? Doesnt match F4 exactly
+	u64	unk120;
+	u64	unk128;
+	u64	unk130;
+	u64	unk138;
+	u64	unk140;
+	u64	unk148;
+	u64	unk150;
 };
 
 class INISettingCollection : public SettingCollectionList<Setting>
@@ -89,6 +107,15 @@ class RegSettingCollection : public SettingCollectionList<Setting>
 public:
 	virtual ~RegSettingCollection();
 };
+
+class GameSettingCollection : public SettingCollectionMap<Setting>
+{
+public:
+	virtual ~GameSettingCollection();
+
+	DEFINE_MEMBER_FN_1(GetSetting, Setting*, 0x01586734, const char*);
+};
+static_assert(sizeof(GameSettingCollection) == 0x158);
 
 template<typename T>
 class SettingT

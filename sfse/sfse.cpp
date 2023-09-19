@@ -10,6 +10,7 @@
 
 #include "Hooks_Version.h"
 #include "Hooks_Script.h"
+#include "Hooks_Scaleform.h"
 
 HINSTANCE g_moduleHandle = nullptr;
 
@@ -141,6 +142,7 @@ void SFSE_Initialize()
 
 	Hooks_Version_Apply();
 	Hooks_Script_Apply();
+	Hooks_Scaleform_Apply();
 
 	FlushInstructionCache(GetCurrentProcess(), NULL, 0);
 

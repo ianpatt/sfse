@@ -9,6 +9,39 @@
 #include "sfse_common/Log.h"
 #include "xbyak/xbyak.h"
 
+#ifdef _DEBUG
+#include "sfse/GameObjects.h"
+#include "sfse/GameChargen.h"
+#include "sfse/GameSettings.h"
+
+bool Test_Execute(const SCRIPT_PARAMETER* paramInfo, const char*, TESObjectREFR* thisObj, TESObjectREFR* containingObj, Script* script, ScriptLocals* locals, float* result, u32* opcodeOffsetPtr)
+{
+	if (thisObj) {
+		dumpClass(thisObj, 0x1100 >> 3/*0x110 >> 3*/);
+		TESNPC* npc = (TESNPC*)thisObj->data.objectReference;
+		_MESSAGE("Name: %s", npc->strFullName.c_str());
+		dumpClass(npc, 0x488 >> 3);
+		dumpClass(TESNPCData::ChargenDataModel::GetSingleton(), 0x700 >> 3);
+
+		npc->MorphWeight.x = 1.0f;
+		npc->MorphWeight.y = 1.0f;
+		npc->MorphWeight.z = 1.0f;
+		bool unk1 = false;
+		u32 unk2 = 0x28;
+		bool unk3 = false;
+		static_cast<Actor*>(thisObj)->UpdateAppearance(unk1, unk2, unk3);
+	}
+	else
+	{
+		auto& gameSettings = (*SettingT<GameSettingCollection>::pCollection);
+		auto setting = gameSettings->GetSetting("sSkinToneDisplayName");
+		Console_Print("Game Settings: %s", setting->name);
+	}
+	Console_Print("Dump Complete");
+	return true;
+}
+#endif
+
 bool GetSFSEVersion_Execute(const SCRIPT_PARAMETER* paramInfo, const char*, TESObjectREFR* thisObj, TESObjectREFR* containingObj, Script* script, ScriptLocals* locals, float* result, u32* opcodeOffsetPtr)
 {
 	_MESSAGE("GetSFSEVersion_Execute");
@@ -43,6 +76,21 @@ void ConsoleCommandInit_Hook(void* unk1)
 			cmd.bInvalidatesCellList = 0;
 			break;
 		}
+#ifdef _DEBUG
+		else if (!strcmp(iter->pFunctionName, "GameComment"))
+		{
+			Script::SCRIPT_FUNCTION& cmd = *iter;
+			cmd.pFunctionName = "test";
+			cmd.pShortName = "";
+			cmd.pHelpString = "";
+			cmd.bReferenceFunction = 0;
+			cmd.sParamCount = 0;
+			cmd.pExecuteFunction = Test_Execute;
+			cmd.bEditorFilter = 0;
+			cmd.bInvalidatesCellList = 0;
+			break;
+		}
+#endif
 	}
 }
 
