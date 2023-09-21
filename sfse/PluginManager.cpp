@@ -271,6 +271,9 @@ void * PluginManager::queryInterface(u32 id)
 	case kInterface_Trampoline:
 		result = (void *)&g_SFSETrampolineInterface;
 		break;
+	case kInterface_Menu:
+		result = (void*)&g_SFSEMenuInterface;
+		break;
 
 	default:
 		_WARNING("unknown QueryInterface %08X", id);
