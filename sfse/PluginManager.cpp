@@ -7,6 +7,8 @@
 #include "sfse_common/Log.h"
 #include "sfse_common/Errors.h"
 
+#include "sfse/Hooks_Scaleform.h"
+
 PluginManager	g_pluginManager;
 
 PluginManager::LoadedPlugin *	PluginManager::s_currentLoadingPlugin = nullptr;
@@ -39,6 +41,12 @@ static SFSEMessagingInterface g_SFSEMessagingInterface =
 	SFSEMessagingInterface::kInterfaceVersion,
 	PluginManager::registerListener,
 	PluginManager::dispatchMessage,
+};
+
+static const SFSEMenuInterface g_SFSEMenuInterface =
+{
+	SFSEMenuInterface::kInterfaceVersion,
+	RegisterMenuPlugin,
 };
 
 PluginManager::PluginManager()

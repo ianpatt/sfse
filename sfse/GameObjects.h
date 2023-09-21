@@ -141,7 +141,11 @@ public:
     BSTArray<BGSHeadPart*> HeadPartsA;  // 3F0
     u64 unk400; // 400
     void* unk408;   // 408
-    void* unk410;   // 410 -- 5 floats entries?
+    struct Unk410Data
+    {
+        float unk00[5];
+    };
+    Unk410Data* unk410;   // 410 -- 5 floats entries?
     struct Unk418
     {
         struct Data
@@ -159,26 +163,30 @@ public:
         u64 start; // 20 count = end - start
         u64 end;   // 28
     };
-    Unk418* unk418;   // 418 -- Unk418?
+    Unk418* unk418;   // 418 -- Unk418? ShapeBlendData probably?
     struct HeadPartData
     {
-        u32 unk00;
-        u32 unk04;
-        BSFixedString unk08;
-        BSFixedString unk10;
-        BSFixedString texture;
-        u32 unk20;
-        u32 unk24;
+        u32 type;                       // 00 1 - Mask? 
+        u32 unk04;                      // 04
+        BSFixedString unk08;            // 08
+        BSFixedString material;         // 10
+        BSFixedString postBlendDetails; // 18
+        struct Color
+        {
+            u8 r, g, b, a;
+        };
+        Color color;                    // 20
+        u32 intensity;                  // 24 up to 128 for some reason replaces alpha, color.a does nothing?
     };
     BSTArray<HeadPartData> HeadPartDataA;    // 420
-    u32 unk430; // 430
+    u32 skinTone; // 430
     u32 unk434; // 434
-    BSFixedString unk438;   // 438
-    BSFixedString unk440;   // 440
-    BSFixedString unk448;   // 448
-    BSFixedString unk450;   // 450
-    BSFixedString unk458;   // 458
-    BSFixedString unk460;   // 460
+    BSFixedString teeth;   // 438
+    BSFixedString jewelryColor;   // 440
+    BSFixedString eyeColor;   // 448
+    BSFixedString hairColor;   // 450
+    BSFixedString facialHairColor;   // 458
+    BSFixedString eyebrowColor;   // 460
     u64 unk468; // 468
     BSFixedString unk470; // 470
     u64 unk478; // 478

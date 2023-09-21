@@ -6,6 +6,7 @@
 
 class TESFile;
 class TESObjectREFR;
+class BGSMorphableObject;
 
 class TESForm : public TESFormRefCount, public BSReflection::IObject
 {
@@ -162,3 +163,60 @@ public:
 	u64	unk88;	// 88
 };
 static_assert(sizeof(BGSListForm) == 0x90);
+
+class BGSMorphableObject : public TESForm
+{
+public:
+	BSFixedString		unk38;					// 38
+	BGSMorphableObject*	unk40;					// 40 - Seems to point to itself?
+	BSFixedString		performanceMaterial;	// 48
+	BSFixedString		chargenMaterial;		// 50
+	BSFixedString		unk58;					// 58
+	u32					unk60;					// 60
+	u32					unk64;					// 64
+};
+static_assert(sizeof(BGSMorphableObject) == 0x68);
+
+class BGSHeadPart : 
+	public TESForm,
+	public TESFullName, // 38
+	public BGSModelMaterialSwap // 48
+{
+public:
+	enum HeadPartType : s32
+	{
+		HeadPartMisc = 0,
+		HeadPartFace,
+		HeadPartRightEye,
+		HeadPartHair,
+		HeadPartFacialHair,
+		HeadPart5,
+		HeadPartEyebrows,
+		HeadPartJewelry,
+		HeadPart8,
+		HeadPartTeeth,
+		HeadPart10,
+		HeadPart11,
+		HeadPartLeftEye,
+		HeadPartEyelashes
+	};
+
+	BSFixedString unk70; // 70
+	BGSHeadPart* unk78;	// 78
+	TESModel ChargenModel;	// 80
+	TESModelTri MorphsA[3];	// A0
+	u8	unk100;	// 100
+	u8	pad101[7];	// 101
+	u64	unk108; // 108
+	BSTArray<BGSHeadPart*>	extraParts;	// 110
+	BGSMorphableObject*	morph;	// 120
+	u64	unk128;	// 128
+	BGSListForm*	unk130;	// 130
+	BSFixedString	unk138;	// 138
+	BSFixedString	unk140;	// 140
+	HeadPartType	eType;	// 148
+	u32	unk14C; // 14C
+};
+static_assert(sizeof(BGSHeadPart) == 0x150);
+static_assert(offsetof(BGSHeadPart, strFullName) == 0x40);
+static_assert(offsetof(BGSHeadPart, cModel) == 0x50);

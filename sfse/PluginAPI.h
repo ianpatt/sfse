@@ -3,15 +3,9 @@
 #include <cstdint>
 
 typedef std::uint32_t PluginHandle;	// treat this as an opaque type
-class GFxMovieView;
-class GFxValue;
-class TaskDelegate;
-class UIDelegate_v1;
-class InventoryEntryData;
-class SFSEDelayFunctorManager;
-class SFSEObjectRegistry;
-class SFSEPersistentObjectStorage;
+
 class BranchTrampoline;
+class IMenu;
 
 struct PluginInfo
 {
@@ -35,6 +29,7 @@ enum
 	kInterface_Invalid = 0,
 	kInterface_Messaging,
 	kInterface_Trampoline,
+	kInterface_Menu,
 	kInterface_Max,
 };
 
@@ -110,6 +105,20 @@ struct SFSEMessagingInterface
 	std::uint32_t interfaceVersion;
 	bool	(* RegisterListener)(PluginHandle listener, const char* sender, EventCallback handler);
 	bool	(* Dispatch)(PluginHandle sender, std::uint32_t messageType, void * data, std::uint32_t dataLen, const char* receiver);
+};
+
+struct SFSEMenuInterface
+{
+	enum
+	{
+		kInterfaceVersion = 1
+	};
+
+	std::uint32_t	interfaceVersion;
+
+	// This callback will be called once for every new menu where its MovieImpl is loaded.
+	typedef bool (*RegisterCallback)(IMenu* menu);
+	void (*Register)(RegisterCallback callback);
 };
 
 struct SFSETrampolineInterface

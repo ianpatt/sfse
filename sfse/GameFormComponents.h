@@ -11,6 +11,7 @@ class BGSPerk;
 class TESRace;
 class BGSLocationRefType;
 class BGSTerminal;
+class BGSModelMaterialSwap;
 
 class BaseFormComponent
 {
@@ -300,14 +301,7 @@ static_assert(sizeof(TESRaceForm) == 0x10);
 class BGSOverridePackCollection : public BaseFormComponent
 {
 public:
-	u64	unk08;
-	u64	unk10;
-	u64	unk18;
-	u64	unk20;
-	u64	unk28;
-	u64	unk30;
-	u64	unk38;
-	u64	unk40;
+	u64	unk08[8];
 };
 static_assert(sizeof(BGSOverridePackCollection) == 0x48);
 
@@ -333,3 +327,36 @@ public:
 	u32	uiSize;	// 10
 };
 static_assert(sizeof(BGSAttachParentArray) == 0x18);
+
+class TESModel : public BaseFormComponent
+{
+public:
+	virtual void Unk_08(); // 08 - Record related
+	virtual void Unk_09(); // 09
+	virtual void Unk_0A(); // 0A
+	virtual void Unk_0B(); // 0B
+	virtual void Unk_0C(); // 0C
+	virtual void Unk_0D(); // 0D
+	virtual BGSModelMaterialSwap* GetAsModelMaterialSwap(); // 0E
+
+	BSFixedString cModel;	// 08
+	u64	unk10;				// 10
+	u32	unk18;				// 18
+	u32	unk1C;				// 1C
+};
+static_assert(sizeof(TESModel) == 0x20);
+
+class TESModelTri : public TESModel
+{
+public:
+
+};
+static_assert(sizeof(TESModelTri) == 0x20);
+
+class BGSModelMaterialSwap : public TESModel
+{
+public:
+	float fColorRemappingIndex; // 20
+	u32 pad24; // 24
+};
+static_assert(sizeof(BGSModelMaterialSwap) == 0x28);

@@ -13,15 +13,18 @@
 #include "sfse/GameObjects.h"
 #include "sfse/GameChargen.h"
 #include "sfse/GameSettings.h"
+#include "sfse/GameUI.h"
+#include "sfse/GameMenu.h"
 
 bool Test_Execute(const SCRIPT_PARAMETER* paramInfo, const char*, TESObjectREFR* thisObj, TESObjectREFR* containingObj, Script* script, ScriptLocals* locals, float* result, u32* opcodeOffsetPtr)
 {
 	if (thisObj) {
-		dumpClass(thisObj, 0x1100 >> 3/*0x110 >> 3*/);
 		TESNPC* npc = (TESNPC*)thisObj->data.objectReference;
+
+		/*dumpClass(thisObj, 0x1100 >> 3);
 		_MESSAGE("Name: %s", npc->strFullName.c_str());
 		dumpClass(npc, 0x488 >> 3);
-		dumpClass(TESNPCData::ChargenDataModel::GetSingleton(), 0x700 >> 3);
+		dumpClass(TESNPCData::ChargenDataModel::GetSingleton(), 0x700 >> 3);*/
 
 		npc->MorphWeight.x = 1.0f;
 		npc->MorphWeight.y = 1.0f;
@@ -33,6 +36,20 @@ bool Test_Execute(const SCRIPT_PARAMETER* paramInfo, const char*, TESObjectREFR*
 	}
 	else
 	{
+		/*auto ui = UI::GetSingleton();
+		//dumpClass(ui, 0x500 >> 3);
+		for (u32 i = 0; i < ui->openMenus.size; ++i)
+		{
+			//dumpClass(ui->openMenus.pData[i], 0x658);
+			if (ui->openMenus.pData[i]->MenuName == BSFixedString("ChargenMenu"))
+			{
+				auto chargenMenu = static_cast<ChargenMenu*>(ui->openMenus.pData[i]);
+				if (chargenMenu->pPaperDoll)
+				{
+					dumpClass(chargenMenu->npc, sizeof(TESNPC) >> 3);
+				}
+			}
+		}*/
 		auto& gameSettings = (*SettingT<GameSettingCollection>::pCollection);
 		auto setting = gameSettings->GetSetting("sSkinToneDisplayName");
 		Console_Print("Game Settings: %s", setting->name);
@@ -63,6 +80,9 @@ void ConsoleCommandInit_Hook(void* unk1)
 
 	for (Script::SCRIPT_FUNCTION* iter = g_firstConsoleCommand; iter->eOutput < (Script::kScript_NumConsoleCommands + Script::kScript_ConsoleOpBase); ++iter)
 	{
+		if (!iter->pExecuteFunction)
+			continue;
+
 		if (!strcmp(iter->pFunctionName, "BetaComment"))
 		{
 			Script::SCRIPT_FUNCTION& cmd = *iter;
@@ -74,7 +94,6 @@ void ConsoleCommandInit_Hook(void* unk1)
 			cmd.pExecuteFunction = GetSFSEVersion_Execute;
 			cmd.bEditorFilter = 0;
 			cmd.bInvalidatesCellList = 0;
-			break;
 		}
 #ifdef _DEBUG
 		else if (!strcmp(iter->pFunctionName, "GameComment"))
@@ -88,8 +107,10 @@ void ConsoleCommandInit_Hook(void* unk1)
 			cmd.pExecuteFunction = Test_Execute;
 			cmd.bEditorFilter = 0;
 			cmd.bInvalidatesCellList = 0;
-			break;
 		}
+
+		RelocAddr<void*> EmptyFunc(0x1256000);
+		_MESSAGE("%s (%s)", iter->pFunctionName, iter->pExecuteFunction == EmptyFunc ? "Empty" : "Implemented");
 #endif
 	}
 }

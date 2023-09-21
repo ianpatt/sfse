@@ -12,13 +12,16 @@ public:
 
 	enum
 	{
-		kType_Unknown = 0,
-		kType_Integer,
-		kType_Float,
-		kType_String,
-		kType_Bool,
-		kType_ID6,	// need to find an example of this
-		kType_ID,
+		kType_Binary,        // b
+		kType_Char,        // c
+		kType_UChar,        // h
+		kType_Int,        // i
+		kType_UInt,        // u
+		kType_Float,        // f
+		kType_String,        // s/S
+		kType_RGB,        // r
+		kType_RGBA,        // a
+		kType_None
 	};
 
 	union Data

@@ -1,11 +1,19 @@
 #pragma once
 
+#include "sfse/GameTypes.h"
+
 namespace BSTEventDetail
 {
     class SinkBase
     {
     public:
         virtual ~SinkBase() = 0;
+    };
+
+    class SourceBase
+    {
+    public:
+        virtual ~SourceBase() = 0;
     };
 }
 
@@ -25,14 +33,30 @@ public:
 };
 
 template<typename T>
-class BSTEventSource
+class BSTEventSource : public BSTEventDetail::SourceBase
 {
 public:
-    // Sinks go here
+    virtual ~BSTEventSource();
+
+    BSTArray<BSTEventSink<T>> pSinksA;
+    u32 unk18;
+    u32 unk1C;
+    u32 unk20;
+    u32 unk24;
 };
 
 struct MenuOpenCloseEvent
 {
-    void*/*BSFixedString*/	MenuName;
+    BSFixedString	MenuName;
     bool			bOpening;
 };
+
+struct UpdateSceneRectEvent{};
+struct MenuModeChangeEvent{};
+struct MenuPauseChangeEvent{};
+struct MenuPauseCounterChangeEvent{};
+struct TutorialEvent{};
+struct BSCursorTypeChange{};
+struct BSCursorRotationChange{};
+struct BIUIMenuVisiblePausedBeginEvent{};
+struct BIUIMenuVisiblePausedEndEvent{};
