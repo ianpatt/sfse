@@ -2,6 +2,8 @@
 
 #include "sfse/GameTypes.h"
 
+struct BGSHotloadCompletedEvent{};
+
 struct MenuOpenCloseEvent
 {
     BSFixedString	MenuName;

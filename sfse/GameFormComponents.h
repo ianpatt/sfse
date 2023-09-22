@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sfse/GameTypes.h"
 #include "sfse_common/Utilities.h"
 #include "sfse_common/Types.h"
 

@@ -72,7 +72,7 @@ class SettingCollectionList : public SettingCollection<T>
 public:
 	virtual ~SettingCollectionList();
 
-	BSSimpleList<T>		SettingsA;			// 118
+	BSSimpleList<T*>	SettingsA;			// 118
 	u64					unk128;				// 128
 	u64					unk130;				// 130
 };
