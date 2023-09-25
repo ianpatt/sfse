@@ -41,6 +41,7 @@ source_group(
 		${headers}
 		${sources}
 		${sfse_common_SOURCE_DIR}/sfse_version.rc
+		sfse_loader.manifest
 )
 
 # ---- Create library ----
