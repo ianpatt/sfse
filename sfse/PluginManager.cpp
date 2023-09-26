@@ -384,12 +384,14 @@ const char * PluginManager::checkAddressLibrary(void)
 		return s_status;
 	}
 
+	const char * buildType = "";
+
 	char fileName[256];
-	_snprintf_s(fileName, 256, "Data\\SFSE\\Plugins\\versionlib-%d-%d-%d-%d.bin",
+	_snprintf_s(fileName, 256, "Data\\SFSE\\Plugins\\versionlib-%d-%d-%d-%d%s.bin",
 		GET_EXE_VERSION_MAJOR(RUNTIME_VERSION),
 		GET_EXE_VERSION_MINOR(RUNTIME_VERSION),
 		GET_EXE_VERSION_BUILD(RUNTIME_VERSION),
-		0);
+		0, buildType);
 
 	FileStream versionLib;
 	if(!versionLib.open(fileName))
@@ -487,9 +489,26 @@ const char * PluginManager::checkPluginCompatibility(const SFSEPluginVersionData
 			}
 		}
 
-		// version compatibility
-		
-		bool versionIndependent = false;	// for now
+		// version compatibility means both address independence and structure independence
+		bool hasAddressIndependence = version.addressIndependence &
+			(SFSEPluginVersionData::kAddressIndependence_Signatures |
+			SFSEPluginVersionData::kAddressIndependence_AddressLibrary);
+		bool hasStructureIndependence = version.structureIndependence &
+			(SFSEPluginVersionData::kStructureIndependence_NoStructs |
+			SFSEPluginVersionData::kStructureIndependence_InitialLayout);
+
+		bool versionIndependent = hasAddressIndependence && hasStructureIndependence;
+
+		// currently anything in the "breaking change" field means that compatibility has been broken by an update
+		if(version.reservedBreaking)
+			versionIndependent = false;
+
+		// verify that address library is there to centralize error message
+		if(versionIndependent && (version.addressIndependence & SFSEPluginVersionData::kAddressIndependence_AddressLibrary))
+		{
+			const char * result = checkAddressLibrary();
+			if(result) return result;
+		}
 
 		// simple version list
 		if(!versionIndependent)
@@ -627,7 +646,7 @@ void PluginManager::updateAddressLibraryPrompt()
 
 	if(result == IDYES)
 	{
-//		ShellExecute(0, nullptr, "https://www.nexusmods.com/starfield/mods/123456789", nullptr, nullptr, 0);
+		ShellExecute(0, nullptr, "https://www.nexusmods.com/starfield/mods/3256", nullptr, nullptr, 0);
 		TerminateProcess(GetCurrentProcess(), 0);
 	}
 }
