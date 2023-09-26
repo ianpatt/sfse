@@ -44,4 +44,18 @@ class Ptr
 public:
 	T* pObject;	// 00
 };
+
+namespace GFx
+{
+enum PlayState
+{
+	State_Playing,
+	State_Stopped
+};
+enum FocusMovedType
+{
+	GFx_FocusMovedByMouse = 1,
+	GFx_FocusMovedByKeyboard = 2
+};
+}
 }

@@ -8,6 +8,7 @@ class MemoryHeap;
 class Log;
 class AmpMovieObjectDesc;
 class String;
+class ASMovieRootBase;
 
 namespace Render
 {
@@ -73,6 +74,11 @@ class Value;
 class MemoryContext;
 class ASStringManager;
 class FunctionHandler;
+class MouseState;
+struct MovieDefRootNode;
+class DisplayObjContainer;
+class LoadQueueEntry;
+class LoadStates;
 
 class ASMovieRootBase : public RefCountBase<ASMovieRootBase>
 {
@@ -112,7 +118,7 @@ public:
     virtual void OnAccelerometerEvent(const AccelerometerEvent*);
     virtual void OnGeolocationEvent(const GeolocationEvent*);
     virtual void PrintObjectsReport(unsigned int, Log*, const char*);
-    virtual void GetObjectsTree(struct /*Array<Ptr<AmpMovieObjectDesc>, 2, ArrayDefaultPolicy>**/void*, MemoryHeap*);
+    virtual void GetObjectsTree(/*Array<Ptr<AmpMovieObjectDesc>, 2, ArrayDefaultPolicy>**/void*, MemoryHeap*);
     virtual AmpMovieObjectDesc* GetDisplayObjectsTree(MemoryHeap*);
     virtual void ProcessLoadQueueEntry(LoadQueueEntry*, LoadStates*);
     virtual void ProcessLoadVarsMT(LoadQueueEntry*, LoadStates*, const String*, unsigned __int64, bool);
