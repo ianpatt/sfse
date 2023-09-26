@@ -11,11 +11,11 @@ const char * kHook_ShowVersion_FormatString =
 	"%08x v%s [SFSE " __PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER) "."
 	__PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER_MINOR) "."
 	__PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER_BETA) "]";
-RelocAddr <uintptr_t> kHook_ShowVersion_Offset(0x02079A4D);
+RelocAddr <uintptr_t> kHook_ShowVersion_Offset(0x0207ABF0 + 0x5D);
 
 void Hooks_Version_Apply()
 {
-	// show SFSE version in menu
+	// show SFSE version in main menu settings (not hooking ingame settings)
 	{
 		struct ShowVersion_Code: Xbyak::CodeGenerator {
 			ShowVersion_Code(void * buf) : Xbyak::CodeGenerator(4096, buf)

@@ -193,6 +193,6 @@ public:
     u8 unk480;  // 480
     u8 pad481[7]; // 481
 
-    DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x1B284E8, TESNPC* source);
+    DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x01B27E98, TESNPC* source);
 };
 static_assert(sizeof(TESNPC) == 0x488);
