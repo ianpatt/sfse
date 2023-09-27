@@ -50,11 +50,16 @@ source_group(
 source_group(
 	${PROJECT_NAME}/api
 	FILES
+		GameChargen.cpp
+		GameChargen.h
+		GameData.h
 		GameConsole.cpp
 		GameConsole.h
 		GameEvents.h
 		GameFormComponents.h
+		GameForms.cpp
 		GameForms.h
+		GameMenu.h
 		GameObjects.h
 		GameReferences.h
 		GameReflection.h
@@ -65,7 +70,11 @@ source_group(
 		GameScript.h
 		GameSettings.cpp
 		GameSettings.h
+		GameSingleton.h
+		GameTypes.cpp
 		GameTypes.h
+		GameUI.cpp
+		GameUI.h
 )
 
 source_group(
@@ -75,6 +84,8 @@ source_group(
 		Hooks_Version.h
 		Hooks_Script.cpp
 		Hooks_Script.h
+		Hooks_Scaleform.cpp
+		Hooks_Scaleform.h
 )
 
 source_group(
@@ -105,6 +116,13 @@ source_group(
 source_group(
 	${PROJECT_NAME}/scaleform
 	FILES
+		ScaleformFunctions.h
+		ScaleformMemory.cpp
+		ScaleformMemory.h
+		ScaleformMovie.h
+		ScaleformState.h
+		ScaleformTypes.h
+		ScaleformValue.h
 )
 
 # ---- Create library ----

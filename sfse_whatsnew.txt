@@ -1,3 +1,10 @@
+0.1.3
+- scaleform menu plugin interface
+- sfse_loader now reports as dpi-aware
+- internal class decoding
+- version-independent plugins allowed to work cross-version
+- support for 1.7.33
+
 0.1.2
 - switch to DLL CRT so defender stops complaining
 - internal class decoding

@@ -253,9 +253,9 @@ public:
 	u8				unk10A;         // 10A
 	u8				unk10B;         // 10B
 
-	DEFINE_MEMBER_FN_0(IsInSpaceship, bool, 0x02B3A714)
-	DEFINE_MEMBER_FN_0(IsInSpace, bool, 0x01A0E1C8)
-	DEFINE_MEMBER_FN_1(HasKeyword, bool, 0x0139EDB8, BGSKeyword*);
+	DEFINE_MEMBER_FN_0(IsInSpaceship, bool, 0x02B3E1F4)
+	DEFINE_MEMBER_FN_0(IsInSpace, bool, 0x01A0DB78)
+	DEFINE_MEMBER_FN_1(HasKeyword, bool, 0x0139E788, BGSKeyword*);
 };
 static_assert(sizeof(TESObjectREFR) == 0x110);
 
@@ -381,11 +381,11 @@ public:
 	virtual void         Unk_1A1();                                     // 1A1
 
 	// More...
-	DEFINE_MEMBER_FN_0(UpdateChargenAppearance, void, 0x02B3A714); // Only seems to work in CharGenMenu?
+	DEFINE_MEMBER_FN_0(UpdateChargenAppearance, void, 0x02B3E1F4); // Only seems to work in CharGenMenu?
 
 	// This function is very slow, do not use for realtime updates, mainly used for "entire character changed"
 	// The fields represent which subsets of chargen to update, usually you want (false, 0x28, false)
-	DEFINE_MEMBER_FN_3(UpdateAppearance, void, 0x24A93EC, bool unk1, u32 flags, bool unk3);
+	DEFINE_MEMBER_FN_3(UpdateAppearance, void, 0x024AC55C, bool unk1, u32 flags, bool unk3);
 };
 
 class MenuActor : public Actor
@@ -394,4 +394,4 @@ public:
 	virtual ~MenuActor();
 };
 
-//inline RelocPtr<Actor*>     g_playerCharacter(0x05595BA8);
+//inline RelocPtr<Actor*>     g_playerCharacter(0x05598CB8);

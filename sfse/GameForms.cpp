@@ -1,3 +1,3 @@
 #include "sfse/GameForms.h"
 
-RelocAddr<TESForm::_GetFormByNumericID> TESForm::GetFormByNumericID(0x014D7DB0);
+RelocAddr<TESForm::_GetFormByNumericID> TESForm::GetFormByNumericID(0x014D7780);

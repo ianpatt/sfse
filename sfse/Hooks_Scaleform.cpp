@@ -14,10 +14,10 @@
 #endif
 
 // Scaleform::Log vtable
-RelocAddr <uintptr_t> kHook_Scaleform_Log_Offset(0x04077C48 + 0x08);
+RelocAddr <uintptr_t> kHook_Scaleform_Log_Offset(0x0407AC48 + 0x08);
 
 typedef bool(*_IMenu_LoadMovie)(IMenu* menu, bool addEventDispatcher, bool unk2);
-RelocAddr <_IMenu_LoadMovie> IMenu_LoadMovie(0x02E79914); // IMenu vtable +7
+RelocAddr <_IMenu_LoadMovie> IMenu_LoadMovie(0x02E7D434); // IMenu vtable +7
 _IMenu_LoadMovie IMenu_LoadMovie_Original = nullptr;
 
 static std::list<SFSEMenuInterface::RegisterCallback> s_plugins;

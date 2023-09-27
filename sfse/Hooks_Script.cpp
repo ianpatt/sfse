@@ -71,7 +71,7 @@ bool GetSFSEVersion_Execute(const SCRIPT_PARAMETER* paramInfo, const char*, TESO
 }
 
 typedef bool (*_ConsoleCommandInit)(void* unk1);
-RelocAddr <_ConsoleCommandInit> ConsoleCommandInit(0x01AEB870);
+RelocAddr <_ConsoleCommandInit> ConsoleCommandInit(0x01AEB220);
 _ConsoleCommandInit ConsoleCommandInit_Original = nullptr;
 
 void ConsoleCommandInit_Hook(void* unk1)

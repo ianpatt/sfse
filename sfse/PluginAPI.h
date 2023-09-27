@@ -172,14 +172,14 @@ struct SFSEPluginVersionData
 	{
 		kVersion = 1,
 	};
-	
+
 	// describe how you find your addresses
 	enum
 	{
 		// signature matching only
 		kAddressIndependence_Signatures = 1 << 0,
 		
-		// something like the Address Library (not confirmed to exist yet)
+		// Address Library v1 (https://www.nexusmods.com/starfield/mods/3256)
 		kAddressIndependence_AddressLibrary = 1 << 1,
 	};
 	
@@ -202,14 +202,14 @@ struct SFSEPluginVersionData
 	char			author[256];		// null-terminated ASCII plugin author name
 	
 	// version compatibility
-	std::uint32_t	addressIndependence;	// describe how you find your addresses using the kAddressIndependence_ enums
-	std::uint32_t	structureIndependence;	// describe how you handle structure layout using the kStructureIndependence_ enums
+	std::uint32_t	addressIndependence;	// bitfield. describe how you find your addresses using the kAddressIndependence_ enums
+	std::uint32_t	structureIndependence;	// bitfield. describe how you handle structure layout using the kStructureIndependence_ enums
 	std::uint32_t	compatibleVersions[16];	// zero-terminated list of RUNTIME_VERSION_ defines your plugin is compatible with
 	
 	std::uint32_t	seVersionRequired;		// minimum version of the script extender required, compared against PACKED_SFSE_VERSION
 											// you probably should just set this to 0 unless you know what you are doing
-	std::uint32_t	reservedNonBreaking;	// set to 0
-	std::uint32_t	reservedBreaking;		// set to 0
+	std::uint32_t	reservedNonBreaking;	// bitfield. set to 0
+	std::uint32_t	reservedBreaking;		// bitfield. set to 0
 };
 
 /**** plugin API docs **********************************************************

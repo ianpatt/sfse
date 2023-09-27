@@ -41,6 +41,7 @@ source_group(
 		${headers}
 		${sources}
 		${sfse_common_SOURCE_DIR}/sfse_version.rc
+		sfse_loader.manifest
 )
 
 # ---- Create library ----
@@ -50,6 +51,7 @@ add_executable(
 	${headers}
 	${sources}
 	${sfse_common_SOURCE_DIR}/sfse_version.rc
+	sfse_loader.manifest
 )
 
 add_executable(sfse::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
