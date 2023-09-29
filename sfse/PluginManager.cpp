@@ -593,7 +593,7 @@ void PluginManager::reportPluginErrors()
 
 	// With this plugin DLL load error, the thread of prophecy is severed. Update your plugins to restore the weave of fate, or persist in the doomed world you have created
 
-	std::string message = "A DLL plugin has failed to load correctly. If a new version of Starfield was just released, the plugin needs to be updated. Please check the mod's webpage for updates.\n";
+	std::string message = "Mods you have installed have failed to load correctly. Check for updates to the mods listed below.\n";
 
 	for(auto & plugin : m_erroredPlugins)
 	{
@@ -613,6 +613,14 @@ void PluginManager::reportPluginErrors()
 		if(!foundReplacementName)
 			message += plugin.dllName;
 
+		if(plugin.version.pluginVersion)
+		{
+			char verStr[256];
+			sprintf_s(verStr, " v%d", plugin.version.pluginVersion);
+
+			message += verStr;
+		}
+
 		message += ": ";
 		message += plugin.errorState;
 
@@ -630,7 +638,11 @@ void PluginManager::reportPluginErrors()
 	message += "\n\nContinuing to load may result in lost save data or other undesired behavior.";
 	message += "\nExit game? (yes highly suggested)";
 
-	int result = MessageBox(0, message.c_str(), "SFSE Plugin Loader", MB_YESNO);
+	int result = MessageBox(0, message.c_str(),
+		"SFSE Plugin Loader (" __PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER) "."
+		__PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER_MINOR) "."
+		__PREPRO_TOKEN_STR__(SFSE_VERSION_INTEGER_BETA) ")",
+		MB_YESNO);
 
 	if(result == IDYES)
 	{
