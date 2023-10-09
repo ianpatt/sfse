@@ -1,11 +1,11 @@
 #include "Hooks_Data.h"
+#include "sfse/GameData.h"
 #include "sfse/PluginManager.h"
 #include "sfse_common/BranchTrampoline.h"
 #include "sfse_common/Relocation.h"
 #include "xbyak/xbyak.h"
 
 #if _DEBUG
-#include "sfse/GameData.h"
 #include "sfse/GameSettings.h"
 #endif
 
