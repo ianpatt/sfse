@@ -1,6 +1,6 @@
 0.1.4
 - internal class decoding
-- 
+- Post/PostDataLoad messages for plugins
 - support for 1.7.36
 
 0.1.3
