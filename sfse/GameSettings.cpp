@@ -1,9 +1,9 @@
 #include "sfse/GameSettings.h"
 
-decltype(SettingT<INISettingCollection>::pCollection) SettingT<INISettingCollection>::pCollection(0x05916E48);
-decltype(SettingT<INIPrefSettingCollection>::pCollection) SettingT<INIPrefSettingCollection>::pCollection(0x05916E68);
-decltype(SettingT<RegSettingCollection>::pCollection) SettingT<RegSettingCollection>::pCollection(0x05915A68);
-decltype(SettingT<GameSettingCollection>::pCollection) SettingT<GameSettingCollection>::pCollection(0x058F8278);
+RelocPtr <INISettingCollection *> SettingT<INISettingCollection>::pCollection(0x05916E48);
+RelocPtr <INIPrefSettingCollection *> SettingT<INIPrefSettingCollection>::pCollection(0x05916E68);
+RelocPtr <RegSettingCollection *> SettingT<RegSettingCollection>::pCollection(0x05915A68);
+RelocPtr <GameSettingCollection *> SettingT<GameSettingCollection>::pCollection(0x058F8278);
 
 u32 Setting::GetType(void) const
 {
