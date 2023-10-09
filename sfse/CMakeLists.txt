@@ -72,6 +72,7 @@ source_group(
 		GameScript.h
 		GameSettings.cpp
 		GameSettings.h
+		GameStreams.h
 		GameSingleton.h
 		GameTypes.cpp
 		GameTypes.h
@@ -82,6 +83,8 @@ source_group(
 source_group(
 	${PROJECT_NAME}/hooks
 	FILES
+		Hooks_Data.cpp
+		Hooks_Data.h
 		Hooks_Version.cpp
 		Hooks_Version.h
 		Hooks_Script.cpp
@@ -126,6 +129,9 @@ source_group(
 		ScaleformState.h
 		ScaleformTypes.h
 		ScaleformValue.h
+		ScaleformLoader.h
+		ScaleformManager.h
+		ScaleformTranslator.h
 )
 
 # ---- Create library ----
