@@ -1,7 +1,9 @@
 #pragma once
 
 #include "sfse_common/Types.h"
+#include "sfse_common/Utilities.h"
 #include "sfse/ScaleformTypes.h"
+#include "sfse/ScaleformMemory.h"
 
 namespace Scaleform
 {
@@ -12,7 +14,7 @@ class Movie;
 class FunctionHandler : public RefCountBase<FunctionHandler>
 {
 public:
-    virtual ~FunctionHandler();
+    virtual ~FunctionHandler() { };
 
     struct Params
     {
@@ -25,7 +27,9 @@ public:
         void* pUserData;
     };
 
-    virtual void Call(const Params*);
+    virtual void Call(const Params*) = 0;
+
+    DEFINE_STATIC_HEAP(ScaleformHeap_Allocate, ScaleformHeap_Free);
 };
 }
 }
@@ -33,5 +37,5 @@ public:
 class SWFToCodeFunctionHandler : public Scaleform::GFx::FunctionHandler
 {
 public:
-    virtual void MapCodeObjectFunctions();
+    virtual void MapCodeObjectFunctions() { };
 };

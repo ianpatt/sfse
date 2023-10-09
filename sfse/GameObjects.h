@@ -111,6 +111,12 @@ class TESNPC :
     public BSTEventSink<MenuOpenCloseEvent> // 318
 {
 public:
+    class InstanceData : public TBO_InstanceData
+    {
+    public:
+        u64 unk10[(0x158 - 0x10) >> 3];
+    };
+
     BGSAttachParentArray AttachParents;  // 320
     u64 unk338; // 338
     u32 unk340; // 340
@@ -140,37 +146,16 @@ public:
     u64 unk3F8; // 3E8
     BSTArray<BGSHeadPart*> HeadPartsA;  // 3F0
     u64 unk400; // 400
-    void* unk408;   // 408
-    struct Unk410Data
-    {
-        float unk00[5];
-    };
-    Unk410Data* unk410;   // 410 -- 5 floats entries?
-    struct Unk418
-    {
-        struct Data
-        {
-            u32 unk00;
-            u32 unk04;
-            u64 unk08;
-            s32 unk10;
-            s32 unk14;
-        };
-        u64 unk00;   // 00
-        u64 unk08;   // 08
-        u64 unk10;   // 10
-        Data* unk18;   // 18
-        u64 start; // 20 count = end - start
-        u64 end;   // 28
-    };
-    Unk418* unk418;   // 418 -- Unk418? ShapeBlendData probably?
+    BSTArray<float>* unk408; // 408  -- 5 floats entries?
+    BSTHashMap2<u32, float>* AdditionalSliders;   // 410
+    BSTHashMap<u32, BSTHashMap<BSFixedString, float>*>* unk418;   // 418
     struct HeadPartData
     {
         u32 type;                       // 00 1 - Mask? 
         u32 unk04;                      // 04
-        BSFixedString unk08;            // 08
-        BSFixedString material;         // 10
-        BSFixedString postBlendDetails; // 18
+        BSFixedStringCS group;             // 08
+        BSFixedStringCS name;         // 10
+        BSFixedStringCS texture; // 18
         struct Color
         {
             u8 r, g, b, a;
@@ -189,10 +174,13 @@ public:
     BSFixedString eyebrowColor;   // 460
     u64 unk468; // 468
     BSFixedString unk470; // 470
-    u64 unk478; // 478
-    u8 unk480;  // 480
+    BSTHashMap<BSFixedString, float>* shapeBlendData; // 478 - ShapeBlendData Map
+    u8 pronoun;  // 480
     u8 pad481[7]; // 481
 
     DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x01B27E98, TESNPC* source);
+    DEFINE_MEMBER_FN_1(CopyAppearance, void, 0x01B262D0, TESNPC* source);
 };
 static_assert(sizeof(TESNPC) == 0x488);
+static_assert(sizeof(TESNPC::HeadPartData) == 0x28);
+static_assert(sizeof(TESNPC::InstanceData) == 0x158);

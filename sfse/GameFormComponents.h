@@ -13,6 +13,8 @@ class TESRace;
 class BGSLocationRefType;
 class BGSTerminal;
 class BGSModelMaterialSwap;
+class BGSBodyPartData;
+class BGSAimAssistPoseData;
 
 class BaseFormComponent
 {
@@ -34,6 +36,29 @@ class TESFormRefCount : public BaseFormComponent
 {
 public:
 	volatile u64 refCount;  // 00
+};
+
+class TBO_InstanceData : public BSIntrusiveRefCounted
+{
+public:
+	virtual ~TBO_InstanceData();
+
+	virtual void Unk_01();
+	virtual void Unk_02();
+	virtual void Unk_03();
+	virtual void Unk_04();
+	virtual void Unk_05();
+	virtual void Unk_06();
+	virtual void Unk_07();
+	virtual void Unk_08();
+	virtual void Unk_09();
+	virtual void Unk_0A();
+	virtual void Unk_0B();
+	virtual void Unk_0C();
+	virtual void Unk_0D();
+	virtual void Unk_0E();
+	virtual void Unk_0F();
+	virtual void Unk_10();
 };
 
 class BGSSnapTemplateComponent : public BaseFormComponent
@@ -109,6 +134,21 @@ static_assert(sizeof(BGSObjectPlacementDefaults) == 0x20);
 
 struct alignas(0x4) ACTOR_BASE_DATA
 {
+	enum Flags
+	{
+		kFlags_None = 0,
+		kFlags_Gender = (1 << 0),
+		kFlags_Essential = (1 << 1),
+		kFlags_Unique = (1 << 5),
+		kFlags_Protected = (1 << 11),
+		kFlags_WalkStyle = (1 << 19),
+	};
+
+	u8 GetSex() const { return iActorBaseFlags & kFlags_Gender; }
+	bool IsEssential() const { return iActorBaseFlags & kFlags_Essential; }
+	bool IsUnique() const { return iActorBaseFlags & kFlags_Unique; }
+	bool IsProtected() const { return iActorBaseFlags & kFlags_Protected; }
+
 	s32 iActorBaseFlags;
 	s16 sXPValueOffset;
 	s16 sLevel;
@@ -131,7 +171,7 @@ public:
 	virtual void	Unk_12();	// 12
 	virtual void	Unk_13();	// 13
 
-	ACTOR_BASE_DATA	actorData;	// 18
+	ACTOR_BASE_DATA	actorData;	// 08
 	s32	unk1C;	// 1C
 	u64	unk20;	// 20
 	u64	unk28;	// 28
@@ -205,6 +245,28 @@ public:
 };
 static_assert(sizeof(TESFullName) == 0x10);
 
+class TESDescription : public BaseFormComponent
+{
+public:
+	u32						uiFileOffset;		// 08
+	u32						uiChunkOffset;		// 0C
+	BGSLocalizedStringDL	DescriptionText;	// 10
+};
+static_assert(sizeof(TESDescription) == 0x18);
+
+class BGSBipedObjectForm : public BaseFormComponent
+{
+public:
+	void* unk08; // 08
+};
+static_assert(sizeof(BGSBipedObjectForm) == 0x10);
+
+class BGSPreloadable
+{
+public:
+	virtual ~BGSPreloadable();
+};
+
 enum ACTOR_VALUE_MODIFIER
 {
 	AVM_PERMANENT,
@@ -247,7 +309,7 @@ public:
 	virtual ~IKeywordFormBase();
 
 	virtual bool HasKeyword(const BGSKeyword* apKeyword, const TBO_InstanceData* apData);
-	virtual void CollectAllKeywords(void*/* BSScrapArray<const BGSKeyword> */ arOutKeywordA, const TBO_InstanceData* apData);
+	virtual void CollectAllKeywords(BSScrapArray<const BGSKeyword>& arOutKeywordA, const TBO_InstanceData* apData);
 };
 
 class BGSKeywordForm : 
@@ -354,6 +416,13 @@ public:
 };
 static_assert(sizeof(TESModelTri) == 0x20);
 
+class BGSTextureModel : public TESModel
+{
+public:
+
+};
+static_assert(sizeof(BGSTextureModel) == 0x20);
+
 class BGSModelMaterialSwap : public TESModel
 {
 public:
@@ -361,3 +430,94 @@ public:
 	u32 pad24; // 24
 };
 static_assert(sizeof(BGSModelMaterialSwap) == 0x28);
+
+class IAnimationGraphComponent
+{
+public:
+	virtual ~IAnimationGraphComponent();
+
+	virtual void Unk_01();
+	virtual void Unk_02();
+};
+
+class BGSAnimationGraphComponent : public BaseFormComponent, public IAnimationGraphComponent
+{
+public:
+	BSFixedString	unk10;	// 10
+	BSFixedString	unk18;	// 18
+	BSFixedString	unk20;	// 20
+	BSFixedString	unk28;	// 28
+	u64	unk30;
+	u8	unk38;
+};
+static_assert(sizeof(BGSAnimationGraphComponent) == 0x40);
+
+struct FACEFX_BONESET
+{
+	virtual ~FACEFX_BONESET();
+
+	u64	unk08;
+	u64	unk10;
+	u64	unk18;
+	u64	unk20;
+};
+
+class BoneModifierData
+{
+public:
+	virtual ~BoneModifierData();
+	
+	virtual void Unk_01();
+	virtual void Unk_02();
+	virtual void Unk_03();
+	virtual void Unk_04();
+	virtual void Unk_05();
+	virtual void Unk_06();
+
+	BSFixedString	unk08;	// 08
+	BSFixedString	unk10;	// 10
+	float			unk18;	// 18
+};
+
+class LookAtChainData : public BoneModifierData
+{
+public:
+	BSFixedString	unk20;	// 20
+};
+
+class MorphDriverData : public BoneModifierData
+{
+public:
+	float	unk20;
+	float	unk24;
+	float	unk28;
+	float	unk2C;
+	float	unk30;
+	u8		unk34;
+};
+
+class PoseDeformerData : public BoneModifierData
+{
+public:
+	float	unk20[(0x58 - 0x20) >> 2];
+	u8		unk58;
+};
+static_assert(sizeof(PoseDeformerData) == 0x60);
+
+class SpringBoneData : public BoneModifierData
+{
+public:
+	float	unk20[(0x60 - 0x20) >> 2];
+	u8		unk60;
+};
+static_assert(sizeof(SpringBoneData) == 0x68);
+
+class BGSBodyPartInfo : public BaseFormComponent
+{
+public:
+	BGSBodyPartData*		unk08;	// 08
+	FACEFX_BONESET*			unk10;	// 10
+	FACEFX_BONESET*			unk18;	// 18
+	BGSAimAssistPoseData*	unk20;	// 20
+};
+static_assert(sizeof(BGSBodyPartInfo) == 0x28);

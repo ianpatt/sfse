@@ -380,12 +380,15 @@ public:
 	virtual void         Unk_1A0();                                     // 1A0
 	virtual void         Unk_1A1();                                     // 1A1
 
-	// More...
-	DEFINE_MEMBER_FN_0(UpdateChargenAppearance, void, 0x02B3E1F4); // Only seems to work in CharGenMenu?
-
 	// This function is very slow, do not use for realtime updates, mainly used for "entire character changed"
 	// The fields represent which subsets of chargen to update, usually you want (false, 0x28, false)
-	DEFINE_MEMBER_FN_3(UpdateAppearance, void, 0x024AC55C, bool unk1, u32 flags, bool unk3);
+	DEFINE_MEMBER_FN_3(UpdateAppearance, void, 0x024AC55C, bool unk1, u32 flags, bool changeRace);
+
+	DEFINE_MEMBER_FN_0(UpdateChargenAppearance, void, 0x02315938);
+	DEFINE_MEMBER_FN_1(SetSkinTone, void, 0x023155B0, u32 skinToneIndex);
+
+	u64	unk110[(0x260 - 0x110) >> 3];	// 110
+	void* unk260;						// 260
 };
 
 class MenuActor : public Actor

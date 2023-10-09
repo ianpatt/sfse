@@ -8,7 +8,6 @@ class MemoryHeap;
 class Log;
 class AmpMovieObjectDesc;
 class String;
-class ASMovieRootBase;
 
 namespace Render
 {
@@ -26,6 +25,7 @@ class Allocator;
 
 namespace GFx
 {
+class ASMovieRootBase;
 class Movie : 
     public RefCountBase<Movie>,
     public StateBag
@@ -83,69 +83,69 @@ class LoadStates;
 class ASMovieRootBase : public RefCountBase<ASMovieRootBase>
 {
 public:
-    virtual ~ASMovieRootBase();
+    virtual ~ASMovieRootBase() { };
 
-    virtual void SetMovie(MovieImpl*);
-    virtual void AdvanceFrame(bool);
-    virtual void ChangeMouseCursorType(unsigned int, unsigned int);
-    virtual bool CheckAvm();
-    virtual void ClearDisplayList();
-    virtual MovieDefRootNode* CreateMovieDefRootNode(MemoryHeap*, MovieDefImpl*, bool);
-    virtual void DoActions();
-    virtual InteractiveObject* FindTarget(const ASString*);
-    virtual void ForceCollect(unsigned int);
-    virtual void ForceEmergencyCollect();
-    virtual void SuspendGC(bool);
-    virtual void ScheduleGC(unsigned int);
-    virtual void GenerateMouseEvents(unsigned int);
-    virtual void GenerateTouchEvents(unsigned int);
-    virtual void GenerateGestureEvents(InteractiveObject*, unsigned int, const Render::Point<float>*, const Render::Point<float>*, const Render::Point<float>*, float, unsigned int);
-    virtual DisplayObjContainer* GetRootMovie(DisplayObject*);
-    virtual bool Init(MovieDefImpl*);
-    virtual void NotifyMouseEvent(const InputEventsQueueEntry*, const MouseState*, int);
-    virtual void NotifyOnResize();
-    virtual void NotifyQueueSetFocus(InteractiveObject*, unsigned int, FocusMovedType);
-    virtual void NotifyTransferFocus(InteractiveObject*, InteractiveObject*, unsigned int);
-    virtual bool NotifyOnFocusChange(InteractiveObject*, InteractiveObject*, unsigned int, FocusMovedType, ProcessFocusKeyInfo*);
-    virtual void NotifyGamePadAnalogEvent(const EventId*);
-    virtual void NotifyStatusEvent(const EventId*);
-    virtual void NotifyAccelerometerEvent(const EventId*, int);
-    virtual void NotifyGeolocationEvent(const EventId*, int);
-    virtual void OnMovieFocus(bool);
-    virtual void OnNextFrame();
-    virtual void OnDeviceOrientationChanged(const OrientationEvent*);
-    virtual void OnAppLifecycleEvent(const AppLifecycleEvent*);
-    virtual void OnAccelerometerEvent(const AccelerometerEvent*);
-    virtual void OnGeolocationEvent(const GeolocationEvent*);
-    virtual void PrintObjectsReport(unsigned int, Log*, const char*);
-    virtual void GetObjectsTree(/*Array<Ptr<AmpMovieObjectDesc>, 2, ArrayDefaultPolicy>**/void*, MemoryHeap*);
-    virtual AmpMovieObjectDesc* GetDisplayObjectsTree(MemoryHeap*);
-    virtual void ProcessLoadQueueEntry(LoadQueueEntry*, LoadStates*);
-    virtual void ProcessLoadVarsMT(LoadQueueEntry*, LoadStates*, const String*, unsigned __int64, bool);
-    virtual void ProcessLoadBinaryMT(LoadQueueEntry*, LoadStates*, const /*ArrayPOD<unsigned char, 2, ArrayDefaultPolicy>**/void*, unsigned __int64, bool);
-    virtual void RegisterAuxASClasses();
-    virtual void ResolveStickyVariables(InteractiveObject*);
-    virtual void SetExternalInterfaceRetVal(const Value*);
-    virtual void SetMemoryParams(unsigned int, unsigned int);
-    virtual void Shutdown();
-    virtual void CreateString(Value*, const char*);
-    virtual void CreateStringW(Value*, const wchar_t*);
-    virtual void CreateObject(Value*, const char*, const Value*, unsigned int);
-    virtual void CreateArray(Value*);
-    virtual void CreateFunction(Value*, FunctionHandler*, void*);
-    virtual bool SetVariable(const char*, const Value*, Movie::SetVarType);
-    virtual bool GetVariable(Value*, const char*);
-    virtual bool SetVariableArray(Movie::SetArrayType, const char*, unsigned int, const void*, unsigned int, Movie::SetVarType);
-    virtual bool SetVariableArraySize(const char*, unsigned int, Movie::SetVarType);
-    virtual unsigned int GetVariableArraySize(const char*);
-    virtual bool GetVariableArray(Movie::SetArrayType, const char*, unsigned int, void*, unsigned int);
-    virtual bool IsAvailable(const char*);
-    virtual bool Invoke(const char*, Value*, const char*, ...);
-    virtual bool Invoke(const char*, Value*, const Value*, unsigned int);
-    virtual bool InvokeArgs(const char*, Value*, const char*, char*);
-    virtual MemoryContext*  GetMemoryContext();
-    virtual ASStringManager*  GetStringManager();
-    virtual Render::Text::Allocator*  GetTextAllocator();
+    virtual void SetMovie(MovieImpl* pmovie) = 0;
+    virtual void AdvanceFrame(bool nextFrame) = 0;
+    virtual void ChangeMouseCursorType(unsigned int mouseIdx, unsigned int newCursorType) = 0;
+    virtual bool CheckAvm() = 0;
+    virtual void ClearDisplayList() = 0;
+    virtual MovieDefRootNode* CreateMovieDefRootNode(MemoryHeap*, MovieDefImpl*, bool) = 0;
+    virtual void DoActions() = 0;
+    virtual InteractiveObject* FindTarget(const ASString& path) = 0;
+    virtual void ForceCollect(unsigned int) = 0;
+    virtual void ForceEmergencyCollect() = 0;
+    virtual void SuspendGC(bool) = 0;
+    virtual void ScheduleGC(unsigned int) = 0;
+    virtual void GenerateMouseEvents(unsigned int) = 0;
+    virtual void GenerateTouchEvents(unsigned int) = 0;
+    virtual void GenerateGestureEvents(InteractiveObject*, unsigned int, const Render::Point<float>*, const Render::Point<float>*, const Render::Point<float>*, float, unsigned int) = 0;
+    virtual DisplayObjContainer* GetRootMovie(DisplayObject*) = 0;
+    virtual bool Init(MovieDefImpl*) = 0;
+    virtual void NotifyMouseEvent(const InputEventsQueueEntry*, const MouseState*, int) = 0;
+    virtual void NotifyOnResize() = 0;
+    virtual void NotifyQueueSetFocus(InteractiveObject*, unsigned int, FocusMovedType) = 0;
+    virtual void NotifyTransferFocus(InteractiveObject*, InteractiveObject*, unsigned int) = 0;
+    virtual bool NotifyOnFocusChange(InteractiveObject*, InteractiveObject*, unsigned int, FocusMovedType, ProcessFocusKeyInfo*) = 0;
+    virtual void NotifyGamePadAnalogEvent(const EventId*) = 0;
+    virtual void NotifyStatusEvent(const EventId*) = 0;
+    virtual void NotifyAccelerometerEvent(const EventId*, int) = 0;
+    virtual void NotifyGeolocationEvent(const EventId*, int) = 0;
+    virtual void OnMovieFocus(bool) = 0;
+    virtual void OnNextFrame() = 0;
+    virtual void OnDeviceOrientationChanged(const OrientationEvent*) = 0;
+    virtual void OnAppLifecycleEvent(const AppLifecycleEvent*) = 0;
+    virtual void OnAccelerometerEvent(const AccelerometerEvent*) = 0;
+    virtual void OnGeolocationEvent(const GeolocationEvent*) = 0;
+    virtual void PrintObjectsReport(unsigned int, Log*, const char*) = 0;
+    virtual void GetObjectsTree(/*Array<Ptr<AmpMovieObjectDesc>, 2, ArrayDefaultPolicy>**/void*, MemoryHeap*) = 0;
+    virtual AmpMovieObjectDesc* GetDisplayObjectsTree(MemoryHeap*) = 0;
+    virtual void ProcessLoadQueueEntry(LoadQueueEntry*, LoadStates*) = 0;
+    virtual void ProcessLoadVarsMT(LoadQueueEntry*, LoadStates*, const String*, unsigned __int64, bool) = 0;
+    virtual void ProcessLoadBinaryMT(LoadQueueEntry*, LoadStates*, const /*ArrayPOD<unsigned char, 2, ArrayDefaultPolicy>**/void*, unsigned __int64, bool) = 0;
+    virtual void RegisterAuxASClasses() = 0;
+    virtual void ResolveStickyVariables(InteractiveObject*) = 0;
+    virtual void SetExternalInterfaceRetVal(const Value&) = 0;
+    virtual void SetMemoryParams(unsigned int, unsigned int) = 0;
+    virtual void Shutdown() = 0;
+    virtual void CreateString(Value* pvalue, const char* pstring) = 0;
+    virtual void CreateStringW(Value* pvalue, const wchar_t* pstring) = 0;
+    virtual void CreateObject(Value* pvalue, const char* className = nullptr, const Value* pargs = nullptr, unsigned int nargs = 0) = 0;
+    virtual void CreateArray(Value* pvalue) = 0;
+    virtual void CreateFunction(Value* pvalue, FunctionHandler* pfc, void* puserData = nullptr) = 0;
+    virtual bool SetVariable(const char* ppathToVar, const Value& value, Movie::SetVarType setType = Movie::SV_Sticky1) = 0;
+    virtual bool GetVariable(Value* pval, const char* ppathToVar) = 0;
+    virtual bool SetVariableArray(Movie::SetArrayType type, const char* ppathToVar, unsigned int index, const void* pdata, unsigned int count, Movie::SetVarType = Movie::SV_Sticky1) = 0;
+    virtual bool SetVariableArraySize(const char* ppathToVar, unsigned int count, Movie::SetVarType setType = Movie::SV_Sticky1) = 0;
+    virtual unsigned int GetVariableArraySize(const char* ppathToVar) = 0;
+    virtual bool GetVariableArray(Movie::SetArrayType type, const char* ppathToVar, unsigned int index, void* pdata, unsigned int count) = 0;
+    virtual bool IsAvailable(const char* ppathToVar) = 0;
+    virtual bool Invoke(const char* ppathToMethod, Value* presult, const char* pargFmt, ...) = 0;
+    virtual bool Invoke(const char* ppathToMethod, Value* presult, const Value* pargs, unsigned int numArgs) = 0;
+    virtual bool InvokeArgs(const char* ppathToMethod, Value* presult, const char* pargFmt, va_list args) = 0;
+    virtual MemoryContext*  GetMemoryContext() = 0;
+    virtual ASStringManager*  GetStringManager() = 0;
+    virtual Render::Text::Allocator*  GetTextAllocator() = 0;
 };
 }
 }

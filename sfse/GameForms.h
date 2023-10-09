@@ -2,13 +2,15 @@
 
 #include "sfse/GameFormComponents.h"
 #include "sfse/GameReflection.h"
+#include "sfse/GameChargen.h"
 #include "sfse/NiTypes.h"
 
 class TESFile;
 class TESObjectREFR;
 class BGSMorphableObject;
+class TESNPC;
 
-enum class FormType
+enum class FormType : u32
 {
 	kNONE = 0,  // 00
 	kTES4,      // 01
@@ -348,6 +350,9 @@ public:
 
 	using _GetFormByNumericID = TESForm * (*)(u32 formId);
 	static RelocAddr<_GetFormByNumericID> GetFormByNumericID;
+
+	using _GetFormByEditorID = TESForm * (*)(const char*);
+	static RelocAddr<_GetFormByEditorID> GetFormByEditorID;
 };
 static_assert(offsetof(TESForm, refCount) == 0x08);
 static_assert(sizeof(TESForm) == 0x38);
@@ -441,3 +446,258 @@ public:
 static_assert(sizeof(BGSHeadPart) == 0x150);
 static_assert(offsetof(BGSHeadPart, strFullName) == 0x40);
 static_assert(offsetof(BGSHeadPart, cModel) == 0x50);
+
+class BGSBoneModifier : public TESForm
+{
+public:
+	virtual ~BGSBoneModifier();
+
+	BoneModifierData*	unk38;	// 38
+};
+static_assert(sizeof(BGSBoneModifier) == 0x40);
+
+class BGSEquipSlot : public TESForm
+{
+public:
+	virtual ~BGSEquipSlot();
+
+	BSFixedString	unk38;	// 38
+	void*			unk40;	// 40
+	u64				unk48;	// 48
+	u64				unk50;	// 50
+	u64				unk58;	// 58
+	u64				unk60;	// 60
+};
+static_assert(sizeof(BGSEquipSlot) == 0x68);
+
+class BGSBodyPartData : 
+	public TESForm,
+	public TESModel,
+	public BGSPreloadable
+{
+public:
+	u64	unk60[(0x130 - 0x60) >> 3];	// 60
+	BSFixedString	unk130;			// 130
+	BSFixedString	unk138;			// 138
+	BSFixedString	unk140;			// 140
+	BSFixedString	unk148;			// 148
+	BSFixedString	unk150;			// 150
+};
+static_assert(sizeof(BGSBodyPartData) == 0x158);
+
+class BGSMovementType : public TESForm
+{
+public:
+	BSFixedString	unk38;	// 38
+	u64	unk40[(0x140 - 0x38) >> 3];
+};
+static_assert(sizeof(BGSMovementType) == 0x148);
+
+class BGSAimAssistPoseData : public TESForm
+{
+public:
+	u64	unk38;	// 38
+	u64	unk40;	// 40
+	u64	unk48;	// 48
+	u64	unk50;	// 50
+	u64	unk58;	// 58
+};
+
+class TESRace :
+	public TESForm,
+	public TESFullName,
+	public TESDescription,
+	public TESSpellList,
+	public BGSSkinForm,
+	public BGSBipedObjectForm,
+	public BGSKeywordForm,
+	public BGSAttackDataForm,
+	public BGSPropertySheet,
+	public BGSPreloadable
+{
+public:
+	BSFixedString	editorID;		// F0
+	void*			unkF8;			// F8
+	void*			unk100;			// 100
+	float			unk108;			// 108
+	u32				unk10C;			// 10C
+	u32				unk110;			// 110
+	u32				unk114;			// 114
+	u64				unk118;			// 118
+	u64				unk120;			// 120
+	u64				unk128;			// 128
+	u64				unk130;			// 130
+	u32				unk138;			// 138
+	u32				unk13C;			// 13C
+	u32				unk140;			// 140
+	u32				unk144;			// 144
+	u64				unk148;			// 148
+	u64				unk150;			// 150
+	u64				unk158;			// 158
+	u64				unk160;			// 160
+	BSFixedString	slotNames[64];	// 168
+	void*			unk368[64];		// 368
+	BSTHashMap<BSFixedString, u32>	slotMap;	// 568
+	struct EquipSlot
+	{
+		BGSEquipSlot*	unk00;	// 00
+		void*			unk08;	// 08
+	};
+	BSTArray<EquipSlot>		unk5A0;			// 5A0
+	u64				unk5B0;			// 5B0
+	u64				unk5B8;			// 5B8
+	u64				unk5C0;			// 5C0
+	BSTArray<BGSBoneModifier*>			unk5C8[2];		// 5C8
+	u64				unk5E8;			// 5E8
+	TESModel		unk5F0[4];		// 5F0
+	TESModel		faceBones[2];	// 670
+	struct Unk6B0
+	{
+		s32				unk00;
+		float			unk04;
+		float			unk08;
+		float			unk0C;
+		float			unk10;
+		u32				unk14;
+		u64				unk18;
+		float			unk20;
+		u32				unk24;
+		float			unk28;
+		float			unk2C;
+		float			unk30;
+		float			unk34;
+		float			unk38;
+		float			unk3C;
+		float			unk40;
+		float			unk44;
+		float			unk48;
+		float			unk4C;
+		u32				unk50;
+		float			unk54;
+		float			unk58;
+		u32				unk5C;
+		float			unk60;
+		float			unk64;
+		struct Unk68
+		{
+			float		unk00;
+			float		unk08;
+			float		unk0C;
+		};
+		Unk68			unk68[2];
+		void*			unk80;
+		s32				unk88;
+		s32				unk8C;
+		s32				unk90;
+		s32				unk94;
+		s32				unk98;
+		s32				unk9C;
+		float			unkA0;
+		float			unkA4;
+		float			unkA8;
+		float			unkAC;
+		float			unkB0;
+		float			unkB4;
+		float			unkB8;
+		float			unkBC;
+		u32				unkC0;
+		u32				unkC4;
+		u32				unkC8;
+		u32				unkCC;
+		u64				unkD0;
+		u64				unkD8;
+		u64				unkE0;
+		u32				unkE8;
+		u32				unkEC;
+		float			unkF0;
+		float			unkF4;
+		u32				unkF8;
+		u32				unkFC;
+	};
+	Unk6B0			unk6B0;					// 6B0
+	u64				unk7B0;					// 7B0
+	BGSTextureModel	unk7B8[2];				// 7B8
+	BGSAnimationGraphComponent unk7F8[4];	// 7F8
+	void*					unk8F8[2];		// 8F8
+	BGSBodyPartInfo			bodyPartInfo;	// 908
+	BGSAttachParentArray	attachParentA;	// 930
+	u64						unk948;			// 948
+	u64						unk950;			// 950
+	u64						unk958;			// 958
+	BGSMovementType*		unk960[4];		// 960
+	u64						unk980;
+	u64						unk988;
+
+	using FaceSliderID = u32;
+	using FaceMorphID = u32;
+	struct ChargenData
+	{
+		struct FaceMorphData
+		{
+			BSFixedString			Name;					// 00
+			BSFixedString			SecondaryMorphName;		// 08
+			BSFixedStringCS			AssociatedMorphGroup;	// 10
+			u64						AssociatedHeadPartType;	// 18
+			BSFixedString			unk20;					// 20
+			BSFixedString			unk28;					// 28
+			BSTArray<BSFixedString> BonesA;					// 30 - Probably CS?
+			BSTArray<u64>			AssociatedMorphs;		// 40
+			BSTArray<FaceSliderID>	PostBlendSliderA;		// 50
+			FaceMorphID				ID;						// 60
+			u8						SculptRegion;			// 64
+		};
+		BSTHashMap<FaceMorphID, FaceMorphData*>							faceMorphMap;
+		BSTHashMap<FaceSliderID, BGSCharacterMorph::FacialBoneSlider*>	facialSliderMap;
+		BSTHashMap<FaceSliderID, BGSCharacterMorph::FacialBoneSlider*>	unk70;
+		BSTHashMap<BSFixedString, BSTHashMap<BSFixedString, float>*>	facialBoneRegionCategoryMapping;
+		BSTArray<FaceMorphID>	headMorphA;	// E0
+		BSFixedString			unkF0;	// F0
+		u64						unkF8;	// F8
+		u64*					unk100;	// 100
+		u64						sliderCount;	// 108
+		u64						unk110;	// 110
+		BSTArray<TESNPC*>		unk118;	// 118
+		struct MorphGroup
+		{
+			BSFixedString				name;	// Probably CS?
+			BSTArray<BSFixedString>		MorphA;	// Probably CS?
+		};
+		BSTArray<MorphGroup*>			morphGroupA;		// 128
+		char*							unk138;				// 138 - This is a giant csv of somekind
+		void*							unk140;				// 140
+		BSFixedString					unk148;				// 148
+	};
+	ChargenData*			chargenData[2];					// 990
+	u64						unk9A0;							// 9A0
+	BSFixedString			handMaterials[2];				// 9A8
+	BSFixedString			skinMaterials[2];				// 9B8
+	BSFixedString			unk9C8[2];						// 9C8
+	BSTArray<BGSHeadPart*>	unk9D8[2];						// 9D8
+	struct Unk9F8
+	{
+		void* unk00[2];
+	};
+	Unk9F8					unk9F8[2];
+	BSFixedString			unkA18;
+};
+
+static_assert(offsetof(TESRace, unk368) == 0x368);
+static_assert(offsetof(TESRace, unk5C0) == 0x5C0);
+static_assert(offsetof(TESRace, unk5E8) == 0x5E8);
+static_assert(offsetof(TESRace, unk5F0) == 0x5F0);
+static_assert(offsetof(TESRace::Unk6B0, unk80) == 0x80);
+static_assert(offsetof(TESRace, unk6B0) == 0x6B0);
+static_assert(offsetof(TESRace, unk7B8) == 0x7B8);
+static_assert(offsetof(TESRace, unk7F8) == 0x7F8);
+static_assert(offsetof(TESRace, unk8F8) == 0x8F8);
+static_assert(offsetof(TESRace, bodyPartInfo) == 0x908);
+static_assert(offsetof(TESRace, attachParentA) == 0x930);
+static_assert(offsetof(TESRace, unk948) == 0x948);
+static_assert(offsetof(TESRace, unk9D8) == 0x9D8);
+static_assert(offsetof(TESRace, unk9F8) == 0x9F8);
+static_assert(offsetof(TESRace, unkA18) == 0xA18);
+static_assert(sizeof(TESRace::Unk6B0) == 0x100);
+static_assert(sizeof(TESRace::Unk6B0) == 0x100);
+static_assert(sizeof(TESRace::ChargenData::FaceMorphData) == 0x68);
+static_assert(sizeof(TESRace::ChargenData) == 0x150);
+static_assert(sizeof(TESRace) == 0xA20);

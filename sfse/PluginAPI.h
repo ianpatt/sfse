@@ -100,6 +100,8 @@ struct SFSEMessagingInterface
 	enum {
 		kMessage_PostLoad,		// sent to registered plugins once all plugins have been loaded (no data)
 		kMessage_PostPostLoad,	// sent right after kMessage_PostPostLoad to facilitate the correct dispatching/registering of messages/listeners
+		kMessage_PostDataLoad,	// sent right after all game data has loaded (Passes TESDataHandler as pointer)
+		kMessage_PostPostDataLoad, // sent after all game data has loaded, and all PostDataLoad events have handled (Passes TESDataHandler as pointer)
 	};
 
 	std::uint32_t interfaceVersion;
@@ -117,7 +119,7 @@ struct SFSEMenuInterface
 	std::uint32_t	interfaceVersion;
 
 	// This callback will be called once for every new menu where its MovieImpl is loaded.
-	typedef bool (*RegisterCallback)(IMenu* menu);
+	typedef void (*RegisterCallback)(IMenu* menu);
 	void (*Register)(RegisterCallback callback);
 };
 

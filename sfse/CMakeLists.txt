@@ -59,6 +59,8 @@ source_group(
 		GameFormComponents.h
 		GameForms.cpp
 		GameForms.h
+		GameMemory.cpp
+		GameMemory.h
 		GameMenu.h
 		GameObjects.h
 		GameReferences.h
@@ -117,6 +119,7 @@ source_group(
 	${PROJECT_NAME}/scaleform
 	FILES
 		ScaleformFunctions.h
+		ScaleformLog.h
 		ScaleformMemory.cpp
 		ScaleformMemory.h
 		ScaleformMovie.h

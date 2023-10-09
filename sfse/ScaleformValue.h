@@ -68,7 +68,7 @@ public:
         DEFINE_MEMBER_FN_6(Invoke, bool, 0x00ECFE30, void* pData, Value* result, const char* name, const Value* args, unsigned long long numArgs, bool isDisplayObj);
         DEFINE_MEMBER_FN_4(CreateEmptyMovieClip, bool, 0x00ED3550, void* pData, Value* pValue, const char* instanceName, int depth);
         DEFINE_MEMBER_FN_6(AttachMovie, bool, 0x00ED3810, void* pData, Value* pValue, const char* symbolName, const char* instanceName, int depth, const void* initArgs);
-        DEFINE_MEMBER_FN_2(GetArraySize, unsigned int, 0x00ED1110, void* pData);
+        DEFINE_MEMBER_FN_1(GetArraySize, unsigned int, 0x00ED1110, void* pData);
         DEFINE_MEMBER_FN_2(SetArraySize, bool, 0x00ED1120, void* pData, unsigned int size);
         DEFINE_MEMBER_FN_3(GetElement, bool, 0x00ED1140, void* pData, unsigned int index, Value* value);
         DEFINE_MEMBER_FN_3(SetElement, bool, 0x00ED11D0, void* pData, unsigned int index, const Value& value);
@@ -100,13 +100,15 @@ public:
     using ObjectVisitor = ObjectInterface::ObjVisitor;
     using ArrayVisitor = ObjectInterface::ArrVisitor;
 
-    Value() : pObjectInterface(nullptr), Type(VT_Undefined) { }
-    Value(ValueType type) : pObjectInterface(nullptr), Type(type) { mValue.pString = 0; }
-    Value(double v) : pObjectInterface(nullptr), Type(VT_Number) { mValue.NValue = v; }
-    Value(bool v) : pObjectInterface(nullptr), Type(VT_Boolean) { mValue.BValue = v; }
-    Value(const char* ps) : pObjectInterface(nullptr), Type(VT_String) { mValue.pString = ps; }
-    Value(const wchar_t* ps) : pObjectInterface(nullptr), Type(VT_StringW) { mValue.pStringW = ps; }
-    Value(const Value& src) : pObjectInterface(nullptr), Type(src.Type)
+    Value() : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(VT_Undefined), DataAux(0) { mValue.pData = nullptr; }
+    Value(ValueType type) : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(type), DataAux(0) { mValue.pString = 0; }
+    Value(u32 v) : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(VT_UInt), DataAux(0) { mValue.UIValue = v; }
+    Value(s32 v) : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(VT_Int), DataAux(0) { mValue.IValue = v; }
+    Value(double v) : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(VT_Number), DataAux(0) { mValue.NValue = v; }
+    Value(bool v) : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(VT_Boolean), DataAux(0) { mValue.BValue = v; }
+    Value(const char* ps) : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(VT_String), DataAux(0) { mValue.pString = ps; }
+    Value(const wchar_t* ps) : unk00(nullptr), unk08(nullptr), pObjectInterface(nullptr), Type(VT_StringW), DataAux(0) { mValue.pStringW = ps; }
+    Value(const Value& src) : unk00(src.unk00), unk08(src.unk08), pObjectInterface(nullptr), Type(src.Type), DataAux(src.DataAux)
     {
         mValue = src.mValue;
         if (src.IsManagedValue()) AcquireManagedValue(src);
@@ -151,6 +153,8 @@ public:
     bool        IsDisplayObject() const { return GetType() == VT_DisplayObject; }
     bool        GetBool() const { return mValue.BValue; }
     long double GetNumber() const { return mValue.NValue; }
+    u32         GetUInt() const { return mValue.UIValue; }
+    s32         GetInt() const { return mValue.IValue; }
     const char* GetString() const { return IsManagedValue() ? *mValue.pStringManaged : mValue.pString; }
     const wchar_t* GetStringW() const { return mValue.pStringW; }
 
@@ -158,6 +162,8 @@ public:
     void SetNull() { ChangeType(VT_Null); }
     void SetBoolean(bool v) { ChangeType(VT_Boolean); mValue.BValue = v; }
     void SetNumber(double v) { ChangeType(VT_Number); mValue.NValue = v; }
+    void SetUInt(u32 v) { ChangeType(VT_UInt); mValue.UIValue = v; }
+    void SetInt(s32 v) { ChangeType(VT_Int); mValue.IValue = v; }
 
     // You probably want to a Managed String via CreateString from the owning Movie
     void SetString(const char* p) { ChangeType(VT_String); mValue.pString = p; }
@@ -185,6 +191,7 @@ public:
     bool Invoke(const char* name, Value* presult, const Value* pargs, unsigned long long nargs) { return pObjectInterface->Invoke(mValue.pData, presult, name, pargs, nargs, IsDisplayObject()); }
     bool Invoke(const char* name, Value* presult = nullptr) { return Invoke(name, presult, nullptr, 0); }
     void VisitMembers(ObjectVisitor* visitor) const { return pObjectInterface->VisitMembers(mValue.pData, visitor, IsDisplayObject()); }
+    unsigned int GetArraySize() { return pObjectInterface->GetArraySize(mValue.pData); };
     bool SetArraySize(unsigned sz) { return pObjectInterface->SetArraySize(mValue.pData, sz); }
     bool GetElement(unsigned idx, Value* pval) const { return pObjectInterface->GetElement(mValue.pData, idx, pval); }
     bool SetElement(unsigned idx, const Value& val) { return pObjectInterface->SetElement(mValue.pData, idx, val); }
@@ -209,10 +216,12 @@ public:
     bool GotoAndStop(unsigned frame) { return pObjectInterface->GotoAndPlay(mValue.pData, frame, true); }
     bool GetParent(Value* val) { return pObjectInterface->GetParent(mValue.pData, val); }
 
-    ObjectInterface* pObjectInterface;	// 00
-	ValueType Type;						// 08
-	ValueUnion mValue;					// 10
-	u64	DataAux;						// 18
+    void*               unk00;              // 00
+    void*               unk08;              // 08
+    ObjectInterface*    pObjectInterface;   // 10
+	ValueType           Type;               // 18
+	ValueUnion          mValue;             // 20
+	u64	                DataAux;            // 28
 };
 }
 }

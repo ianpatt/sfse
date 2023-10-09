@@ -46,9 +46,7 @@ public:
     virtual void Unk_19(); // 19
     virtual void Unk_1A(); // 1A
 
-    s64 unk58;  // 58
-    s64 unk60;  // 60
-    Scaleform::GFx::Value MenuObj;  // 80
+    Scaleform::GFx::Value MenuObj;  // 58
     Scaleform::GFx::MovieImpl* pUIMovie;  // 88
     u64 unk90;  // 90 - EventDispatcherBackend?
     u64 unk98;  // 98
@@ -83,55 +81,6 @@ class GameMenuBase : public IMenu
 public:
 
 };
-
-struct CharGen_CloseMenu {};
-struct CharGen_PresetChange {};
-struct CharGen_HeadpartPresetChange {};
-struct CharGen_SetSex {};
-struct CharGen_SetSlider {};
-struct CharGen_StartTextEntry {};
-struct CharGen_EndTextEntry {};
-struct CharGen_CancelTextEntry {};
-struct CharGen_ShowPlayerRenameMessage {};
-struct CharGen_ShowChooseBackgroundMessage {};
-struct CharGen_SetBodyValues {};
-struct CharGen_SetCameraPosition {};
-struct CharGen_HeadpartPlusSelectorChange {};
-struct CharGen_SkintoneChange {};
-struct CharGen_DirtScarsEtcChange {};
-struct CharGen_ToggleMarking {};
-struct CharGen_SetTrait {};
-struct CharGen_SetBackground {};
-struct CharGen_EyeColorChange {};
-struct CharGen_BrowChange {};
-struct CharGen_HairChange {};
-struct CharGen_HairColorChange {};
-struct CharGen_FacialHairChange {};
-struct CharGen_FacialHairColorChange {};
-struct CharGen_BrowColorChange {};
-struct CharGen_TeethChange {};
-struct CharGen_CyclePronoun {};
-struct CharGen_SetPronoun {};
-struct CharGen_TogglePreviewHabSuit {};
-struct CharGen_SwitchLocomotion {};
-struct CharGen_SwitchBodyType {};
-struct CharGen_RotatePaperdoll {};
-struct CharGen_RollOnLocomotion {};
-struct CharGen_RollOffLocomotion {};
-struct CharGen_TeethRollOn {};
-struct CharGen_TeethRollOff {};
-struct CharGen_JewelryChange {};
-struct CharGen_JewelryColorChange {};
-struct CharGen_StartBodyChange {};
-struct CharGen_EndBodyChange {};
-struct CharGen_SetAdditionalSlider {};
-struct CharGen_SetBlockInputUnderPopup {};
-struct CharGen_PostBlendFaceChange {};
-struct CharGen_PostBlendColorOptionChange {};
-struct CharGen_PostBlendIntensityChange {};
-struct CharGen_MakeupChange {};
-struct CharGen_MarkingsChange {};
-struct UIMenuChargenMenuDisablePaperdoll {};
 
 // 658
 class ChargenMenu : 
@@ -189,5 +138,32 @@ class ChargenMenu :
 public:
     MenuPaperDoll* pPaperDoll;   // 2C0
     TESNPC* npc;                 // 2C8
-    // More ...
+    void* unk2D0;                // 2D0 ChargenRestorePoint
+    u64 unk2D8[(0x5C0 - 0x2D8) >> 3];
+    u64 unk5C0;
+    u32 cameraPosition;          // 5C8
+    u32 unk5CC;                  // 5CC
+    u64 unk5D0;                  // 5D0
+    u64 unk5D8;                  // 5D8
+    u8  unk5E0;                  // 5E0 - Camera dirty?
+    u8  unk5E1;                  // 5E1
+    u8  unk5E2;                  // 5E2
+    u8  unk5E3;                  // 5E3
+    u8  unk5E4;                  // 5E4
+    u8  unk5E5;                  // 5E5
+    u8  unk5E6;                  // 5E6
+    u8  unk5E7;                  // 5E7
+    u32 unk5E8;                  // 5E8
+
+    enum
+    {
+        FACE_CAMERA_POSITION = 0,
+        BODY_CAMERA_POSITION,
+        BACKGROUND_CAMERA_POSITION,
+        PRESET_CAMERA_POSITION,
+        TRAITS_CAMERA_POSITION
+    };
 };
+static_assert(offsetof(ChargenMenu, unk2D0) == 0x2D0);
+static_assert(offsetof(ChargenMenu, cameraPosition) == 0x5C8);
+static_assert(offsetof(ChargenMenu, unk5E0) == 0x5E0);

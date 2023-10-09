@@ -37,14 +37,31 @@ public:
 	u64	unk198;
 	u64	unk1A0;
 	u32	unk1A8;
-	u32	unk1AC;
-	u32	unk1B0;
-	u32	unk1B4;
-	u64	unk1B8;
-	BSTArray<BSFixedString> unk1C0;
-	BSTArray<TESFile*> unk1D0;
+	float	version;
+	u32	numRecords;
+	u32 nextObjectID;
+	u32	unk1B8;
+	u32	unk1BC;
+	BSTArray<BSFixedString> masterNames;
+	BSTArray<TESFile*> masterFiles;
 	BSTArray<TESFile*> unk1E0;
-	u64	unk1F0[(0x250 - 0x1F0) >> 3];
+	u64	unk1F0;
+	u64	unk1F8;
+	u64	unk200;
+	u8	cCompileIndex;			// 208
+	u16	sSmallFileCompileIndex;	// 209
+	u8	pad[3];
+	u64	unk210;
+	u64	unk218;
+	u64	unk220;
+	u32	unk228;
+	u32	unk22C;
+	u64	unk230;
+	u32	unk238;
+	u32	unk23C;
+	u64	unk240;
+	u32	unk248;
+	u32	unk24C;
 };
 static_assert(sizeof(TESFile) == 0x250);
 
@@ -75,7 +92,6 @@ public:
 		BSTArray<TESFile*> SmallFileA;
 	};
 
-
 	void* unk28; // BSService::Detail::TService<BSService::Detail::TServiceTraits<TESDataHandler,BSService::Detail::ReferenceGetterDefaultPointer<TESDataHandler *>>>
 	u64	unk30;
 	u64	unk38;
@@ -85,9 +101,9 @@ public:
 	u64	unk58;
 	u64	unk60;
 	u64	unk68;
-	FormItem pFormArray[FormType::kTotal];
+	FormItem pFormArray[static_cast<u64>(FormType::kTotal)];
 	TESRegionList* unk1498;
-	BSTArray<void*> unk14A0;
+	BSTArray<TESObjectCELL*> unk14A0;
 	u64	unk14B0;
 	NiTPrimitiveArray<BGSAddonNode*> unk14B8;
 	u64	unk14D0;

@@ -70,3 +70,6 @@ public:
     static RelocPtr<MemoryHeap*> pGlobalHeap;
 };
 }
+
+extern void* ScaleformHeap_Allocate(u64 size);
+extern void ScaleformHeap_Free(void* ptr);
