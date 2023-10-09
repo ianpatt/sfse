@@ -616,8 +616,18 @@ void PluginManager::reportPluginErrors()
 		if(plugin.version.pluginVersion)
 		{
 			char verStr[256];
-			sprintf_s(verStr, " v%d", plugin.version.pluginVersion);
 
+			// heuristic to determine if we have a packed version from commonlib
+			if(GET_EXE_VERSION_MAJOR(plugin.version.pluginVersion))
+				sprintf_s(verStr, "%d.%d.%d.%d",
+					GET_EXE_VERSION_MAJOR(plugin.version.pluginVersion),
+					GET_EXE_VERSION_MINOR(plugin.version.pluginVersion),
+					GET_EXE_VERSION_BUILD(plugin.version.pluginVersion),
+					GET_EXE_VERSION_SUB(plugin.version.pluginVersion));
+			else
+				sprintf_s(verStr, "%d", plugin.version.pluginVersion);
+
+			message += " v";
 			message += verStr;
 		}
 
