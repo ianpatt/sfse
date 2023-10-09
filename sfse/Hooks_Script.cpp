@@ -109,7 +109,7 @@ void ConsoleCommandInit_Hook(void* unk1)
 			cmd.bInvalidatesCellList = 0;
 		}
 
-		RelocAddr<void*> EmptyFunc(0x1256000);
+		RelocAddr<void*> EmptyFunc(0x012559D0);
 		_MESSAGE("%s (%s)", iter->pFunctionName, iter->pExecuteFunction == EmptyFunc ? "Empty" : "Implemented");
 #endif
 	}
