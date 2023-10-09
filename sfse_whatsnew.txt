@@ -1,3 +1,8 @@
+0.1.4
+- internal class decoding
+- 
+- support for 1.7.36
+
 0.1.3
 - scaleform menu plugin interface
 - sfse_loader now reports as dpi-aware
