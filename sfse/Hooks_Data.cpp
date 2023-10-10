@@ -92,7 +92,10 @@ void Hooks_Data_Apply()
 				pop(rsi);
 				pop(rbx);
 				pop(rbp);
+				sub(rsp, 0x28);
 				call(ptr[rip + callLabel]);
+				add(rsp, 0x28);
+				mov(ecx, 1);
 				jmp(ptr[rip + retnLabel]);
 
 				L(retnLabel);
