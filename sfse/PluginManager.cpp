@@ -445,6 +445,18 @@ struct MinVersionEntry
 
 static const MinVersionEntry	kMinVersionList[] =
 {
+	{	"BakaAchievementEnabler",	MAKE_EXE_VERSION(2, 0, 0),		"broken before plugin version 2.0.0",	kCompat_BlockFromRuntime	},
+	{	"BakaKillMyGames",			MAKE_EXE_VERSION(2, 0, 0),		"broken before plugin version 2.0.0",	kCompat_BlockFromRuntime	},
+	{	"BakaQuitGameFix",			MAKE_EXE_VERSION(2, 0, 0),		"broken before plugin version 2.0.0",	kCompat_BlockFromRuntime	},
+	{	"BakaQuickFullSaves",		MAKE_EXE_VERSION(2, 0, 0),		"broken before plugin version 2.0.0",	kCompat_BlockFromRuntime	},
+
+	// version data doesn't match the version listed on nexus, have contacted the author to update this
+	{	"StarfieldRadio",			10001,		"crashes due to bad version data (update past version 1.0.3)",		kCompat_BlockFromRuntime	},
+
+	{	"SaveTweaks",				4,			"crashes due to bad version data (update past version 3)",			kCompat_BlockFromRuntime	},
+
+	{	"Starfield-NoAffinityLoss",	10301,		"crashes due to bad version data (update past version 1.3.0)",		kCompat_BlockFromRuntime	},
+
 	{	nullptr, 0, nullptr }
 };
 
