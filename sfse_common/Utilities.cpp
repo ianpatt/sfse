@@ -172,22 +172,22 @@ const void * getResourceLibraryProcAddress(const void * module, const char * exp
 		(const IMAGE_EXPORT_DIRECTORY *)(base + ntHeader->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
 
 	auto * exportAddresses = (const u32 *)(base + exportTable->AddressOfFunctions);	// RVA array
-	auto * exportNameOrdinals = (const u16 *)(base + exportTable->AddressOfNameOrdinals);	// index in to exportNames
+	auto * exportNameOrdinals = (const u16 *)(base + exportTable->AddressOfNameOrdinals);	// index in to exportAddresses
 	auto * exportNames = (const u32 *)(base + exportTable->AddressOfNames);	// RVA array
 
 	const void * result = nullptr;
 
-	for(u32 i = 0; i < exportTable->NumberOfFunctions; i++)
+	for(u32 i = 0; i < exportTable->NumberOfNames; i++)
 	{
-		u32 nameOrdinal = exportNameOrdinals[i];
-		if(nameOrdinal < exportTable->NumberOfNames)
-		{
-			u32 nameRVA = exportNames[nameOrdinal];
-			auto * name = (const char *)(base + nameRVA);
+		u32 nameRVA = exportNames[i];
+		auto * name = (const char *)(base + nameRVA);
 
-			if(!strcmp(exportName, name))
+		if(!strcmp(exportName, name))
+		{
+			u32 addrIdx = exportNameOrdinals[i];
+			if(addrIdx < exportTable->NumberOfFunctions)
 			{
-				u32 addrRVA = exportAddresses[i];
+				u32 addrRVA = exportAddresses[addrIdx];
 				result = (const void *)(base + addrRVA);
 
 				break;

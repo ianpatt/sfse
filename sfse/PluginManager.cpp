@@ -669,6 +669,7 @@ void PluginManager::reportPluginErrors()
 
 	if(result == IDYES)
 	{
+		DebugLog::flush();
 		TerminateProcess(GetCurrentProcess(), 0);
 	}
 }
