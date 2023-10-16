@@ -701,3 +701,35 @@ static_assert(sizeof(TESRace::Unk6B0) == 0x100);
 static_assert(sizeof(TESRace::ChargenData::FaceMorphData) == 0x68);
 static_assert(sizeof(TESRace::ChargenData) == 0x150);
 static_assert(sizeof(TESRace) == 0xA20);
+
+class BGSAVMData : public TESForm
+{
+public:
+	BSFixedString	editorName;	// 38
+	BGSAVMData*		unk40;		// 40 - Points to itself?
+	enum Type
+	{
+		SIMPLE,
+		COMPLEX,
+		MODULATION
+	};
+	u64				type;		// 48
+	BSFixedString	name;		// 50
+	BSFixedString	name2;		// 58
+	struct Entry
+	{
+		BSFixedString	name;
+		BSFixedString	textureOrAVM;
+		struct Color
+		{
+			u8 r, g, b, a;
+		};
+		Color			color;
+		u32				unk14;
+	};
+	Entry*			entryBegin;	// 60
+	Entry*			entryEnd;	// 68
+	Entry*			unk70;		// 70 - Why are there 2 end pointers?
+	u64				unk78;		// 78
+};
+static_assert(sizeof(BGSAVMData) == 0x80);

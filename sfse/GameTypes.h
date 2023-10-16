@@ -562,6 +562,15 @@ public:
     }
 };
 
+template<> class BSTScatterTableDefaultHashPolicy<BSFixedStringWCS>
+{
+public:
+    size_t operator()(const BSFixedStringW& key)
+    {
+        return BSHash::XOR()(key);
+    }
+};
+
 template<> class BSTScatterTableDefaultHashPolicy<u32>
 {
 public:

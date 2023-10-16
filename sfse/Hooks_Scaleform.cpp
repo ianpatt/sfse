@@ -26,17 +26,24 @@ using _BSScaleformManager_ctor = BSScaleformManager*(*)(BSScaleformManager* __th
 RelocAddr <_BSScaleformManager_ctor> BSScaleformManager_ctor(0x02E7FF80);
 _BSScaleformManager_ctor BSScaleformManager_ctor_Original = nullptr;
 
-static std::list<SFSEMenuInterface::RegisterCallback> s_plugins;
-void RegisterMenuPlugin(SFSEMenuInterface::RegisterCallback callback)
+static std::list<SFSEMenuInterface::MenuMovieCreatedCallback> s_menuPlugins;
+void RegisterMenuPlugin(SFSEMenuInterface::MenuMovieCreatedCallback callback)
 {
-	s_plugins.push_back(callback);
+	s_menuPlugins.push_back(callback);
 }
+
+static std::list<SFSEMenuInterface::ScaleformManagerCreatedCallback> s_managerPlugins;
+void RegisterManagerPlugin(SFSEMenuInterface::ScaleformManagerCreatedCallback callback)
+{
+	s_managerPlugins.push_back(callback);
+}
+
 
 bool IMenu_LoadMovie_Hook(IMenu* menu, bool addEventDispatcher, bool unk2)
 {
 	bool ret = IMenu_LoadMovie_Original(menu, addEventDispatcher, unk2);
 
-	for (auto cb : s_plugins)
+	for (auto cb : s_menuPlugins)
 	{
 		cb(menu);
 	}
@@ -67,17 +74,11 @@ BSScaleformManager* BSScaleformManager_ctor_Hook(BSScaleformManager* __this)
 	if (ret->pLoader)
 	{
 		ret->pLoader->SetState(Scaleform::GFx::State::State_Log, new Scaleform::GFx::LogState(new SFSEScaleformLogger));
+	}
 
-		/*auto translator = (BSScaleformTranslator::ScaleformImpl*)ret->pLoader->GetStateAddRef(Scaleform::GFx::State::State_Translator);
-		for (auto item : *translator->translationMap)
-		{
-			_MESSAGE("%ws - %ws", item.Key.c_str(), item.Value.c_str());
-		}
-
-		BSFixedStringWCS test(L"$ASTEROID BELTS");
-		auto it = translator->translationMap->find(test);
-
-		dumpClass(translator, 0x28 >> 3);*/
+	for (auto cb : s_managerPlugins)
+	{
+		cb(ret);
 	}
 	
 	return ret;

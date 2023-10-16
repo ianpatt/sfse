@@ -97,6 +97,8 @@ class INISettingCollection : public SettingCollectionList<Setting>
 {
 public:
 	virtual ~INISettingCollection();
+
+	Setting* GetSetting(const char* name);
 };
 
 class INIPrefSettingCollection : public INISettingCollection

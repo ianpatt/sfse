@@ -6,6 +6,7 @@ typedef std::uint32_t PluginHandle;	// treat this as an opaque type
 
 class BranchTrampoline;
 class IMenu;
+class BSScaleformManager;
 
 struct PluginInfo
 {
@@ -113,14 +114,18 @@ struct SFSEMenuInterface
 {
 	enum
 	{
-		kInterfaceVersion = 1
+		kInterfaceVersion = 2
 	};
 
 	std::uint32_t	interfaceVersion;
 
 	// This callback will be called once for every new menu where its MovieImpl is loaded.
-	typedef void (*RegisterCallback)(IMenu* menu);
-	void (*Register)(RegisterCallback callback);
+	typedef void (*MenuMovieCreatedCallback)(IMenu* menu);
+	void (*RegisterMenuMovieCreated)(MenuMovieCreatedCallback callback); // v1
+
+	// This callback will be invoked when the BSScaleformManager is initialized
+	typedef void (*ScaleformManagerCreatedCallback)(BSScaleformManager* manager);
+	void (*RegisterScaleformManagerCreated)(ScaleformManagerCreatedCallback callback); // v2
 };
 
 struct SFSETrampolineInterface

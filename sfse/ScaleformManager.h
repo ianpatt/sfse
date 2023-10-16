@@ -10,4 +10,10 @@ public:
     void* unk10;                        // 10
     void* unk18;                        // 18
     void* unk20;                        // 20
+
+    static BSScaleformManager* GetSingleton()
+    {
+        RelocPtr<BSScaleformManager*> singleton(0x05900EC8);
+        return *singleton;
+    }
 };

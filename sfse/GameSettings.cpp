@@ -55,3 +55,21 @@ bool Setting::SetDouble(double value)
 
 	return true;
 }
+
+Setting* INISettingCollection::GetSetting(const char* name)
+{
+	auto node = &SettingsA.node;
+	do
+	{
+		auto item = node->m_item;
+		if (item)
+		{
+			if (_stricmp(name, item->name) == 0)
+			{
+				return item;
+			}
+		}
+		node = node->m_pkNext;
+	} while (node);
+	return nullptr;
+}

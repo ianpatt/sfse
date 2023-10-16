@@ -47,6 +47,7 @@ static const SFSEMenuInterface g_SFSEMenuInterface =
 {
 	SFSEMenuInterface::kInterfaceVersion,
 	RegisterMenuPlugin,
+	RegisterManagerPlugin,
 };
 
 PluginManager::PluginManager()

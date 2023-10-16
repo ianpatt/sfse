@@ -9,11 +9,33 @@ class TESForm;
 class TESRegionList;
 class BGSAddonNode;
 class TESPackedFile;
+class TESFile;
+class BGSAVMData;
+
+struct TESFileCollection
+{
+	BSTArray<TESFile*> FileA;
+	BSTArray<TESFile*> SmallFileA;
+};
 
 class TESFile
 {
 public:
 	virtual ~TESFile();
+
+	struct PLUGIN_HEADER
+	{
+		float	version;
+		u32	numRecords;
+		u32 nextObjectID;
+
+		enum Flags
+		{
+			kFlags_Active = (1 << 2)
+		};
+
+		u32	flags;
+	};
 
 	u64	unk08;
 	void*	unk10;
@@ -37,19 +59,14 @@ public:
 	u64	unk198;
 	u64	unk1A0;
 	u32	unk1A8;
-	float	version;
-	u32	numRecords;
-	u32 nextObjectID;
-	u32	unk1B8;
+	PLUGIN_HEADER header;
 	u32	unk1BC;
 	BSTArray<BSFixedString> masterNames;
 	BSTArray<TESFile*> masterFiles;
-	BSTArray<TESFile*> unk1E0;
-	u64	unk1F0;
-	u64	unk1F8;
+	TESFileCollection fileCollection;	// 1E0
 	u64	unk200;
 	u8	cCompileIndex;			// 208
-	u16	sSmallFileCompileIndex;	// 209
+	u16	sSmallFileCompileIndex;	// 20A
 	u8	pad[3];
 	u64	unk210;
 	u64	unk218;
@@ -64,6 +81,8 @@ public:
 	u32	unk24C;
 };
 static_assert(sizeof(TESFile) == 0x250);
+static_assert(offsetof(TESFile, cCompileIndex) == 0x208);
+static_assert(offsetof(TESFile, sSmallFileCompileIndex) == 0x20A);
 
 class TESPackedFile : public TESFile
 {
@@ -86,11 +105,7 @@ public:
 		BSTArray<TESForm*> pFormsA;
 	};
 
-	struct TESFileCollection
-	{
-		BSTArray<TESFile*> FileA;
-		BSTArray<TESFile*> SmallFileA;
-	};
+	
 
 	void* unk28; // BSService::Detail::TService<BSService::Detail::TServiceTraits<TESDataHandler,BSService::Detail::ReferenceGetterDefaultPointer<TESDataHandler *>>>
 	u64	unk30;
@@ -124,3 +139,11 @@ public:
 static_assert(offsetof(TESDataHandler, pFormArray) == 0x70);
 static_assert(offsetof(TESDataHandler, listFiles) == 0x14F0);
 static_assert(offsetof(TESDataHandler, unk1520) == 0x1520);
+
+struct MaterialDatabase
+{
+	BSTHashMap<BSFixedString, BGSAVMData*>	materialMaps[3]; // Simple, Complex, Modulation
+	BSTHashMap<BSFixedString, void*>		fullMap; // This is probably a set, every value is 0
+};
+
+extern RelocPtr<MaterialDatabase> g_materialDatabase;
