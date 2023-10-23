@@ -91,6 +91,8 @@ source_group(
 		Hooks_Script.h
 		Hooks_Scaleform.cpp
 		Hooks_Scaleform.h
+		Hooks_Command.cpp
+		Hooks_Command.h
 )
 
 source_group(

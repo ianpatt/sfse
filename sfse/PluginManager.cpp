@@ -8,6 +8,7 @@
 #include "sfse_common/Errors.h"
 
 #include "sfse/Hooks_Scaleform.h"
+#include "sfse/Hooks_Command.h"
 
 PluginManager	g_pluginManager;
 
@@ -48,6 +49,13 @@ static const SFSEMenuInterface g_SFSEMenuInterface =
 	SFSEMenuInterface::kInterfaceVersion,
 	RegisterMenuPlugin,
 	RegisterManagerPlugin,
+};
+
+static const SFSETaskInterface g_SFSETaskInterface =
+{
+	SFSETaskInterface::kInterfaceVersion,
+	TaskInterface::addTask,
+	TaskInterface::addTaskPermanent
 };
 
 PluginManager::PluginManager()
@@ -274,6 +282,9 @@ void * PluginManager::queryInterface(u32 id)
 		break;
 	case kInterface_Menu:
 		result = (void*)&g_SFSEMenuInterface;
+		break;
+	case kInterface_Task:
+		result = (void*)&g_SFSETaskInterface;
 		break;
 
 	default:

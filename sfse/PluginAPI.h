@@ -31,6 +31,7 @@ enum
 	kInterface_Messaging,
 	kInterface_Trampoline,
 	kInterface_Menu,
+	kInterface_Task,
 	kInterface_Max,
 };
 
@@ -126,6 +127,29 @@ struct SFSEMenuInterface
 	// This callback will be invoked when the BSScaleformManager is initialized
 	typedef void (*ScaleformManagerCreatedCallback)(BSScaleformManager* manager);
 	void (*RegisterScaleformManagerCreated)(ScaleformManagerCreatedCallback callback); // v2
+};
+
+struct SFSETaskInterface
+{
+	enum
+	{
+		kInterfaceVersion = 1
+	};
+	std::uint32_t interfaceVersion;
+
+	class ITaskDelegate
+	{
+	public:
+		virtual ~ITaskDelegate() { }
+
+		virtual void Run() = 0;
+	};
+
+	// This task will be executed once on the Main thread, then deleted
+	void (*AddTask)(ITaskDelegate* task);
+
+	// This task will be executed every frame on the Main thread without deleting
+	void (*AddTaskPermanent)(ITaskDelegate* task);
 };
 
 struct SFSETrampolineInterface
