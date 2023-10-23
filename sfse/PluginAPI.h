@@ -140,9 +140,8 @@ struct SFSETaskInterface
 	class ITaskDelegate
 	{
 	public:
-		virtual ~ITaskDelegate() { }
-
 		virtual void Run() = 0;
+		virtual void Destroy() = 0; // delete this or free/release here
 	};
 
 	// This task will be executed once on the Main thread, then deleted

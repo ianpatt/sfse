@@ -36,7 +36,7 @@ bool Command_Process_Hook(void* __this)
 		auto cmd = s_tasks.front();
 		s_tasks.pop();
 		cmd->Run();
-		delete cmd;
+		cmd->Destroy();
 	}
 
 	return ret;
