@@ -30,6 +30,9 @@ SFSE will support the latest version of Starfield available on Steam, currently 
 * Where did the log files go?
 - <My Documents>\My Games\Starfield\SFSE\Logs\
 
+* Where does the SFSE.ini file go?
+- Data\SFSE\SFSE.ini. The .ini is generally not needed. See the whatsnew for .ini options.
+
 * How do I uninstall SFSE?
 - Delete the .dll and .exe files starting with sfse_ from your Starfield folder.
 

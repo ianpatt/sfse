@@ -1,3 +1,9 @@
+0.1.6
+- internal class decoding
+- scaleform log enabled via SFSE.ini to avoid spamming the log file
+	[Scaleform]
+	EnableLog=1
+
 0.1.5
 - fix crash from PostDataLoad hook
 

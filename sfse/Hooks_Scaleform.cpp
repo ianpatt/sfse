@@ -4,6 +4,7 @@
 #include "sfse_common/Log.h"
 #include "sfse_common/SafeWrite.h"
 #include "sfse_common/BranchTrampoline.h"
+#include "sfse_common/Utilities.h"
 #include "xbyak/xbyak.h"
 
 #include "sfse/GameMenu.h"
@@ -25,6 +26,8 @@ _IMenu_LoadMovie IMenu_LoadMovie_Original = nullptr;
 using _BSScaleformManager_ctor = BSScaleformManager*(*)(BSScaleformManager* __this);
 RelocAddr <_BSScaleformManager_ctor> BSScaleformManager_ctor(0x02E7FF80);
 _BSScaleformManager_ctor BSScaleformManager_ctor_Original = nullptr;
+
+static bool s_enableScaleformLog = false;
 
 static std::list<SFSEMenuInterface::MenuMovieCreatedCallback> s_menuPlugins;
 void RegisterMenuPlugin(SFSEMenuInterface::MenuMovieCreatedCallback callback)
@@ -56,6 +59,9 @@ class SFSEScaleformLogger : public Scaleform::Log
 public:
 	virtual void LogMessageVarg(Scaleform::LogMessageId messageId, const char* fmt, va_list argList) final override
 	{
+		if(!s_enableScaleformLog)
+			return;
+
 		DebugLog::log(DebugLog::kLevel_Message, fmt, argList);
 #ifdef _DEBUG
 		char szBuff[1024];
@@ -103,6 +109,10 @@ void Hooks_Scaleform_Apply()
 		IMenu_LoadMovie_Original = (_IMenu_LoadMovie)codeBuf;
 		g_branchTrampoline.write5Branch(IMenu_LoadMovie.getUIntPtr(), (uintptr_t)IMenu_LoadMovie_Hook);
 	}
+
+	u32 enableScaleformLog = 0;
+	if(getConfigOption_u32("Scaleform", "EnableLog", &enableScaleformLog))
+		s_enableScaleformLog = enableScaleformLog != 0;
 
 	{
 		struct BSScaleformManager_ctor_Code : Xbyak::CodeGenerator {
