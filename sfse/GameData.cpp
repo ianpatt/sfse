@@ -1,3 +1,3 @@
 #include "sfse/GameData.h"
 
-RelocPtr<MaterialDatabase> g_materialDatabase(0x054DCFD0 - 0x08);
+RelocPtr<MaterialDatabase> g_materialDatabase(0x05546C50 - 0x08);
