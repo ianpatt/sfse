@@ -3,6 +3,7 @@
 - scaleform log enabled via SFSE.ini to avoid spamming the log file
 	[Scaleform]
 	EnableLog=1
+- add task interface for plugins
 
 0.1.5
 - fix crash from PostDataLoad hook
