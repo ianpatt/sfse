@@ -528,7 +528,7 @@ const char * PluginManager::checkPluginCompatibility(const SFSEPluginVersionData
 			versionIndependent = false;
 
 		// verify that address library is there to centralize error message
-		if(versionIndependent && (version.addressIndependence & SFSEPluginVersionData::kAddressIndependence_AddressLibrary))
+		if(version.addressIndependence & SFSEPluginVersionData::kAddressIndependence_AddressLibrary)
 		{
 			const char * result = checkAddressLibrary();
 			if(result) return result;
