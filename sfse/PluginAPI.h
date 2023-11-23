@@ -221,6 +221,9 @@ struct SFSEPluginVersionData
 		
 		// works with the structure layout the game shipped with
 		kStructureIndependence_InitialLayout = 1 << 1,
+
+		// works with 1.8.86+ structure layout
+		kStructureIndependence_1_8_86_Layout = 1 << 2,
 		
 		// additional bits will be added here when breaking changes happen
 	};
