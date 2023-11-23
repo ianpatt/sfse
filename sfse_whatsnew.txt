@@ -1,9 +1,14 @@
+0.2.0
+- plugin compatibility flag update for the breaking changes in 1.8.86
+- plugin developers using SFSE headers: these are not currently up to date. getting a release out with the loader compatibility flags is higher priority. please check github for updates.
+
 0.1.6
 - internal class decoding
 - scaleform log enabled via SFSE.ini to avoid spamming the log file
 	[Scaleform]
 	EnableLog=1
 - add task interface for plugins
+- support for 1.8.86
 
 0.1.5
 - fix crash from PostDataLoad hook
