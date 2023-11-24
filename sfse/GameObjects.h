@@ -24,6 +24,8 @@ public:
     virtual void    Unk_69(); // 69
     virtual void    Unk_6A(); // 6A
     virtual void    Unk_6B(); // 6B
+
+    BGSSnapTemplateComponent    snapTemplate;   // 30
 };
 
 class TESBoundObject : public TESObject
@@ -50,19 +52,17 @@ public:
     virtual void    Unk_7E(); // 7E
     virtual void    Unk_7F(); // 7F
 
-    BGSSnapTemplateComponent    snapTemplate;   // 38
-    u64                         unk50;          // 50
-    u32                         unk58;          // 58
-    u32                         unk5C;          // 5C
-    u64                         unk60;          // 60
-    BGSMod::Template::Items     templateItems;  // 68
-    BGSPreviewTransform         previewTransform; // 88
-    BGSObjectPlacementDefaults  placementDefaults;  // D0
+    NiPoint3                    boundMin;           // 48
+    NiPoint3                    boundMax;           // 54
+    BGSMod::Template::Items     templateItems;      // 60
+    BGSPreviewTransform         previewTransform;   // 80
+    BGSObjectPlacementDefaults  placementDefaults;  // C8
+    u32                         unkD8;              // D8
 };
-static_assert(offsetof(TESBoundObject, templateItems) == 0x68);
-static_assert(offsetof(TESBoundObject, previewTransform) == 0x88);
-static_assert(offsetof(TESBoundObject, placementDefaults) == 0xD0);
-static_assert(sizeof(TESBoundObject) == 0xF0);
+static_assert(offsetof(TESBoundObject, templateItems) == 0x60);
+static_assert(offsetof(TESBoundObject, previewTransform) == 0x80);
+static_assert(offsetof(TESBoundObject, placementDefaults) == 0xC8);
+static_assert(sizeof(TESBoundObject) == 0xE0);
 
 class TESBoundAnimObject : public TESBoundObject
 {
@@ -71,29 +71,23 @@ public:
 
     virtual void    Unk_80(); // 80
     virtual void    Unk_81(); // 81
-
-    u64 unkF0;  // F0
-    u64 unkF8;  // F8
-    u64 unk100; // 100
-    u64 unk108; // 108
-    u64 unk110; // 110
 };
-static_assert(sizeof(TESBoundAnimObject) == 0x118);
+static_assert(sizeof(TESBoundAnimObject) == 0xE0);
 
 class TESActorBase : 
     public TESBoundAnimObject,
-    public TESActorBaseData,            // 118
-    public TESContainer,                // 188
-    public TESSpellList,                // 1A0
-    public TESAIForm,                   // 1B8
-    public TESFullName,                 // 1F8
-    public ActorValueOwner,             // 208
-    public BGSDestructibleObjectForm,   // 210
-    public BGSSkinForm,                 // 220
-    public BGSKeywordForm,              // 230
-    public BGSAttackDataForm,           // 260
-    public BGSPerkRankArray,            // 270
-    public BGSPropertySheet             // 288
+    public TESActorBaseData,            // E0
+    public TESContainer,                // 150
+    public TESSpellList,                // 168
+    public TESAIForm,                   // 180
+    public TESFullName,                 // 1C0
+    public ActorValueOwner,             // 1D0
+    public BGSDestructibleObjectForm,   // 1D8
+    public BGSSkinForm,                 // 1E8
+    public BGSKeywordForm,              // 1F8
+    public BGSAttackDataForm,           // 200
+    public BGSPerkRankArray,            // 228
+    public BGSPropertySheet             // 238
 {
 public:
     virtual void    Unk_82(); // 82
@@ -104,11 +98,11 @@ public:
 
 class TESNPC : 
     public TESActorBase,
-    public TESRaceForm,                     // 298
-    public BGSOverridePackCollection,       // 2A8
-    public BGSForcedLocRefType,             // 2F0
-    public BGSNativeTerminalForm,           // 308
-    public BSTEventSink<MenuOpenCloseEvent> // 318
+    public TESRaceForm,                     // 250
+    public BGSOverridePackCollection,       // 260
+    public BGSForcedLocRefType,             // 270
+    public BGSNativeTerminalForm,           // 2B8
+    public BSTEventSink<MenuOpenCloseEvent> // 2D0
 {
 public:
     class InstanceData : public TBO_InstanceData
@@ -117,38 +111,38 @@ public:
         u64 unk10[(0x158 - 0x10) >> 3];
     };
 
-    BGSAttachParentArray AttachParents;  // 320
+    BGSAttachParentArray AttachParents;  // 2E8
+    u64 unk300; // 300
+    u32 unk308; // 308
+    u32 unk30C; // 30C
+    TESClass* pCl;  // 310
+    u64 unk318; // 318
+    u64 unk320; // 320
+    TESCombatStyle* pCombatStyle;   // 328
+    u32 unk330; // 330
+    u32 unk334; // 334
     u64 unk338; // 338
-    u32 unk340; // 340
-    u32 unk344; // 344
-    TESClass* pCl;  // 348
-    u64 unk350; // 350
-    u64 unk358; // 358
-    TESCombatStyle* pCombatStyle;   // 360
-    u32 unk368; // 368
-    u32 unk36C; // 36C
-    u64 unk370; // 370
-    TESNPC* pFaceNPC; // 378
-    NiPoint3 MorphWeight; // 380
-    float fHeight; // 38C
-    float fHeightMax; // 390
-    u32     unk394; // 394
-    u64     unk398; // 398
-    u64     unk3A0; // 3A0
-    u64     unk3A8; // 3A8
-    BSFixedString   unk3B0; // 3B0
-    u64     unk3B8; // 3B8
-    u64     unk3C0; // 3C0
-    BGSOutfit* pDefOutfit;  // 3C8
-    BGSOutfit* pSleepOutfit;    // 3D0
-    BGSListForm* pDefaultPackList;  // 3D8
-    TESFaction* pCrimeFaction;  // 3E0
-    u64 unk3F8; // 3E8
-    BSTArray<BGSHeadPart*> HeadPartsA;  // 3F0
-    u64 unk400; // 400
-    BSTArray<float>* unk408; // 408  -- 5 floats entries?
-    BSTHashMap2<u32, float>* AdditionalSliders;   // 410
-    BSTHashMap<u32, BSTHashMap<BSFixedString, float>*>* unk418;   // 418
+    TESNPC* pFaceNPC; // 340
+    NiPoint3 MorphWeight; // 348
+    float fHeight; // 354
+    float fHeightMax; // 358
+    u32     unk35C; // 35C
+    u64     unk360; // 360
+    u64     unk368; // 368
+    u64     unk370; // 370
+    BSFixedString   unk378; // 378
+    u64     unk380; // 380
+    u64     unk388; // 388
+    BGSOutfit* pDefOutfit;  // 390
+    BGSOutfit* pSleepOutfit;    // 398
+    BGSListForm* pDefaultPackList;  // 3A0
+    TESFaction* pCrimeFaction;  // 3A8
+    u64 unk3B0; // 3B0
+    BSTArray<BGSHeadPart*> HeadPartsA;  // 3B8
+    u64 unk3C8; // 3C8
+    BSTArray<float>* unk3D0; // 3D0  -- 5 floats entries?
+    BSTHashMap2<u32, float>* AdditionalSliders;   // 3D8
+    BSTHashMap<u32, BSTHashMap<BSFixedString, float>*>* unk3E0;   // 3E0
     struct HeadPartData
     {
         u32 type;                       // 00 1 - Mask? 
@@ -163,24 +157,24 @@ public:
         Color color;                    // 20
         u32 intensity;                  // 24 up to 128 for some reason replaces alpha, color.a does nothing?
     };
-    BSTArray<HeadPartData> HeadPartDataA;    // 420
-    u32 skinTone; // 430
-    u32 unk434; // 434
-    BSFixedString teeth;   // 438
-    BSFixedString jewelryColor;   // 440
-    BSFixedString eyeColor;   // 448
-    BSFixedString hairColor;   // 450
-    BSFixedString facialHairColor;   // 458
-    BSFixedString eyebrowColor;   // 460
-    u64 unk468; // 468
-    BSFixedString unk470; // 470
-    BSTHashMap<BSFixedString, float>* shapeBlendData; // 478 - ShapeBlendData Map
-    u8 pronoun;  // 480
-    u8 pad481[7]; // 481
+    BSTArray<HeadPartData> HeadPartDataA;    // 3E0
+    u32 skinTone; // 3F8
+    u32 unk3FC; // 3FC
+    BSFixedString teeth;   // 400
+    BSFixedString jewelryColor;   // 408
+    BSFixedString eyeColor;   // 410
+    BSFixedString hairColor;   // 418
+    BSFixedString facialHairColor;   // 420
+    BSFixedString eyebrowColor;   // 428
+    u64 unk468; // 430
+    BSFixedString unk438; // 438
+    BSTHashMap<BSFixedString, float>* shapeBlendData; // 440 - ShapeBlendData Map
+    u8 pronoun;  // 448
+    u8 pad449[7]; // 449
 
     DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x01B2DBE8, TESNPC* source);
     DEFINE_MEMBER_FN_1(CopyAppearance, void, 0x01B2C020, TESNPC* source);
 };
-static_assert(sizeof(TESNPC) == 0x488);
+static_assert(sizeof(TESNPC) == 0x450);
 static_assert(sizeof(TESNPC::HeadPartData) == 0x28);
 static_assert(sizeof(TESNPC::InstanceData) == 0x158);

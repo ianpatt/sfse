@@ -338,15 +338,15 @@ public:
 	virtual void          Unk_61();                                                         // 61
 
 	// members
-	u64 sourceFiles;  // 18 - TESFileContainer
-	u32 unk20;        // 20
+	u32 unk18;        // 18
+	u32 unk1C;        // 1C
+	u32 formFlags;    // 20
 	u32 unk24;        // 24
-	u32 formFlags;    // 28
-	u32 unk2C;        // 2C
-	u32 formID;       // 30
-	u8  unk34;        // 34 - also flag
-	u8  unk35;        // 35
-	u8  formType;     // 36
+	u32 formID;       // 28
+	u8  unk2C;        // 2C - also flag
+	u8  unk2D;        // 2D
+	u8  formType;     // 2E
+	u8  modIndex;     // 2F
 
 	using _GetFormByNumericID = TESForm * (*)(u32 formId);
 	static RelocAddr<_GetFormByNumericID> GetFormByNumericID;
@@ -355,7 +355,7 @@ public:
 	static RelocAddr<_GetFormByEditorID> GetFormByEditorID;
 };
 static_assert(offsetof(TESForm, refCount) == 0x08);
-static_assert(sizeof(TESForm) == 0x38);
+static_assert(sizeof(TESForm) == 0x30);
 
 class BGSKeyword : public TESForm
 {
@@ -377,7 +377,8 @@ class BGSListForm :
 	public TESForm
 {
 public:
-	BSTArray<TESForm*> ArrayOfForms;		// 38
+	BSTArray<TESForm*> ArrayOfForms;		// 30
+	u64	unk40;	// 40
 	u64	unk48;	// 48
 	u64	unk50;	// 50
 	u64	unk58;	// 58
@@ -386,27 +387,26 @@ public:
 	u64	unk70;	// 70
 	u64	unk78;	// 78
 	u64	unk80;	// 80
-	u64	unk88;	// 88
 };
-static_assert(sizeof(BGSListForm) == 0x90);
+static_assert(sizeof(BGSListForm) == 0x88);
 
 class BGSMorphableObject : public TESForm
 {
 public:
-	BSFixedString		unk38;					// 38
-	BGSMorphableObject*	unk40;					// 40 - Seems to point to itself?
-	BSFixedString		performanceMaterial;	// 48
-	BSFixedString		chargenMaterial;		// 50
-	BSFixedString		unk58;					// 58
-	u32					unk60;					// 60
-	u32					unk64;					// 64
+	BSFixedString		unk30;					// 30
+	BGSMorphableObject*	unk38;					// 38 - Seems to point to itself?
+	BSFixedString		performanceMaterial;	// 40
+	BSFixedString		chargenMaterial;		// 48
+	BSFixedString		unk50;					// 50
+	u32					unk58;					// 58
+	u32					unk5C;					// 5C
 };
-static_assert(sizeof(BGSMorphableObject) == 0x68);
+static_assert(sizeof(BGSMorphableObject) == 0x60);
 
 class BGSHeadPart : 
 	public TESForm,
-	public TESFullName, // 38
-	public BGSModelMaterialSwap // 48
+	public TESFullName,			// 30
+	public BGSModelMaterialSwap // 40
 {
 public:
 	enum HeadPartType : s32
@@ -427,80 +427,80 @@ public:
 		HeadPartEyelashes
 	};
 
-	BSFixedString unk70; // 70
-	BGSHeadPart* unk78;	// 78
-	TESModel ChargenModel;	// 80
-	TESModelTri MorphsA[3];	// A0
-	u8	unk100;	// 100
-	u8	pad101[7];	// 101
-	u64	unk108; // 108
-	BSTArray<BGSHeadPart*>	extraParts;	// 110
-	BGSMorphableObject*	morph;	// 120
-	u64	unk128;	// 128
-	BGSListForm*	unk130;	// 130
-	BSFixedString	unk138;	// 138
-	BSFixedString	unk140;	// 140
-	HeadPartType	eType;	// 148
-	u32	unk14C; // 14C
+	BSFixedString unk68; // 68
+	BGSHeadPart* unk70;	// 70
+	TESModel ChargenModel;	// 78
+	TESModelTri MorphsA[3];	// 98
+	u8	unkF8;	// F8
+	u8	padF9[7];	// F9
+	u64	unk100; // 100
+	BSTArray<BGSHeadPart*>	extraParts;	// 108
+	BGSMorphableObject*	morph;	// 118
+	u64	unk120;	// 120
+	BGSListForm*	unk128;	// 128
+	BSFixedString	unk130;	// 130
+	BSFixedString	unk148;	// 138
+	HeadPartType	eType;	// 140
+	u32	unk144; // 144
 };
-static_assert(sizeof(BGSHeadPart) == 0x150);
-static_assert(offsetof(BGSHeadPart, strFullName) == 0x40);
-static_assert(offsetof(BGSHeadPart, cModel) == 0x50);
+static_assert(sizeof(BGSHeadPart) == 0x148);
+static_assert(offsetof(BGSHeadPart, strFullName) == 0x38);
+static_assert(offsetof(BGSHeadPart, cModel) == 0x48);
 
 class BGSBoneModifier : public TESForm
 {
 public:
 	virtual ~BGSBoneModifier();
 
-	BoneModifierData*	unk38;	// 38
+	BoneModifierData*	unk30;	// 30
 };
-static_assert(sizeof(BGSBoneModifier) == 0x40);
+static_assert(sizeof(BGSBoneModifier) == 0x38);
 
 class BGSEquipSlot : public TESForm
 {
 public:
 	virtual ~BGSEquipSlot();
 
-	BSFixedString	unk38;	// 38
-	void*			unk40;	// 40
+	BSFixedString	unk30;	// 30
+	void*			unk38;	// 38
+	u64				unk40;	// 40
 	u64				unk48;	// 48
 	u64				unk50;	// 50
 	u64				unk58;	// 58
-	u64				unk60;	// 60
 };
-static_assert(sizeof(BGSEquipSlot) == 0x68);
+static_assert(sizeof(BGSEquipSlot) == 0x60);
 
 class BGSBodyPartData : 
 	public TESForm,
-	public TESModel,
+	public TESModel,		// 30
 	public BGSPreloadable
 {
 public:
-	u64	unk60[(0x130 - 0x60) >> 3];	// 60
+	u64	unk58[(0x128 - 0x58) >> 3];	// 58
+	BSFixedString	unk128;			// 128
 	BSFixedString	unk130;			// 130
 	BSFixedString	unk138;			// 138
 	BSFixedString	unk140;			// 140
 	BSFixedString	unk148;			// 148
-	BSFixedString	unk150;			// 150
 };
-static_assert(sizeof(BGSBodyPartData) == 0x158);
+static_assert(sizeof(BGSBodyPartData) == 0x150);
 
 class BGSMovementType : public TESForm
 {
 public:
-	BSFixedString	unk38;	// 38
-	u64	unk40[(0x140 - 0x38) >> 3];
+	BSFixedString	unk30;	// 30
+	u64	unk38[(0x140 - 0x38) >> 3];
 };
-static_assert(sizeof(BGSMovementType) == 0x148);
+static_assert(sizeof(BGSMovementType) == 0x140);
 
 class BGSAimAssistPoseData : public TESForm
 {
 public:
+	u64	unk30;	// 30
 	u64	unk38;	// 38
 	u64	unk40;	// 40
 	u64	unk48;	// 48
 	u64	unk50;	// 50
-	u64	unk58;	// 58
 };
 
 class TESRace :
@@ -516,42 +516,42 @@ class TESRace :
 	public BGSPreloadable
 {
 public:
-	BSFixedString	editorID;		// F0
+	BSFixedString	editorID;		// E8
+	void*			unkF0;			// F0
 	void*			unkF8;			// F8
-	void*			unk100;			// 100
-	float			unk108;			// 108
+	float			unk100;			// 100
+	u32				unk104;			// 104
+	u32				unk108;			// 108
 	u32				unk10C;			// 10C
-	u32				unk110;			// 110
-	u32				unk114;			// 114
+	u64				unk110;			// 110
 	u64				unk118;			// 118
 	u64				unk120;			// 120
 	u64				unk128;			// 128
-	u64				unk130;			// 130
+	u32				unk130;			// 130
+	u32				unk134;			// 134
 	u32				unk138;			// 138
 	u32				unk13C;			// 13C
-	u32				unk140;			// 140
-	u32				unk144;			// 144
+	u64				unk140;			// 140
 	u64				unk148;			// 148
 	u64				unk150;			// 150
 	u64				unk158;			// 158
-	u64				unk160;			// 160
-	BSFixedString	slotNames[64];	// 168
-	void*			unk368[64];		// 368
-	BSTHashMap<BSFixedString, u32>	slotMap;	// 568
+	BSFixedString	slotNames[64];	// 160
+	void*			unk360[64];		// 360
+	BSTHashMap<BSFixedString, u32>	slotMap;	// 560
 	struct EquipSlot
 	{
 		BGSEquipSlot*	unk00;	// 00
 		void*			unk08;	// 08
 	};
-	BSTArray<EquipSlot>		unk5A0;			// 5A0
+	BSTArray<EquipSlot>		unk598;			// 598
+	u64				unk5A8;			// 5A8
 	u64				unk5B0;			// 5B0
 	u64				unk5B8;			// 5B8
-	u64				unk5C0;			// 5C0
-	BSTArray<BGSBoneModifier*>			unk5C8[2];		// 5C8
-	u64				unk5E8;			// 5E8
-	TESModel		unk5F0[4];		// 5F0
-	TESModel		faceBones[2];	// 670
-	struct Unk6B0
+	BSTArray<BGSBoneModifier*>			unk5C0[2];		// 5C0
+	u64				unk5E0;			// 5E0
+	TESModel		unk5E8[4];		// 5E8
+	TESModel		faceBones[2];	// 668
+	struct Unk6A8
 	{
 		s32				unk00;
 		float			unk04;
@@ -614,19 +614,19 @@ public:
 		u32				unkF8;
 		u32				unkFC;
 	};
-	Unk6B0			unk6B0;					// 6B0
-	u64				unk7B0;					// 7B0
-	BGSTextureModel	unk7B8[2];				// 7B8
-	BGSAnimationGraphComponent unk7F8[4];	// 7F8
-	void*					unk8F8[2];		// 8F8
-	BGSBodyPartInfo			bodyPartInfo;	// 908
-	BGSAttachParentArray	attachParentA;	// 930
+	Unk6A8			unk6A8;					// 6A8
+	u64				unk7A8;					// 7A8
+	BGSTextureModel	unk7B0[2];				// 7B0
+	BGSAnimationGraphComponent unk7F0[4];	// 7F0
+	void*					unk8F0[2];		// 8F0
+	BGSBodyPartInfo			bodyPartInfo;	// 900
+	BGSAttachParentArray	attachParentA;	// 928
+	u64						unk940;			// 940
 	u64						unk948;			// 948
 	u64						unk950;			// 950
-	u64						unk958;			// 958
-	BGSMovementType*		unk960[4];		// 960
-	u64						unk980;
-	u64						unk988;
+	BGSMovementType*		unk958[4];		// 958
+	u64						unk978;			// 978
+	u64						unk980;			// 980
 
 	using FaceSliderID = u32;
 	using FaceMorphID = u32;
@@ -667,55 +667,53 @@ public:
 		void*							unk140;				// 140
 		BSFixedString					unk148;				// 148
 	};
-	ChargenData*			chargenData[2];					// 990
-	u64						unk9A0;							// 9A0
-	BSFixedString			handMaterials[2];				// 9A8
-	BSFixedString			skinMaterials[2];				// 9B8
-	BSFixedString			unk9C8[2];						// 9C8
-	BSTArray<BGSHeadPart*>	unk9D8[2];						// 9D8
-	struct Unk9F8
+	ChargenData*			chargenData[2];					// 988
+	u64						unk998;							// 998
+	BSFixedString			handMaterials[2];				// 9A0
+	BSFixedString			skinMaterials[2];				// 9B0
+	BSFixedString			unk9C0[2];						// 9C0
+	BSTArray<BGSHeadPart*>	headParts[2];					// 9D0
+	struct Unk9F0
 	{
 		void* unk00[2];
 	};
-	Unk9F8					unk9F8[2];
-	BSFixedString			unkA18;
+	Unk9F0					unk9F0[2];
+	BSFixedString			unkA10;
 };
 
-static_assert(offsetof(TESRace, unk368) == 0x368);
+static_assert(offsetof(TESRace, unk360) == 0x360);
 static_assert(offsetof(TESRace, unk5C0) == 0x5C0);
 static_assert(offsetof(TESRace, unk5E8) == 0x5E8);
-static_assert(offsetof(TESRace, unk5F0) == 0x5F0);
-static_assert(offsetof(TESRace::Unk6B0, unk80) == 0x80);
-static_assert(offsetof(TESRace, unk6B0) == 0x6B0);
-static_assert(offsetof(TESRace, unk7B8) == 0x7B8);
-static_assert(offsetof(TESRace, unk7F8) == 0x7F8);
-static_assert(offsetof(TESRace, unk8F8) == 0x8F8);
-static_assert(offsetof(TESRace, bodyPartInfo) == 0x908);
-static_assert(offsetof(TESRace, attachParentA) == 0x930);
-static_assert(offsetof(TESRace, unk948) == 0x948);
-static_assert(offsetof(TESRace, unk9D8) == 0x9D8);
-static_assert(offsetof(TESRace, unk9F8) == 0x9F8);
-static_assert(offsetof(TESRace, unkA18) == 0xA18);
-static_assert(sizeof(TESRace::Unk6B0) == 0x100);
-static_assert(sizeof(TESRace::Unk6B0) == 0x100);
+static_assert(offsetof(TESRace::Unk6A8, unk80) == 0x80);
+static_assert(offsetof(TESRace, unk6A8) == 0x6A8);
+static_assert(offsetof(TESRace, unk7B0) == 0x7B0);
+static_assert(offsetof(TESRace, unk7F0) == 0x7F0);
+static_assert(offsetof(TESRace, unk8F0) == 0x8F0);
+static_assert(offsetof(TESRace, bodyPartInfo) == 0x900);
+static_assert(offsetof(TESRace, attachParentA) == 0x928);
+static_assert(offsetof(TESRace, unk940) == 0x940);
+static_assert(offsetof(TESRace, headParts) == 0x9D0);
+static_assert(offsetof(TESRace, unk9F0) == 0x9F0);
+static_assert(offsetof(TESRace, unkA10) == 0xA10);
+static_assert(sizeof(TESRace::Unk6A8) == 0x100);
 static_assert(sizeof(TESRace::ChargenData::FaceMorphData) == 0x68);
 static_assert(sizeof(TESRace::ChargenData) == 0x150);
-static_assert(sizeof(TESRace) == 0xA20);
+static_assert(sizeof(TESRace) == 0xA18);
 
 class BGSAVMData : public TESForm
 {
 public:
-	BSFixedString	editorName;	// 38
-	BGSAVMData*		unk40;		// 40 - Points to itself?
+	BSFixedString	editorName;	// 30
+	BGSAVMData*		unk38;		// 38 - Points to itself?
 	enum Type
 	{
 		SIMPLE,
 		COMPLEX,
 		MODULATION
 	};
-	u64				type;		// 48
-	BSFixedString	name;		// 50
-	BSFixedString	name2;		// 58
+	u64				type;		// 40
+	BSFixedString	name;		// 48
+	BSFixedString	name2;		// 50
 	struct Entry
 	{
 		BSFixedString	name;
@@ -727,9 +725,9 @@ public:
 		Color			color;
 		u32				unk14;
 	};
-	Entry*			entryBegin;	// 60
-	Entry*			entryEnd;	// 68
-	Entry*			unk70;		// 70 - Why are there 2 end pointers?
-	u64				unk78;		// 78
+	Entry*			entryBegin;	// 58
+	Entry*			entryEnd;	// 60
+	Entry*			unk68;		// 68 - Why are there 2 end pointers?
+	u64				unk70;		// 70
 };
-static_assert(sizeof(BGSAVMData) == 0x80);
+static_assert(sizeof(BGSAVMData) == 0x78);

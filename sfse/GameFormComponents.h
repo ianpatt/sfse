@@ -126,11 +126,8 @@ public:
 	virtual void	Unk_0A();	// 0A
 
 	u64 unk08;	// 08
-	u32	unk10;	// 10
-	u32 unk14;	// 14
-	u32	unk18;	// 18
 };
-static_assert(sizeof(BGSObjectPlacementDefaults) == 0x20);
+static_assert(sizeof(BGSObjectPlacementDefaults) == 0x10);
 
 struct alignas(0x4) ACTOR_BASE_DATA
 {

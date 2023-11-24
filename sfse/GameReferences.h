@@ -224,40 +224,37 @@ public:
 	virtual void         Unk_12F();                                                                                                                         // 12F
 
 	// the following should be inherited when decoded properly
-	void* BSTransformDeltaEvent;               // 38
-	void* IMovementProcessMessageInterface;    // 40
-	void* IPostAnimationChannelUpdateFunctor;  // 48
-	void* BSAnimationGraphEvent;               // 50
-	void* BGSInventoryListEvent;               // 58
-	void* IAnimationGraphManagerHolder;        // 60
-	void* IKeywordFormBase;                    // 68
-	void* ActorValueOwner;                     // 70
-	void* ActorValueChangedEvent;              // 78
+	void* BSTransformDeltaEvent;               // 30
+	void* IMovementProcessMessageInterface;    // 38
+	void* IPostAnimationChannelUpdateFunctor;  // 40
+	void* BSAnimationGraphEvent;               // 48
+	void* BGSInventoryListEvent;               // 50
+	void* IAnimationGraphManagerHolder;        // 58
+	void* IKeywordFormBase;                    // 60
+	void* ActorValueOwner;                     // 68
+	void* ActorValueChangedEvent;              // 70
 
 	// members
-	u32				unk80;          // 80
-	u32				unk84;          // 84
-	u64				unk88;          // 88
-	u64				unk90;          // 90
-	u32				unk98;          // 98
-	u8				pad9C[4];       // 9C
-	OBJ_REFR		data;           // A0
-	u64				unkD0;          // D0
-	u64				unkD8;          // D8
-	TESObjectCELL*	parentCell;     // E0
-	void*			loadedData;     // E8
-	u64				unkF0;          // F0
-	u64				extraDataList;  // F8
-	u64				unk100;         // 100
-	u16				scale;          // 108
-	u8				unk10A;         // 10A
-	u8				unk10B;         // 10B
+	u64				unk78;          // 78
+	OBJ_REFR		data;           // 80
+	u64				unkB0;          // B0
+	u64				unkB8;          // B8
+	TESObjectCELL*	parentCell;     // C0
+	void*			loadedData;     // C8
+	u64				unkF0;          // D0
+	u64				extraDataList;  // D8
+	u16				scale;          // E0
+	u8				unkE2;          // E2
+	u8				flags;          // E3
 
 	DEFINE_MEMBER_FN_0(IsInSpaceship, bool, 0x02B4B594)
 	DEFINE_MEMBER_FN_0(IsInSpace, bool, 0x01A140A8)
 	DEFINE_MEMBER_FN_1(HasKeyword, bool, 0x0139F778, BGSKeyword*);
 };
-static_assert(sizeof(TESObjectREFR) == 0x110);
+static_assert(offsetof(TESObjectREFR, data) == 0x80);
+static_assert(offsetof(TESObjectREFR, parentCell) == 0xC0);
+static_assert(offsetof(TESObjectREFR, scale) == 0xE0);
+static_assert(sizeof(TESObjectREFR) == 0xF0);
 
 class Actor : public TESObjectREFR
 {
@@ -387,8 +384,8 @@ public:
 	DEFINE_MEMBER_FN_0(UpdateChargenAppearance, void, 0x0231F9D8);
 	DEFINE_MEMBER_FN_1(SetSkinTone, void, 0x0231F650, u32 skinToneIndex);
 
-	u64	unk110[(0x260 - 0x110) >> 3];	// 110
-	void* unk260;						// 260
+	u64	unkF0[(0x240 - 0xF0) >> 3];	// F0
+	void* unk240;					// 240
 };
 
 class MenuActor : public Actor
