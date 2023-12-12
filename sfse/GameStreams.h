@@ -126,11 +126,11 @@ public:
     u64                   uiStreamPos;                                                          // 20
     BSResource::ErrorCode eLastError;                                                           // 28
 
-    DEFINE_MEMBER_FN_1(Construct, void, 0x034C4F44, const char* apName);
-    DEFINE_MEMBER_FN_0(Destroy, void, 0x034C4FE8);
-    DEFINE_MEMBER_FN_1(Seek_Impl, void, 0x034C57F0, s64 iNumBytes);
-    DEFINE_MEMBER_FN_1(GetBufferInfo_Impl, void, 0x034C5248, BufferInfo& info);
-    DEFINE_MEMBER_FN_2(DoRead_Impl, u64, 0x034C50D0, void* apBuffer, u64 auiBytes);
-    DEFINE_MEMBER_FN_2(DoWrite_Impl, u64, 0x034C5134, const void* apBuffer, u64 auiBytes);
+    DEFINE_MEMBER_FN_1(Construct, void, 0x034C6CC4, const char* apName);
+    DEFINE_MEMBER_FN_0(Destroy, void, 0x034C6D68);
+    DEFINE_MEMBER_FN_1(Seek_Impl, void, 0x034C7570, s64 iNumBytes);
+    DEFINE_MEMBER_FN_1(GetBufferInfo_Impl, void, 0x034C6FC8, BufferInfo& info);
+    DEFINE_MEMBER_FN_2(DoRead_Impl, u64, 0x034C6E50, void* apBuffer, u64 auiBytes);
+    DEFINE_MEMBER_FN_2(DoWrite_Impl, u64, 0x034C6EB4, const void* apBuffer, u64 auiBytes);
 };
 static_assert(sizeof(BSResourceNiBinaryStream) == 0x30);

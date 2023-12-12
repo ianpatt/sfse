@@ -1,3 +1,6 @@
+0.2.1
+- support for 1.8.88
+
 0.2.0
 - plugin compatibility flag update for the breaking changes in 1.8.86
 - plugin developers using SFSE headers: these are not currently up to date. getting a release out with the loader compatibility flags is higher priority. please check github for updates.

@@ -4,10 +4,10 @@
 // these have to be macros so they can be used in the .rc
 #define SFSE_VERSION_INTEGER		0
 #define SFSE_VERSION_INTEGER_MINOR	2
-#define SFSE_VERSION_INTEGER_BETA	0
-#define SFSE_VERSION_VERSTRING		"0, 0, 2, 0"
+#define SFSE_VERSION_INTEGER_BETA	1
+#define SFSE_VERSION_VERSTRING		"0, 0, 2, 1"
 #define SFSE_VERSION_PADDEDSTRING	"0001"
-#define SFSE_VERSION_RELEASEIDX		8
+#define SFSE_VERSION_RELEASEIDX		9
 
 #define MAKE_EXE_VERSION_EX(major, minor, build, sub)	((((major) & 0xFF) << 24) | (((minor) & 0xFF) << 16) | (((build) & 0xFFF) << 4) | ((sub) & 0xF))
 #define MAKE_EXE_VERSION(major, minor, build)			MAKE_EXE_VERSION_EX(major, minor, build, 0)
@@ -33,13 +33,15 @@
 #define RUNTIME_VERSION_1_8_83	MAKE_EXE_VERSION(1, 8, 83)	// 0x01080530	beta
 #define RUNTIME_VERSION_1_8_84	MAKE_EXE_VERSION(1, 8, 84)	// 0x01080540	beta
 #define RUNTIME_VERSION_1_8_86	MAKE_EXE_VERSION(1, 8, 86)	// 0x01080560	beta released to main branch
+#define RUNTIME_VERSION_1_8_87	MAKE_EXE_VERSION(1, 8, 87)	// 0x01080570	beta
+#define RUNTIME_VERSION_1_8_88	MAKE_EXE_VERSION(1, 8, 88)	// 0x01080580	(very) small patch
 
 #define PACKED_SFSE_VERSION		MAKE_EXE_VERSION(SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA)
 
 // information about the state of the game at the time of release
 #define SFSE_TARGETING_BETA_VERSION	0
-#define CURRENT_RELEASE_RUNTIME		RUNTIME_VERSION_1_8_86
-#define CURRENT_RELEASE_SFSE_STR	"0.2.0"
+#define CURRENT_RELEASE_RUNTIME		RUNTIME_VERSION_1_8_88
+#define CURRENT_RELEASE_SFSE_STR	"0.2.1"
 
 #if GET_EXE_VERSION_SUB(RUNTIME_VERSION) == RUNTIME_TYPE_BETHESDA
 #define SAVE_FOLDER_NAME "Starfield"
