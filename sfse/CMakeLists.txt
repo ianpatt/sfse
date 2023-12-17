@@ -52,6 +52,7 @@ source_group(
 	FILES
 		GameChargen.cpp
 		GameChargen.h
+		GameData.cpp
 		GameData.h
 		GameConsole.cpp
 		GameConsole.h
