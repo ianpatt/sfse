@@ -100,7 +100,28 @@ int main(int argc, char ** argv)
 		FileStream	fileCheck;
 		if(!fileCheck.open(procPath.c_str()))
 		{
-			if(usedCustomRuntimeName)
+			DWORD err = GetLastError();
+			if(err)
+				_MESSAGE("exe open check error = %08X", err);
+
+			bool msStore = false;
+
+			if(err == ERROR_ACCESS_DENIED)
+			{
+				// this might be ms store
+				std::string manifestPath = runtimeDir + "appxmanifest.xml";
+
+				if(fileCheck.open(manifestPath.c_str()))
+				{
+					msStore = true;
+				}
+			}
+
+			if(msStore)
+			{
+				PrintLoaderError("You have the MS Store/Gamepass version of Starfield, which is not compatible with SFSE.");
+			}
+			else if(usedCustomRuntimeName)
 			{
 				PrintLoaderError("Couldn't find %s. You have customized the runtime name via SFSE's .ini file, and that file does not exist. This can usually be fixed by removing the RuntimeName line from the .ini file.)", procName.c_str());
 			}
