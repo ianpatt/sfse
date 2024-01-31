@@ -9,7 +9,7 @@
 #include "sfse/GameSettings.h"
 #endif
 
-RelocAddr <uintptr_t> GameDataLoad_Target(0x023FBA20 + 0x1098); // End of this function before the retn
+RelocAddr <uintptr_t> GameDataLoad_Target(0x02405870 + 0x1098); // End of this function before the retn
 
 void Hook_GameData_Loaded()
 {

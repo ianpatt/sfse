@@ -6,7 +6,7 @@
 class ConsoleLog
 {
 public:
-	DEFINE_MEMBER_FN_2(VPrint, void, 0x02894E68, const char* fmt, va_list args);
+	DEFINE_MEMBER_FN_2(VPrint, void, 0x028A1408, const char* fmt, va_list args);
 };
 
 extern RelocPtr <ConsoleLog*> g_console;

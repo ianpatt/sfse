@@ -1,3 +1,8 @@
+0.2.2
+- support for 1.9.51
+- better error message for ms store
+- better error reporting for sfee.dll (CharGenMenu)
+
 0.2.1
 - support for 1.8.88
 
