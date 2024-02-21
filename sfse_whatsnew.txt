@@ -1,3 +1,6 @@
+0.2.3
+- support for 1.9.67
+
 0.2.2
 - support for 1.9.51
 - better error message for ms store
