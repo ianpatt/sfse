@@ -17,13 +17,13 @@ public:
 
 	static ChargenDataModel* GetSingleton()
 	{
-		RelocPtr<ChargenDataModel*> singleton(0x06581DF8);
+		RelocPtr<ChargenDataModel*> singleton(0x06581E78);
 		return *singleton;
 	}
 
 	// Contains main UI data model wrappers, decode these later
 	// This function will pull data from the TESNPC into this wrapper
-	DEFINE_MEMBER_FN_1(Update, void, 0x018CB844, TESNPC*); // unk2 removed in 1.9.51
+	DEFINE_MEMBER_FN_1(Update, void, 0x018CB834, TESNPC*); // unk2 removed in 1.9.51
 };
 }
 

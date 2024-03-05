@@ -290,6 +290,8 @@ bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, 
 	_MESSAGE("version = %016I64X", version);
 	_MESSAGE("product name = %s", productName.c_str());
 
+	hookInfo->version = version;
+
 	if(productName == "SFSE")
 	{
 		_MESSAGE("found an SFSE component");

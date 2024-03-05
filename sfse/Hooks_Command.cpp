@@ -11,7 +11,7 @@
 #include <vector>
 
 using _Command_Process = bool (*)(void* __this);
-RelocAddr <_Command_Process> Command_Process(0x031BD5A8);
+RelocAddr <_Command_Process> Command_Process(0x031BD608);
 _Command_Process Command_Process_Original = nullptr;
 
 namespace TaskInterface
