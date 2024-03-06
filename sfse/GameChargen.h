@@ -6,7 +6,7 @@
 #include "sfse_common/Utilities.h"
 #include "sfse/NiTypes.h"
 
-class TESNPC;
+class MenuActor;
 
 namespace TESNPCData
 {
@@ -23,8 +23,10 @@ public:
 
 	// Contains main UI data model wrappers, decode these later
 	// This function will pull data from the TESNPC into this wrapper
-	DEFINE_MEMBER_FN_1(Update, void, 0x018CB834, TESNPC*); // unk2 removed in 1.9.51
+	DEFINE_MEMBER_FN_1(Update, void, 0x018CB834, MenuActor*); // unk2 removed in 1.9.51
 };
+
+extern RelocPtr<MenuActor*> g_actorCheckpoint;
 }
 
 namespace BGSCharacterMorph

@@ -138,22 +138,10 @@ class ChargenMenu :
 public:
     MenuPaperDoll* pPaperDoll;   // 2C0
     TESNPC* npc;                 // 2C8
-    void* unk2D0;                // 2D0 ChargenRestorePoint
-    u64 unk2D8[(0x5C0 - 0x2D8) >> 3];
-    u64 unk5C0;
-    u32 cameraPosition;          // 5C8
-    u32 unk5CC;                  // 5CC
-    u64 unk5D0;                  // 5D0
-    u64 unk5D8;                  // 5D8
-    u8  unk5E0;                  // 5E0 - Camera dirty?
-    u8  unk5E1;                  // 5E1
-    u8  unk5E2;                  // 5E2
-    u8  unk5E3;                  // 5E3
-    u8  unk5E4;                  // 5E4
-    u8  unk5E5;                  // 5E5
-    u8  unk5E6;                  // 5E6
-    u8  unk5E7;                  // 5E7
-    u32 unk5E8;                  // 5E8
+    u64 unk2D0[(0x5B0 - 0x2D0) >> 3];
+    u32 cameraPosition;          // 5B0
+    u32 unk5B4;                  // 5B4
+    u64 unk5D8[(0x648 - 0x5B8) >> 3];
 
     enum
     {
@@ -164,6 +152,5 @@ public:
         TRAITS_CAMERA_POSITION
     };
 };
-static_assert(offsetof(ChargenMenu, unk2D0) == 0x2D0);
-static_assert(offsetof(ChargenMenu, cameraPosition) == 0x5C8);
-static_assert(offsetof(ChargenMenu, unk5E0) == 0x5E0);
+static_assert(offsetof(ChargenMenu, cameraPosition) == 0x5B0);
+static_assert(sizeof(ChargenMenu) == 0x648);

@@ -142,7 +142,7 @@ public:
     u64 unk3C8; // 3C8
     BSTArray<float>* unk3D0; // 3D0  -- 5 floats entries?
     BSTHashMap2<u32, float>* AdditionalSliders;   // 3D8
-    BSTHashMap<u32, BSTHashMap<BSFixedString, float>*>* unk3E0;   // 3E0
+    BSTHashMap<u32, BSTHashMap<BSFixedStringCS, float>*>* unk3E0;   // 3E0
     struct HeadPartData
     {
         u32 type;                       // 00 1 - Mask? 
@@ -160,15 +160,15 @@ public:
     BSTArray<HeadPartData> HeadPartDataA;    // 3E0
     u32 skinTone; // 3F8
     u32 unk3FC; // 3FC
-    BSFixedString teeth;   // 400
-    BSFixedString jewelryColor;   // 408
-    BSFixedString eyeColor;   // 410
-    BSFixedString hairColor;   // 418
-    BSFixedString facialHairColor;   // 420
-    BSFixedString eyebrowColor;   // 428
+    BSFixedStringCS teeth;   // 400
+    BSFixedStringCS jewelryColor;   // 408
+    BSFixedStringCS eyeColor;   // 410
+    BSFixedStringCS hairColor;   // 418
+    BSFixedStringCS facialHairColor;   // 420
+    BSFixedStringCS eyebrowColor;   // 428
     u64 unk468; // 430
     BSFixedString unk438; // 438
-    BSTHashMap<BSFixedString, float>* shapeBlendData; // 440 - ShapeBlendData Map
+    BSTHashMap<BSFixedStringCS, float>* shapeBlendData; // 440 - ShapeBlendData Map
     u8 pronoun;  // 448
     u8 pad449[7]; // 449
 

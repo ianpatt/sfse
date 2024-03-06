@@ -339,8 +339,7 @@ struct PerkRankData
 class BGSPerkRankArray : public BaseFormComponent
 {
 public:
-	PerkRankData*	pPerksA;		// 08
-	u32				uiPerkCount;	// 10
+	BSTArray<PerkRankData>	pPerksA;		// 08
 };
 static_assert(sizeof(BGSPerkRankArray) == 0x18);
 
