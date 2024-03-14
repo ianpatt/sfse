@@ -3501,7 +3501,6 @@ extern const void * RTTI_Particles__BundleInfo;
 extern const void * RTTI_Particles__EmitterBinding;
 extern const void * RTTI_Particles__EmitterDefinition;
 extern const void * RTTI_Particles__EmitterMaterialDependency;
-extern const void * RTTI_Particles__ExpressionParser;
 extern const void * RTTI_Particles__ForcesProperties;
 extern const void * RTTI_Particles__GeometryAsShapeDependency;
 extern const void * RTTI_Particles__GeometryParticlesProperties;
