@@ -1,3 +1,6 @@
+0.2.5
+- support for 1.10.31
+
 0.2.4
 - support for 1.9.71
 

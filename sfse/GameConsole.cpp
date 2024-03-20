@@ -1,7 +1,7 @@
 #include "sfse/GameConsole.h"
 #include <stdarg.h>
 
-RelocPtr <ConsoleLog*> g_console(0x06581A10);
+RelocPtr <ConsoleLog*> g_console(0x06532650);
 
 void Console_Print(const char* fmt, ...)
 {

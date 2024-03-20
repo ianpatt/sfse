@@ -1,3 +1,3 @@
 #include "sfse/GameChargen.h"
 
-RelocPtr<MenuActor*> TESNPCData::g_actorCheckpoint(0x0658F658);
+RelocPtr<MenuActor*> TESNPCData::g_actorCheckpoint(0x06540328);
