@@ -116,7 +116,7 @@ public:
     u32 unk308; // 308
     u32 unk30C; // 30C
     TESClass* pCl;  // 310
-    u64 unk318; // 318
+    //u64 unk318; // 318 - Removed 1.10.31
     u64 unk320; // 320
     TESCombatStyle* pCombatStyle;   // 328
     u32 unk330; // 330
@@ -175,6 +175,6 @@ public:
     DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x01AD3428, TESNPC* source);
     DEFINE_MEMBER_FN_1(CopyAppearance, void, 0x01AD1860, TESNPC* source);
 };
-static_assert(sizeof(TESNPC) == 0x450);
+static_assert(sizeof(TESNPC) == 0x450); // Un-verified after 1.10.31
 static_assert(sizeof(TESNPC::HeadPartData) == 0x28);
 static_assert(sizeof(TESNPC::InstanceData) == 0x158);

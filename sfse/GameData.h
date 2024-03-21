@@ -65,6 +65,8 @@ public:
 	BSTArray<TESFile*> masterFiles;
 	TESFileCollection fileCollection;	// 1E0
 	u64	unk200;
+	u64	unkPad1; // Added in 1.10.31
+	u64	unkPad2; // Added in 1.10.31
 	u8	cCompileIndex;			// 208
 	u16	sSmallFileCompileIndex;	// 20A
 	u8	pad[3];
@@ -80,18 +82,18 @@ public:
 	u32	unk248;
 	u32	unk24C;
 };
-static_assert(sizeof(TESFile) == 0x250);
-static_assert(offsetof(TESFile, cCompileIndex) == 0x208);
-static_assert(offsetof(TESFile, sSmallFileCompileIndex) == 0x20A);
+static_assert(sizeof(TESFile) == 0x260); // Unverified after 1.10.31
+static_assert(offsetof(TESFile, cCompileIndex) == 0x218);
+static_assert(offsetof(TESFile, sSmallFileCompileIndex) == 0x21A);
 
 class TESPackedFile : public TESFile
 {
 public:
 	virtual ~TESPackedFile();
 
-	u64	unk250[(0x3B8 - 0x250) >> 3];
+	u64	unk250[(0x3C8 - 0x260) >> 3];
 };
-static_assert(sizeof(TESPackedFile) == 0x3B8);
+static_assert(sizeof(TESPackedFile) == 0x3C8); // Unverified after 1.10.31
 
 class TESDataHandler : 
 	public BSTEventSource<BGSHotloadCompletedEvent>
@@ -120,6 +122,9 @@ public:
 	TESRegionList* unk1498;
 	BSTArray<TESObjectCELL*> unk14A0;
 	u64	unk14B0;
+	u64 unkPad1; // Added in 1.10.31
+	u64	unkPad2; // Added in 1.10.31
+	u64	unkPad3; // Added in 1.10.31
 	NiTPrimitiveArray<BGSAddonNode*> unk14B8;
 	u64	unk14D0;
 	u64	unk14D8;
@@ -137,8 +142,8 @@ public:
 	}
 };
 static_assert(offsetof(TESDataHandler, pFormArray) == 0x70);
-static_assert(offsetof(TESDataHandler, listFiles) == 0x14F0);
-static_assert(offsetof(TESDataHandler, unk1520) == 0x1520);
+static_assert(offsetof(TESDataHandler, listFiles) == 0x1508);
+static_assert(offsetof(TESDataHandler, unk1520) == 0x1538);
 
 struct MaterialDatabase
 {

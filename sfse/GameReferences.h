@@ -235,26 +235,25 @@ public:
 	void* ActorValueChangedEvent;              // 70
 
 	// members
-	u64				unk78;          // 78
-	OBJ_REFR		data;           // 80
-	u64				unkB0;          // B0
-	u64				unkB8;          // B8
-	TESObjectCELL*	parentCell;     // C0
-	void*			loadedData;     // C8
-	u64				unkF0;          // D0
-	u64				extraDataList;  // D8
-	u16				scale;          // E0
-	u8				unkE2;          // E2
-	u8				flags;          // E3
+	OBJ_REFR		data;           // 78
+	u64				inventoryLock;	// 98
+	void*			inventoryList;  // A0
+	TESObjectCELL*	parentCell;     // A8
+	void*			loadedData;     // B0
+	u64				unkF0;          // B8
+	u64				extraDataList;  // C0
+	u16				scale;          // C8
+	u8				unkE2;          // CB
+	u8				flags;          // CC
 
 	DEFINE_MEMBER_FN_0(IsInSpaceship, bool, 0x02B2D0D4)
 	DEFINE_MEMBER_FN_0(IsInSpace, bool, 0x019B8180)
 	DEFINE_MEMBER_FN_1(HasKeyword, bool, 0x0131CED8, BGSKeyword*);
 };
-static_assert(offsetof(TESObjectREFR, data) == 0x80);
-static_assert(offsetof(TESObjectREFR, parentCell) == 0xC0);
-static_assert(offsetof(TESObjectREFR, scale) == 0xE0);
-static_assert(sizeof(TESObjectREFR) == 0xF0);
+static_assert(offsetof(TESObjectREFR, data) == 0x78);
+static_assert(offsetof(TESObjectREFR, parentCell) == 0xA8);
+static_assert(offsetof(TESObjectREFR, scale) == 0xC8);
+static_assert(sizeof(TESObjectREFR) == 0xD0);
 
 class Actor : public TESObjectREFR
 {

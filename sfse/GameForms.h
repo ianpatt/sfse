@@ -367,11 +367,11 @@ struct OBJ_REFR
 {
 public:
 	// members
-	NiPoint3A angle;            // 00
-	NiPoint3A location;         // 10
-	TESForm* objectReference;  // 20 - TESBoundObject
+	NiPoint3 angle;            // 00
+	NiPoint3 location;         // 0C
+	TESForm* objectReference;  // 18 - TESBoundObject
 };
-static_assert(sizeof(OBJ_REFR) == 0x30);
+static_assert(sizeof(OBJ_REFR) == 0x20);
 
 class BGSListForm :
 	public TESForm

@@ -171,6 +171,7 @@ public:
 	ACTOR_BASE_DATA	actorData;	// 08
 	s32	unk1C;	// 1C
 	u64	unk20;	// 20
+	u64 unkPad; // Added in 1.10.31
 	u64	unk28;	// 28
 	u64	unk30;	// 30
 	u64	unk38;	// 38
@@ -181,7 +182,7 @@ public:
 	u64	unk60;	// 60
 	u64	unk68;	// 68
 };
-static_assert(sizeof(TESActorBaseData) == 0x70);
+static_assert(sizeof(TESActorBaseData) == 0x78);
 
 class TESContainer : public BaseFormComponent
 {
