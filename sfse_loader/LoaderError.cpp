@@ -2,6 +2,7 @@
 #include <cstdarg>
 #include <cstdio>
 #include <Windows.h>
+#include "sfse_common/Log.h"
 
 void PrintLoaderError(const char * fmt, ...)
 {
@@ -10,7 +11,7 @@ void PrintLoaderError(const char * fmt, ...)
 	va_list	args;
 
 	va_start(args, fmt);
-//	gLog.Log(IDebugLog::kLevel_FatalError, fmt, args);
+	DebugLog::log(DebugLog::kLevel_FatalError, fmt, args);
 	va_end(args);
 
 	va_start(args, fmt);

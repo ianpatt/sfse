@@ -291,6 +291,7 @@ bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, 
 	_MESSAGE("product name = %s", productName.c_str());
 
 	hookInfo->version = version;
+	hookInfo->packedVersion = MAKE_EXE_VERSION(version >> 48, version >> 32, version >> 16);
 
 	if(productName == "SFSE")
 	{
@@ -331,90 +332,7 @@ bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, 
 
 	bool result = false;
 
-	const u64 kCurVersion =
-		(u64(GET_EXE_VERSION_MAJOR(RUNTIME_VERSION)) << 48) |
-		(u64(GET_EXE_VERSION_MINOR(RUNTIME_VERSION)) << 32) |
-		(u64(GET_EXE_VERSION_BUILD(RUNTIME_VERSION)) << 16);
-
-	// convert version resource to internal version format
-	u32 versionInternal = MAKE_EXE_VERSION(version >> 48, version >> 32, version >> 16);
-
-	// version mismatch could mean exe type mismatch
-	if(version != kCurVersion)
-	{
-#if GET_EXE_VERSION_SUB(RUNTIME_VERSION) == RUNTIME_TYPE_BETHESDA
-		const int expectedProcType = kProcType_Steam;
-		const char * expectedProcTypeName = "Steam";
-#elif GET_EXE_VERSION_SUB(RUNTIME_VERSION) == RUNTIME_TYPE_GOG
-		const int expectedProcType = kProcType_GOG;
-		const char * expectedProcTypeName = "GOG";
-#else
-#error unknown runtime type
-#endif
-
-		// we only care about steam/gog for this check
-		const char * foundProcTypeName = nullptr;
-
-		switch(hookInfo->procType)
-		{
-			case kProcType_Steam:
-				foundProcTypeName = "Steam";
-				break;
-
-			case kProcType_GOG:
-				foundProcTypeName = "GOG";
-				break;
-		}
-
-		if(foundProcTypeName && (hookInfo->procType != expectedProcType))
-		{
-			// different build
-			PrintLoaderError(
-				"This version of SFSE is compatible with the %s version of the game.\n"
-				"You have the %s version of the game. Please download the correct version from the website.\n"
-				"Runtime: %d.%d.%d\n"
-				"SFSE: %d.%d.%d",
-				expectedProcTypeName, foundProcTypeName,
-				GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
-				SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
-
-			return false;
-		}
-	}
-
-	if(version < kCurVersion)
-	{
-#if SFSE_TARGETING_BETA_VERSION
-		if(versionInternal == CURRENT_RELEASE_RUNTIME)
-			PrintLoaderError(
-				"You are using the version of SFSE intended for the Steam beta branch (%d.%d.%d).\n"
-				"Download and install the non-beta branch version (%s) from http://sfse.silverlock.org/.",
-				SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA, CURRENT_RELEASE_SFSE_STR);
-		else
-			PrintLoaderError(
-				"You are using Starfield version %d.%d.%d, which is out of date and incompatible with this version of SFSE (%d.%d.%d). Update to the latest beta version.",
-				GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
-				SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
-#else
-		PrintLoaderError(
-			"You are using Starfield version %d.%d.%d, which is out of date and incompatible with this version of SFSE (%d.%d.%d). Update to the latest version.",
-			GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
-			SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
-#endif
-	}
-	else if(version > kCurVersion)
-	{
-		PrintLoaderError(
-			"You are using a newer version of Starfield than this version of SFSE supports.\n"
-			"If this version just came out, please be patient while we update our code.\n"
-			"In the meantime, please check http://sfse.silverlock.org for updates.\n"
-			"Do not email about this!\n"
-			"Runtime: %d.%d.%d\n"
-			"SFSE: %d.%d.%d",
-			GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
-			SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
-	}
-	else if(isEditor)
+	if(isEditor)
 	{
 		switch(hookInfo->procType)
 		{
@@ -436,21 +354,24 @@ bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, 
 	else
 	{
 		char versionStr[256];
-		sprintf_s(versionStr, "%d_%d_%d", GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal));
+		sprintf_s(versionStr, "%d_%d_%d", hookInfo->getVersionMajor(), hookInfo->getVersionMinor(), hookInfo->getVersionBuild());
+		*dllSuffix = versionStr;
 
 		switch(hookInfo->procType)
 		{
 		case kProcType_Steam:
 		case kProcType_Normal:
-		case kProcType_GOG:
-			*dllSuffix = versionStr;
-
 			result = true;
 
 			break;
 
+		case kProcType_GOG:
+			*dllSuffix += "_gog";
+
+			result = true;
+			break;
+
 		case kProcType_WinStore:
-			*dllSuffix = versionStr;
 			*dllSuffix += "_winstore";
 
 			result = true;
@@ -469,4 +390,93 @@ bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, 
 	}
 
 	return result;
+}
+
+bool VersionCheck(const ProcHookInfo & procInfo, u64 RUNTIME_VERSION)
+{
+	const u64 kCurVersion =
+		(u64(GET_EXE_VERSION_MAJOR(RUNTIME_VERSION)) << 48) |
+		(u64(GET_EXE_VERSION_MINOR(RUNTIME_VERSION)) << 32) |
+		(u64(GET_EXE_VERSION_BUILD(RUNTIME_VERSION)) << 16);
+
+	// convert version resource to internal version format
+	u32 versionInternal = MAKE_EXE_VERSION(procInfo.version >> 48, procInfo.version >> 32, procInfo.version >> 16);
+
+	// version mismatch could mean exe type mismatch
+	if(procInfo.version != kCurVersion)
+	{
+#if GET_EXE_VERSION_SUB(RUNTIME_VERSION) == RUNTIME_TYPE_BETHESDA
+		const int expectedProcType = kProcType_Steam;
+		const char * expectedProcTypeName = "Steam";
+#elif GET_EXE_VERSION_SUB(RUNTIME_VERSION) == RUNTIME_TYPE_GOG
+		const int expectedProcType = kProcType_GOG;
+		const char * expectedProcTypeName = "GOG";
+#else
+#error unknown runtime type
+#endif
+
+		// we only care about steam/gog for this check
+		const char * foundProcTypeName = nullptr;
+
+		switch(procInfo.procType)
+		{
+			case kProcType_Steam:
+				foundProcTypeName = "Steam";
+				break;
+
+			case kProcType_GOG:
+				foundProcTypeName = "GOG";
+				break;
+		}
+
+		if(foundProcTypeName && (procInfo.procType != expectedProcType))
+		{
+			// different build
+			PrintLoaderError(
+				"This version of SFSE is compatible with the %s version of the game.\n"
+				"You have the %s version of the game. Please download the correct version from the website.\n"
+				"Runtime: %d.%d.%d\n"
+				"SFSE: %d.%d.%d",
+				expectedProcTypeName, foundProcTypeName,
+				GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
+				SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
+
+			return false;
+		}
+	}
+
+	if(procInfo.version < kCurVersion)
+	{
+#if SFSE_TARGETING_BETA_VERSION
+		if(versionInternal == CURRENT_RELEASE_RUNTIME)
+			PrintLoaderError(
+				"You are using the version of SFSE intended for the Steam beta branch (%d.%d.%d).\n"
+				"Download and install the non-beta branch version (%s) from http://sfse.silverlock.org/.",
+				SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA, CURRENT_RELEASE_SFSE_STR);
+		else
+			PrintLoaderError(
+				"You are using Starfield version %d.%d.%d, which is out of date and incompatible with this version of SFSE (%d.%d.%d). Update to the latest beta version.",
+				GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
+				SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
+#else
+		PrintLoaderError(
+			"You are using Starfield version %d.%d.%d, which is out of date and incompatible with this version of SFSE (%d.%d.%d). Update to the latest version.",
+			GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
+			SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
+#endif
+	}
+	else if(procInfo.version > kCurVersion)
+	{
+		PrintLoaderError(
+			"You are using a newer version of Starfield than this version of SFSE supports.\n"
+			"If this version just came out, please be patient while we update our code.\n"
+			"In the meantime, please check http://sfse.silverlock.org for updates.\n"
+			"Do not email about this!\n"
+			"Runtime: %d.%d.%d\n"
+			"SFSE: %d.%d.%d",
+			GET_EXE_VERSION_MAJOR(versionInternal), GET_EXE_VERSION_MINOR(versionInternal), GET_EXE_VERSION_BUILD(versionInternal),
+			SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
+	}
+
+	return true;
 }

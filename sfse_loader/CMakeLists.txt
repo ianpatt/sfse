@@ -6,7 +6,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/versioning.cmake)
 
 project(
 	sfse_loader
-	VERSION ${SFSE_VERSION_MAJOR}.${SFSE_VERSION_MINOR}.${SFSE_VERSION_PATCH}
+	VERSION 1.0.0
 	LANGUAGES CXX
 )
 
@@ -40,7 +40,7 @@ source_group(
 	FILES
 		${headers}
 		${sources}
-		${sfse_common_SOURCE_DIR}/sfse_version.rc
+		sfse_loader_version.rc
 		sfse_loader.manifest
 )
 
@@ -50,19 +50,13 @@ add_executable(
 	${PROJECT_NAME}
 	${headers}
 	${sources}
-	${sfse_common_SOURCE_DIR}/sfse_version.rc
+	sfse_loader_version.rc
 	sfse_loader.manifest
 )
 
 add_executable(sfse::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/configuration.cmake)
-
-target_compile_definitions(
-	${PROJECT_NAME}
-	PRIVATE
-		RUNTIME_VERSION=${RUNTIME_VERSION_PACKED}
-)
 
 target_compile_features(
 	${PROJECT_NAME}

@@ -60,4 +60,7 @@
 #error unknown runtime type
 #endif
 
+#define LOADER_VERSION_1_0_0	MAKE_EXE_VERSION(1, 0, 0)
+#define LOADER_VERSION			LOADER_VERSION_1_0_0
+
 #endif /* __SFSE_VERSION_H__ */

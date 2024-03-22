@@ -29,7 +29,6 @@ source_group(
 	FILES
 		${headers}
 		${sources}
-		sfse_version.rc
 )
 
 # ---- Create library ----
@@ -39,7 +38,6 @@ add_library(
 	STATIC
 	${headers}
 	${sources}
-	sfse_version.rc
 )
 
 add_library(sfse::${PROJECT_NAME} ALIAS ${PROJECT_NAME})

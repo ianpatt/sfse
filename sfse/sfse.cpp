@@ -6,6 +6,7 @@
 #include "sfse_common/Utilities.h"
 #include "sfse_common/SafeWrite.h"
 #include "sfse_common/BranchTrampoline.h"
+#include "sfse_common/CoreInfo.h"
 #include "PluginManager.h"
 
 #include "Hooks_Version.h"
@@ -175,4 +176,11 @@ extern "C" {
 
 		return TRUE;
 	}
+
+	__declspec(dllexport) SFSECoreVersionData SFSECore_Version =
+	{
+		SFSECoreVersionData::kVersion,
+
+		RUNTIME_VERSION,
+	};
 }

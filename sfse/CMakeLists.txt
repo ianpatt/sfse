@@ -44,7 +44,7 @@ source_group(
 	FILES
 		sfse.cpp
 		sfse.def
-		${sfse_common_SOURCE_DIR}/sfse_version.rc
+		sfse_version.rc
 )
 
 source_group(
@@ -145,7 +145,7 @@ add_library(
 	${headers}
 	${sources}
 	sfse.def
-	${sfse_common_SOURCE_DIR}/sfse_version.rc
+	sfse_version.rc
 )
 
 add_library(sfse64::${PROJECT_NAME} ALIAS ${PROJECT_NAME})

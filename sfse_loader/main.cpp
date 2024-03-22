@@ -6,6 +6,7 @@
 #include "sfse_common/sfse_version.h"
 #include "sfse_common/Utilities.h"
 #include "sfse_common/FileStream.h"
+#include "sfse_common/CoreInfo.h"
 #include "LoaderError.h"
 #include "IdentifyEXE.h"
 #include "Inject.h"
@@ -22,7 +23,7 @@ int main(int argc, char ** argv)
 	GetSystemTime(&now);
 
 	_MESSAGE("SFSE loader: initialize (version = %d.%d.%d %08X %04d-%02d-%02d %02d:%02d:%02d, os = %s)",
-		SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA, RUNTIME_VERSION,
+		SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA, LOADER_VERSION,
 		now.wYear, now.wMonth, now.wDay, now.wHour, now.wMinute, now.wSecond,
 		getOSInfoStr().c_str());
 
@@ -182,7 +183,48 @@ int main(int argc, char ** argv)
 
 		if(!tempFile.open(dllPath.c_str()))
 		{
-			PrintLoaderError("Couldn't find SFSE DLL (%s). Please make sure you have installed SFSE correctly and are running it from your Starfield folder.", dllPath.c_str());
+			PrintLoaderError(
+				"Couldn't find SFSE DLL (%s).\n"
+				"Either you have not installed SFSE correctly, or a new version of Starfield has been released.\n"
+				"Please make sure you have installed SFSE correctly and are running it from your Starfield folder.\n"
+				"If a game patch was released since you last ran the game, please check the website for updates.\n"
+				"Runtime: %d.%d.%d", dllPath.c_str(), procHookInfo.getVersionMajor(), procHookInfo.getVersionMinor(), procHookInfo.getVersionBuild());
+			return 1;
+		}
+	}
+
+	// check to make sure the dll makes sense
+	{
+		bool dllOK = false;
+		u32 dllVersion = 0;
+
+		HMODULE resourceHandle = (HMODULE)LoadLibraryEx(dllPath.c_str(), nullptr, LOAD_LIBRARY_AS_IMAGE_RESOURCE);
+		if(resourceHandle)
+		{
+			if(is64BitDLL(resourceHandle))
+			{
+				auto * version = (const SFSECoreVersionData *)getResourceLibraryProcAddress(resourceHandle, "SFSECore_Version");
+				if(version)
+				{
+					dllVersion = version->runtimeVersion;
+
+					if(	(version->dataVersion == SFSECoreVersionData::kVersion) &&
+						(version->runtimeVersion == procHookInfo.packedVersion))
+					{
+						dllOK = true;
+					}
+				}
+			}
+
+			FreeLibrary(resourceHandle);
+		}
+
+		if(!dllOK)
+		{
+			PrintLoaderError(
+				"Bad SFSE DLL (%s).\n"
+				"Do not rename files; it will not magically make anything work.\n"
+				"%08X %08X", dllPath.c_str(), procHookInfo.packedVersion, dllVersion);
 			return 1;
 		}
 	}

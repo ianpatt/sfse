@@ -1,2 +1,3 @@
 EXPORTS
 StartSFSE @1
+SFSECore_Version

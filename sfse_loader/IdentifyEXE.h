@@ -18,8 +18,13 @@ enum
 
 struct ProcHookInfo
 {
-	u64	version;
-	u32	procType;
+	u64	version;		// version from resource
+	u32	packedVersion;	// internal packed version number
+	u32	procType;		// kProcType_*
+
+	u16 getVersionMajor() { return u16(version >> 48); }
+	u16 getVersionMinor() { return u16(version >> 32); }
+	u16 getVersionBuild() { return u16(version >> 16); }
 };
 
 bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, ProcHookInfo * hookInfo);
