@@ -172,8 +172,8 @@ public:
     u8 pronoun;  // 448
     u8 pad449[7]; // 449
 
-    DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x01AD3428, TESNPC* source);
-    DEFINE_MEMBER_FN_1(CopyAppearance, void, 0x01AD1860, TESNPC* source);
+    DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x01AD3408, TESNPC* source);
+    DEFINE_MEMBER_FN_1(CopyAppearance, void, 0x01AD1840, TESNPC* source);
 };
 static_assert(sizeof(TESNPC) == 0x450); // Un-verified after 1.10.31
 static_assert(sizeof(TESNPC::HeadPartData) == 0x28);
