@@ -1,3 +1,6 @@
+0.2.7
+- support for 1.11.36
+
 0.2.6
 - the loader has been made version-independent due to continued problems with false positives. it should not need to be updated. this means that we lose out on a bit of diagnostic information (the loader no longer knows the latest version of the game). feel free to blame microsoft for this.
 - support for 1.10.32
