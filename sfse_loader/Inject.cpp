@@ -75,14 +75,14 @@ static bool DoInjectDLLThread(PROCESS_INFORMATION * info, const char * dllPath, 
 	bool	result = false;
 
 	// make sure the dll exists
-	FileStream	fileCheck;
-	if(!fileCheck.open(dllPath))
 	{
-		PrintLoaderError("Couldn't find %s.", dllPath);
-		return false;
+		FileStream	fileCheck;
+		if(!fileCheck.open(dllPath))
+		{
+			PrintLoaderError("Couldn't find %s.", dllPath);
+			return false;
+		}
 	}
-
-	fileCheck.close();
 
 	HANDLE	process = OpenProcess(
 		PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, FALSE, info->dwProcessId);
