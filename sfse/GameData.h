@@ -122,9 +122,6 @@ public:
 	TESRegionList* unk1498;
 	BSTArray<TESObjectCELL*> unk14A0;
 	u64	unk14B0;
-	u64 unkPad1; // Added in 1.10.31
-	u64	unkPad2; // Added in 1.10.31
-	u64	unkPad3; // Added in 1.10.31
 	NiTPrimitiveArray<BGSAddonNode*> unk14B8;
 	u64	unk14D0;
 	u64	unk14D8;
@@ -142,8 +139,7 @@ public:
 	}
 };
 static_assert(offsetof(TESDataHandler, pFormArray) == 0x70);
-static_assert(offsetof(TESDataHandler, listFiles) == 0x1508);
-static_assert(offsetof(TESDataHandler, unk1520) == 0x1538);
+static_assert(offsetof(TESDataHandler, listFiles) == 0x1538);
 
 struct MaterialDatabase
 {

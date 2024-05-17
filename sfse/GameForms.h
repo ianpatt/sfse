@@ -227,8 +227,10 @@ enum class FormType : u32
 	kAVMD,      // D4 BGSAVMData
 	kPERS,      // D5 TESDataHandlerPersistentCreatedUtil::BGSPersistentIDsForm
 	kCHAL,      // D6 BGSChallengeForm
-
-	kTotal  // D7
+	kUNK1,      // D7
+	kUNK2,      // D8
+	kUNK3,      // D9
+	kTotal      // DA
 };
 
 class TESForm : public TESFormRefCount, public BSReflection::IObject
