@@ -15,9 +15,9 @@ static_assert(offsetof(ScrapHeap, currentThreadId) == 0x4B8);
 class MemoryManager
 {
 public:
-    DEFINE_MEMBER_FN_3(Allocate, void*, 0x005736D4, size_t size, size_t alignment, bool aligned);
-    DEFINE_MEMBER_FN_2(Free, void, 0x00589710, void* buf, bool aligned);
-    DEFINE_MEMBER_FN_0(GetThreadScrapHeap, ScrapHeap*, 0x007838DC);
+    DEFINE_MEMBER_FN_3(Allocate, void*, 0x0057DD84, size_t size, size_t alignment, bool aligned);
+    DEFINE_MEMBER_FN_2(Free, void, 0x00593DC0, void* buf, bool aligned);
+    DEFINE_MEMBER_FN_0(GetThreadScrapHeap, ScrapHeap*, 0x0078D88C);
 };
 
 using _GetMemoryManager = MemoryManager * (*)();
