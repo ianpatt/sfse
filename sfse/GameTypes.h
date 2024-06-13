@@ -599,6 +599,12 @@ public:
         Value(a_rhs.Value)
     {}
 
+    BSTScatterTableDefaultKVStorage(BSTScatterTableDefaultKVStorage&& a_rhs) :
+        Key(std::move(a_rhs.Key)),
+        Value(std::move(a_rhs.Value))
+    {
+    }
+
     BSTScatterTableDefaultKVStorage& operator=(const BSTScatterTableDefaultKVStorage& a_rhs)
     {
         Key = a_rhs.Key;
@@ -643,6 +649,15 @@ struct BSTScatterTableEntry
     Storage<Key, T> Value;
     s32 iNextIndex;
     s32 iIndex;
+
+    BSTScatterTableEntry(BSTScatterTableEntry&& a_rhs) :
+        Value(std::move(a_rhs.Value)),
+        iNextIndex(std::move(a_rhs.iNextIndex)),
+        iIndex(std::move(a_rhs.iIndex))
+    {
+        a_rhs.iIndex = -1;
+        a_rhs.iNextIndex = -1;
+    }
 };
 
 template <class T, u32 N = 8>
@@ -954,8 +969,9 @@ public:
                 tail->iNextIndex = static_cast<u32>(uiSize);
             }
             entry->iNextIndex = -1;
+            entry->iIndex = -1;
         }
-        else {  // else move next entry into current
+        else {  // else move next entry into current and clear the old entry
             new (entry) entry_type(std::move(*get_pos(entry->iNextIndex)));
         }
 

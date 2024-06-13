@@ -72,6 +72,7 @@ public:
     u64 unk118; // 118
     u64 unk120; // 120
     u64 unk128; // 128
+    u64 unk130; // 130
 };
 static_assert(offsetof(IMenu, pUIMovie) == 0x88);
 static_assert(offsetof(IMenu, MenuName) == 0xB0);
@@ -85,7 +86,7 @@ public:
 // 658
 class ChargenMenu : 
     public IMenu,                                               // 00
-    public IDataModel,                                          // 130
+    public IDataModel,                                          // 138
     public BSTEventSink<CharGen_CloseMenu>,                     // 140
     public BSTEventSink<CharGen_PresetChange>,                  // 148
     public BSTEventSink<CharGen_HeadpartPresetChange>,          // 150
@@ -136,12 +137,12 @@ class ChargenMenu :
     public BSTEventSink<UIMenuChargenMenuDisablePaperdoll>      // 2B8
 {
 public:
-    MenuPaperDoll* pPaperDoll;   // 2C0
-    TESNPC* npc;                 // 2C8
-    u64 unk2D0[(0x5B0 - 0x2D0) >> 3];
-    u32 cameraPosition;          // 5B0
-    u32 unk5B4;                  // 5B4
-    u64 unk5D8[(0x648 - 0x5B8) >> 3];
+    MenuPaperDoll* pPaperDoll;   // 2C8
+    TESNPC* npc;                 // 2D0
+    u64 unk2D8[(0x5B8 - 0x2D8) >> 3];
+    u32 cameraPosition;          // 5B8
+    u32 unk5BC;                  // 5BC
+    u64 unk5C0[(0x650 - 0x5C0) >> 3];
 
     enum
     {
@@ -152,5 +153,5 @@ public:
         TRAITS_CAMERA_POSITION
     };
 };
-static_assert(offsetof(ChargenMenu, cameraPosition) == 0x5B0);
-static_assert(sizeof(ChargenMenu) == 0x648);
+static_assert(offsetof(ChargenMenu, cameraPosition) == 0x5B8);
+static_assert(sizeof(ChargenMenu) == 0x650);

@@ -16,6 +16,7 @@ struct TESFileCollection
 {
 	BSTArray<TESFile*> FileA;
 	BSTArray<TESFile*> SmallFileA;
+	BSTArray<TESFile*> MediumFileA;
 };
 
 class TESFile
@@ -64,25 +65,25 @@ public:
 	BSTArray<BSFixedString> masterNames;
 	BSTArray<TESFile*> masterFiles;
 	TESFileCollection fileCollection;	// 1E0
-	u64	unk200;
-	u64	unkPad1; // Added in 1.10.31
-	u64	unkPad2; // Added in 1.10.31
-	u8	cCompileIndex;			// 208
-	u16	sSmallFileCompileIndex;	// 20A
-	u8	pad[3];
-	u64	unk210;
-	u64	unk218;
-	u64	unk220;
-	u32	unk228;
-	u32	unk22C;
+	u64	unkPad2;
+	u8	cCompileIndex;			// 218
+	u16	sSmallFileCompileIndex;	// 21A
+	u8	pad21C[10];
+	u16	unk226;
+	u16 unk228;
+	u8	unk22C[4];
 	u64	unk230;
-	u32	unk238;
+	u16	unk238;
+	u16	unk23A;
 	u32	unk23C;
 	u64	unk240;
 	u32	unk248;
 	u32	unk24C;
+	char*	unk250;
+	u32	unk258;
+	u32	unk25C;
 };
-static_assert(sizeof(TESFile) == 0x260); // Unverified after 1.10.31
+static_assert(sizeof(TESFile) == 0x260);
 static_assert(offsetof(TESFile, cCompileIndex) == 0x218);
 static_assert(offsetof(TESFile, sSmallFileCompileIndex) == 0x21A);
 
@@ -93,7 +94,7 @@ public:
 
 	u64	unk250[(0x3C8 - 0x260) >> 3];
 };
-static_assert(sizeof(TESPackedFile) == 0x3C8); // Unverified after 1.10.31
+static_assert(sizeof(TESPackedFile) == 0x3C8);
 
 class TESDataHandler : 
 	public BSTEventSource<BGSHotloadCompletedEvent>
@@ -118,19 +119,19 @@ public:
 	u64	unk58;
 	u64	unk60;
 	u64	unk68;
-	FormItem pFormArray[static_cast<u64>(FormType::kTotal)];
-	TESRegionList* unk1498;
-	BSTArray<TESObjectCELL*> unk14A0;
-	u64	unk14B0;
-	NiTPrimitiveArray<BGSAddonNode*> unk14B8;
-	u64	unk14D0;
-	u64	unk14D8;
-	u64	unk14E0;
-	u64	unk14E8;
-	BSSimpleList<TESPackedFile*> listFiles; // 14F0
-	TESFileCollection CompiledFileCollection; // 1500
+	FormItem pFormArray[static_cast<u64>(FormType::kTotal)];	// 70
+	TESRegionList* regionList;
+	BSTArray<TESObjectCELL*> unk14E8;
+	u64	unk14F8;
+	NiTPrimitiveArray<BGSAddonNode*> unk1500;
+	u64	unk1518;
 	u64	unk1520;
-	u64 unk1528[(0x1718 - 0x1528) >> 3];
+	u64	unk1528;
+	u64	unk1530;
+	BSSimpleList<TESPackedFile*> listFiles; // 1538
+	TESFileCollection CompiledFileCollection; // 1548
+	u64 unk1578[(0x17C8 - 0x1578) >> 3];
+	void* regionDataManager;	// 17C8
 
 	static TESDataHandler* GetSingleton()
 	{
@@ -140,6 +141,8 @@ public:
 };
 static_assert(offsetof(TESDataHandler, pFormArray) == 0x70);
 static_assert(offsetof(TESDataHandler, listFiles) == 0x1538);
+static_assert(offsetof(TESDataHandler, CompiledFileCollection) == 0x1548);
+static_assert(offsetof(TESDataHandler, regionDataManager) == 0x17C8);
 
 struct MaterialDatabase
 {
