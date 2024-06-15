@@ -115,11 +115,11 @@ public:
     u64 unk400[(0x4F8 - 0x400) >> 3]; // 400
 
     // This properly locks the data structure, use this
-    DEFINE_MEMBER_FN_2(IsMenuOpen, bool, 0x03029074, const BSFixedString&);
+    DEFINE_MEMBER_FN_2(IsMenuOpen, bool, 0x0302A074, const BSFixedString&);
 
     static UI* GetSingleton()
     {
-        RelocPtr<UI*> singleton(0x0666E790);
+        RelocPtr<UI*> singleton(0x066707D0);
         return *singleton;
     }
 };

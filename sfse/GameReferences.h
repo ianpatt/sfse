@@ -246,9 +246,9 @@ public:
 	u8				unkE2;          // CB
 	u8				flags;          // CC
 
-	DEFINE_MEMBER_FN_0(IsInSpaceship, bool, 0x02C968C4)
-	DEFINE_MEMBER_FN_0(IsInSpace, bool, 0x01A2E744)
-	DEFINE_MEMBER_FN_1(HasKeyword, bool, 0x01381628, BGSKeyword*);
+	DEFINE_MEMBER_FN_0(IsInSpaceship, bool, 0x02C96D34)
+	DEFINE_MEMBER_FN_0(IsInSpace, bool, 0x01A2E634)
+	DEFINE_MEMBER_FN_1(HasKeyword, bool, 0x01381618, BGSKeyword*);
 };
 static_assert(offsetof(TESObjectREFR, data) == 0x78);
 static_assert(offsetof(TESObjectREFR, parentCell) == 0xA8);
@@ -378,10 +378,10 @@ public:
 
 	// This function is very slow, do not use for realtime updates, mainly used for "entire character changed"
 	// The fields represent which subsets of chargen to update, usually you want (false, 0x28, false)
-	DEFINE_MEMBER_FN_3(UpdateAppearance, void, 0x025EE740, bool unk1, u32 flags, bool changeRace);
+	DEFINE_MEMBER_FN_3(UpdateAppearance, void, 0x025EE970, bool unk1, u32 flags, bool changeRace);
 
-	DEFINE_MEMBER_FN_0(UpdateChargenAppearance, void, 0x0243B6F4);
-	DEFINE_MEMBER_FN_1(SetSkinTone, void, 0x0243B2BC, u32 skinToneIndex);
+	DEFINE_MEMBER_FN_0(UpdateChargenAppearance, void, 0x0243B774);
+	DEFINE_MEMBER_FN_1(SetSkinTone, void, 0x0243B33C, u32 skinToneIndex);
 
 	u64	unkF0[(0x240 - 0xF0) >> 3];	// F0
 	void* unk240;					// 240
