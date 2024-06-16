@@ -1,0 +1,1 @@
+#include "sfse/NiObject.h"

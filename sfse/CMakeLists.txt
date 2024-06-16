@@ -57,9 +57,13 @@ source_group(
 		GameConsole.cpp
 		GameConsole.h
 		GameEvents.h
+		GameExtraData.cpp
+		GameExtraData.h
 		GameFormComponents.h
 		GameForms.cpp
 		GameForms.h
+		GameLock.cpp
+		GameLock.h
 		GameMemory.cpp
 		GameMemory.h
 		GameMenu.h
@@ -79,6 +83,12 @@ source_group(
 		GameTypes.h
 		GameUI.cpp
 		GameUI.h
+		NiExtraData.cpp
+		NiExtraData.h
+		NiObject.cpp
+		NiObject.h
+		NiRTTI.cpp
+		NiRTTI.h
 )
 
 source_group(

@@ -24,6 +24,26 @@ public:
     Node node;
 };
 
+// Does not actually do refcounting atm, just a wrapper
+template<typename element_type>
+class BSTSmartPointer
+{
+public:
+    constexpr element_type* get() const noexcept { return _ptr; }
+    explicit constexpr operator bool() const noexcept { return _ptr != nullptr; }
+    constexpr element_type& operator*() const noexcept
+    {
+        return *_ptr;
+    }
+    constexpr element_type* operator->() const noexcept
+    {
+        return _ptr;
+    }
+
+private:
+    element_type* _ptr;
+};
+
 
 class BSTArrayBase
 {

@@ -79,9 +79,20 @@ public:
 	u64	unk240;
 	u32	unk248;
 	u32	unk24C;
-	char*	unk250;
+	char* unk250;
 	u32	unk258;
 	u32	unk25C;
+
+	static const u8 LightIndex = 0xFE;
+	static const u8 MediumIndex = 0xFD;
+
+	static bool IsActive(u8 index) { return index != 0xFF; }
+	static bool IsLight(u8 index) { return index == LightIndex; }
+	static bool IsMedium(u8 index) { return index == MediumIndex; }
+
+	bool IsActive() const { return IsActive(cCompileIndex); }
+	bool IsLight() const { return IsLight(cCompileIndex); }
+	bool IsMedium() const { return IsMedium(cCompileIndex); }
 };
 static_assert(sizeof(TESFile) == 0x260);
 static_assert(offsetof(TESFile, cCompileIndex) == 0x218);
@@ -96,7 +107,7 @@ public:
 };
 static_assert(sizeof(TESPackedFile) == 0x3C8);
 
-class TESDataHandler : 
+class TESDataHandler :
 	public BSTEventSource<BGSHotloadCompletedEvent>
 {
 public:
@@ -108,7 +119,7 @@ public:
 		BSTArray<TESForm*> pFormsA;
 	};
 
-	
+
 
 	void* unk28; // BSService::Detail::TService<BSService::Detail::TServiceTraits<TESDataHandler,BSService::Detail::ReferenceGetterDefaultPointer<TESDataHandler *>>>
 	u64	unk30;
@@ -137,6 +148,57 @@ public:
 	{
 		RelocPtr<TESDataHandler*> singleton(0x0642EB08);
 		return *singleton;
+	}
+
+	uint32_t GetSubIndex(const TESFile* file) const
+	{
+		if (!file->IsActive())
+			return -1;
+
+		if (file->IsLight())
+		{
+			return file->sSmallFileCompileIndex;
+		}
+		else if (file->IsMedium())
+		{
+			int32_t foundIndex = -1;
+			for(uint32_t i = 0; i < CompiledFileCollection.MediumFileA.size(); ++i)
+			{
+				if (file == CompiledFileCollection.MediumFileA[i])
+				{
+					foundIndex = i;
+					break;
+				}
+			}
+			return foundIndex;
+		}
+
+		return file->cCompileIndex;
+	}
+
+	const TESFile* GetModByFormId(const uint32_t formId)
+	{
+		uint8_t modIndex = formId >> 24;
+		uint16_t middleIndex = (formId >> 12) & 0xFFF;
+		if (TESFile::IsLight(modIndex))
+		{
+			if (middleIndex < CompiledFileCollection.SmallFileA.size())
+			{
+				return CompiledFileCollection.SmallFileA[middleIndex];
+			}
+		}
+		else if (TESFile::IsMedium(modIndex))
+		{
+			if (middleIndex < CompiledFileCollection.MediumFileA.size())
+			{
+				return CompiledFileCollection.MediumFileA[middleIndex];
+			}
+		}
+		else if (modIndex < CompiledFileCollection.FileA.size())
+		{
+			return CompiledFileCollection.FileA[modIndex];
+		}
+		return nullptr;
 	}
 };
 static_assert(offsetof(TESDataHandler, pFormArray) == 0x70);

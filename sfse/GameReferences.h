@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sfse/GameForms.h"
+#include "sfse/GameExtraData.h"
 #include "sfse/NiTypes.h"
 
 class BGSLocation;
@@ -236,12 +237,10 @@ public:
 
 	// members
 	OBJ_REFR		data;           // 78
-	u64				inventoryLock;	// 98
-	void*			inventoryList;  // A0
+	BSGuarded<void*, BSReadWriteLock>	inventoryList;  // A0
 	TESObjectCELL*	parentCell;     // A8
-	void*			loadedData;     // B0
-	u64				unkF0;          // B8
-	u64				extraDataList;  // C0
+	BSGuarded<LOADED_REF_DATA*, BSReadWriteLock>	loadedData;     // B0
+	BSTSmartPointer<ExtraDataList>	extraDataList;  // C0
 	u16				scale;          // C8
 	u8				unkE2;          // CB
 	u8				flags;          // CC

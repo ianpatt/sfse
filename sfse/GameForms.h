@@ -9,6 +9,8 @@ class TESFile;
 class TESObjectREFR;
 class BGSMorphableObject;
 class TESNPC;
+class NiAVObject;
+class TESWaterForm;
 
 enum class FormType : u32
 {
@@ -374,6 +376,20 @@ public:
 	TESForm* objectReference;  // 18 - TESBoundObject
 };
 static_assert(sizeof(OBJ_REFR) == 0x20);
+
+struct LOADED_REF_DATA
+{
+public:
+	// members
+	void* handleList;								// 00 - TODO
+	NiPointer<NiAVObject>	data3D;					// 08
+	TESWaterForm*			currentWaterType;		// 10
+	float					relevantWaterHeight;	// 18
+	float					cachedRadius;			// 1C
+	u32						flags;					// 20
+	u16						underwaterCount;		// 24
+};
+static_assert(sizeof(LOADED_REF_DATA) == 0x28);
 
 class BGSListForm :
 	public TESForm
