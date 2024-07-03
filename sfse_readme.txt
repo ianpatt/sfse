@@ -1,11 +1,11 @@
-Starfield Script Extender v0.2.9 pre-alpha
+Starfield Script Extender v0.2.10 pre-alpha
 by Ian Patterson, Stephen Abel, and Expired
 
 The Starfield Script Extender, or SFSE for short, is a modder's resource that expands the scripting capabilities of Starfield. As the editor is not out, it's mostly a plugin loader for now. Depending on where modders show interest, this will expand to Scaleform and Papyrus (or other things) over time.
 
 [ Compatibility ]
 
-SFSE will support the latest version of Starfield available on Steam, currently 1.12.32. The Gamepass/MS Store/EGS version is unsupported. Do not email asking for support.
+SFSE will support the latest version of Starfield available on Steam, currently 1.12.36. The Gamepass/MS Store/EGS version is unsupported. Do not email asking for support.
 
 [ Installation ]
 

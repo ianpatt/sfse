@@ -119,7 +119,7 @@ public:
 
     static UI* GetSingleton()
     {
-        RelocPtr<UI*> singleton(0x066707D0);
+        RelocPtr<UI*> singleton(0x066707C8);
         return *singleton;
     }
 };
