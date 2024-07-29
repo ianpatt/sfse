@@ -104,6 +104,10 @@ struct SFSEMessagingInterface
 		kMessage_PostPostLoad,	// sent right after kMessage_PostPostLoad to facilitate the correct dispatching/registering of messages/listeners
 		kMessage_PostDataLoad,	// sent right after all game data has loaded (Passes TESDataHandler as pointer)
 		kMessage_PostPostDataLoad, // sent after all game data has loaded, and all PostDataLoad events have handled (Passes TESDataHandler as pointer)
+		kMessage_PreSaveGame,
+		kMessage_PostSaveGame,
+		kMessage_PreLoadGame,
+		kMessage_PostLoadGame,
 	};
 
 	std::uint32_t interfaceVersion;
