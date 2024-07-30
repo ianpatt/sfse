@@ -12,6 +12,7 @@
 #include "Hooks_Version.h"
 #include "Hooks_Script.h"
 #include "Hooks_Scaleform.h"
+#include "Hooks_Serialization.h"
 #include "Hooks_Data.h"
 #include "Hooks_Command.h"
 
@@ -146,6 +147,7 @@ void SFSE_Initialize()
 	Hooks_Version_Apply();
 	Hooks_Script_Apply();
 	Hooks_Scaleform_Apply();
+	Hooks_Serialization_Apply();
 	Hooks_Data_Apply();
 	Hooks_Command_Apply();
 
