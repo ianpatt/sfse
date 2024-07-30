@@ -687,12 +687,12 @@ struct TESExitBleedoutEvent {};
 struct TESExitFurnitureEvent {};
 struct TESFormDeleteEvent
 {
-    u32 formId; //00
+    u32 formId; // 00
 };
 struct TESFormIDRemapEvent
 {
-    u32 oldID;  //00
-    u32 newID;  //04
+    u32 oldID;  // 00
+    u32 newID;  // 04
 };
 struct TESFurnitureEvent {};
 struct TESGrabReleaseEvent {};

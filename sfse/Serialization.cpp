@@ -146,26 +146,26 @@ namespace Serialization
 	{
 		_MESSAGE("RevertGlobalData");
 
-		//TODO: add implementation for revert callbacks.
+		// TODO: add implementation for revert callbacks.
 	}
 
 	void HandleSaveGlobalData()
 	{
 		_MESSAGE("SaveGlobalData");
 
-		//TODO: add implementation for serialization & save callbacks.
+		// TODO: add implementation for serialization & save callbacks.
 	}
 
 	void HandleLoadGlobalData()
 	{
 		_MESSAGE("LoadGlobalData");
 
-		//TODO: add implementation for deserialization & load callbacks.
+		// TODO: add implementation for deserialization & load callbacks.
 	}
 
 	void HandleDeleteSave(std::string filePath)
 	{
-		//check if old file is gone
+		// check if old file is gone
 		FileStream saveFile;
 		if (!saveFile.open(filePath.c_str()))
 		{
