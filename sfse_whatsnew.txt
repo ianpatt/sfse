@@ -1,3 +1,6 @@
+0.2.11
+- support for 1.13.61
+
 0.2.10
 - support for 1.12.36
 

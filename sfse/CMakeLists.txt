@@ -104,6 +104,8 @@ source_group(
 		Hooks_Scaleform.h
 		Hooks_Command.cpp
 		Hooks_Command.h
+		Hooks_Serialization.cpp
+		Hooks_Serialization.h
 )
 
 source_group(
@@ -112,6 +114,8 @@ source_group(
 		PluginAPI.h
 		PluginManager.cpp
 		PluginManager.h
+		Serialization.cpp
+		Serialization.h
 )
 
 source_group(
