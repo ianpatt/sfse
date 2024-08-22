@@ -286,8 +286,8 @@ static_assert(sizeof(BSExtraData) == 0x18);
 class BaseExtraList
 {
 public:
-	DEFINE_MEMBER_FN_1(AddExtra, void, 0x014093AC, BSExtraData* a_extra);
-	DEFINE_MEMBER_FN_1(GetByType, BSExtraData*, 0x0140F560, BSExtraData::Type type);
+	DEFINE_MEMBER_FN_1(AddExtra, void, 0x01460FFC, BSExtraData* a_extra);
+	DEFINE_MEMBER_FN_1(GetByType, BSExtraData*, 0x014671B0, BSExtraData::Type type);
 
 private:
 	// members

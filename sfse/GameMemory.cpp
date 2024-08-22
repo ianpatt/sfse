@@ -1,6 +1,6 @@
 #include "sfse/GameMemory.h"
 
-RelocAddr<_GetMemoryManager> GetMemoryManager(0x0057DD64);
+RelocAddr<_GetMemoryManager> GetMemoryManager(0x0058AA14);
 
 void* Heap_Allocate(size_t size)
 {

@@ -118,7 +118,7 @@ class GameSettingCollection : public SettingCollectionMap<Setting>
 public:
 	virtual ~GameSettingCollection();
 
-	DEFINE_MEMBER_FN_1(GetSetting, Setting*, 0x0157EDF4, const char*);
+	DEFINE_MEMBER_FN_1(GetSetting, Setting*, 0x015D7C14, const char*);
 };
 static_assert(sizeof(GameSettingCollection) == 0x158);
 
