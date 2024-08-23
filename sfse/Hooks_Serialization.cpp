@@ -87,6 +87,7 @@ bool VM_LoadGame_Hook(void* a_this, void* a_storage, void* a_handleReaderWriter,
 
 void Hooks_Serialization_Apply()
 {
+#if 0
 	// write call hooks for SaveGame, LoadGame & DeleteSaveFile
 	g_branchTrampoline.write5Call(SaveGame_Call.getUIntPtr(), (uintptr_t)SaveGame_Hook);
 	g_branchTrampoline.write5Call(LoadGame_Call.getUIntPtr(), (uintptr_t)LoadGame_Hook);
@@ -106,4 +107,5 @@ void Hooks_Serialization_Apply()
 	safeWrite64(VM_SaveGame_VFunc, (uintptr_t)VM_SaveGame_Hook);
 	safeWrite64(VM_LoadGame_VFunc, (uintptr_t)VM_LoadGame_Hook);
 	safeWrite64(VM_DropAllRunningData_VFunc, (uintptr_t)VM_DropAllRunningData_Hook);
+#endif
 }
