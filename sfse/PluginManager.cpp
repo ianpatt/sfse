@@ -519,7 +519,7 @@ const char * PluginManager::checkPluginCompatibility(const SFSEPluginVersionData
 			SFSEPluginVersionData::kAddressIndependence_AddressLibrary);
 		bool hasStructureIndependence = version.structureIndependence &
 			(SFSEPluginVersionData::kStructureIndependence_NoStructs |
-			SFSEPluginVersionData::kStructureIndependence_1_8_86_Layout);
+			SFSEPluginVersionData::kStructureIndependence_1_14_70_Layout);
 
 		bool versionIndependent = hasAddressIndependence && hasStructureIndependence;
 

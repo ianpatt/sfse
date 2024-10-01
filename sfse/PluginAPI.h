@@ -228,6 +228,9 @@ struct SFSEPluginVersionData
 
 		// works with 1.8.86+ structure layout
 		kStructureIndependence_1_8_86_Layout = 1 << 2,
+
+		// works with 1.14.70+ structure layout
+		kStructureIndependence_1_14_70_Layout = 1 << 3,
 		
 		// additional bits will be added here when breaking changes happen
 	};
