@@ -146,7 +146,7 @@ public:
 
 	static TESDataHandler* GetSingleton()
 	{
-		RelocPtr<TESDataHandler*> singleton(0x0650D0B0);
+		RelocPtr<TESDataHandler*> singleton(0x065E0250);
 		return *singleton;
 	}
 

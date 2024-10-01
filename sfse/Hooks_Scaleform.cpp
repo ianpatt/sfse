@@ -20,11 +20,11 @@
 #endif
 
 typedef bool(*_IMenu_LoadMovie)(IMenu* menu, bool addEventDispatcher, bool unk2);
-RelocAddr <_IMenu_LoadMovie> IMenu_LoadMovie(0x030C73C4); // IMenu vtable +7
+RelocAddr <_IMenu_LoadMovie> IMenu_LoadMovie(0x03175204); // IMenu vtable +7
 _IMenu_LoadMovie IMenu_LoadMovie_Original = nullptr;
 
 using _BSScaleformManager_ctor = BSScaleformManager*(*)(BSScaleformManager* __this);
-RelocAddr <_BSScaleformManager_ctor> BSScaleformManager_ctor(0x030C9A20);
+RelocAddr <_BSScaleformManager_ctor> BSScaleformManager_ctor(0x03177860);
 _BSScaleformManager_ctor BSScaleformManager_ctor_Original = nullptr;
 
 static bool s_enableScaleformLog = false;
