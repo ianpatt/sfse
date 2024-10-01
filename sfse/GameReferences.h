@@ -249,10 +249,10 @@ public:
 	DEFINE_MEMBER_FN_0(IsInSpace, bool, 0x01A86794)
 	DEFINE_MEMBER_FN_1(HasKeyword, bool, 0x013DA778, BGSKeyword*);
 };
-static_assert(offsetof(TESObjectREFR, data) == 0x78);
-static_assert(offsetof(TESObjectREFR, parentCell) == 0xA8);
-static_assert(offsetof(TESObjectREFR, scale) == 0xC8);
-static_assert(sizeof(TESObjectREFR) == 0xD0);
+static_assert(offsetof(TESObjectREFR, data) == 0x80);
+static_assert(offsetof(TESObjectREFR, parentCell) == 0xB0);
+static_assert(offsetof(TESObjectREFR, scale) == 0xD0);
+static_assert(sizeof(TESObjectREFR) == 0xD8);
 
 class Actor : public TESObjectREFR
 {

@@ -350,7 +350,7 @@ public:
 	u8  unk2C;        // 2C - also flag
 	u8  unk2D;        // 2D
 	u8  formType;     // 2E
-	u8  modIndex;     // 2F
+	u16  modIndex;    // 2F - changed to u16 in 1.14.70
 
 	using _GetFormByNumericID = TESForm * (*)(u32 formId);
 	static RelocAddr<_GetFormByNumericID> GetFormByNumericID;
@@ -359,7 +359,7 @@ public:
 	static RelocAddr<_GetFormByEditorID> GetFormByEditorID;
 };
 static_assert(offsetof(TESForm, refCount) == 0x08);
-static_assert(sizeof(TESForm) == 0x30);
+static_assert(sizeof(TESForm) == 0x38);
 
 class BGSKeyword : public TESForm
 {
@@ -406,7 +406,7 @@ public:
 	u64	unk78;	// 78
 	u64	unk80;	// 80
 };
-static_assert(sizeof(BGSListForm) == 0x88);
+static_assert(sizeof(BGSListForm) == 0x90);
 
 class BGSMorphableObject : public TESForm
 {
@@ -419,7 +419,7 @@ public:
 	u32					unk58;					// 58
 	u32					unk5C;					// 5C
 };
-static_assert(sizeof(BGSMorphableObject) == 0x60);
+static_assert(sizeof(BGSMorphableObject) == 0x68);
 
 class BGSHeadPart : 
 	public TESForm,
@@ -461,9 +461,9 @@ public:
 	HeadPartType	eType;	// 140
 	u32	unk144; // 144
 };
-static_assert(sizeof(BGSHeadPart) == 0x148);
-static_assert(offsetof(BGSHeadPart, strFullName) == 0x38);
-static_assert(offsetof(BGSHeadPart, cModel) == 0x48);
+static_assert(sizeof(BGSHeadPart) == 0x150);
+static_assert(offsetof(BGSHeadPart, strFullName) == 0x40);
+static_assert(offsetof(BGSHeadPart, cModel) == 0x50);
 
 class BGSBoneModifier : public TESForm
 {
@@ -472,7 +472,7 @@ public:
 
 	BoneModifierData*	unk30;	// 30
 };
-static_assert(sizeof(BGSBoneModifier) == 0x38);
+static_assert(sizeof(BGSBoneModifier) == 0x40);
 
 class BGSEquipSlot : public TESForm
 {
@@ -486,7 +486,7 @@ public:
 	u64				unk50;	// 50
 	u64				unk58;	// 58
 };
-static_assert(sizeof(BGSEquipSlot) == 0x60);
+static_assert(sizeof(BGSEquipSlot) == 0x68);
 
 class BGSBodyPartData : 
 	public TESForm,
@@ -501,7 +501,7 @@ public:
 	BSFixedString	unk140;			// 140
 	BSFixedString	unk148;			// 148
 };
-static_assert(sizeof(BGSBodyPartData) == 0x150);
+static_assert(sizeof(BGSBodyPartData) == 0x158);
 
 class BGSMovementType : public TESForm
 {
@@ -509,7 +509,7 @@ public:
 	BSFixedString	unk30;	// 30
 	u64	unk38[(0x140 - 0x38) >> 3];
 };
-static_assert(sizeof(BGSMovementType) == 0x140);
+static_assert(sizeof(BGSMovementType) == 0x148);
 
 class BGSAimAssistPoseData : public TESForm
 {
@@ -699,24 +699,24 @@ public:
 	BSFixedString			unkA10;
 };
 
-static_assert(offsetof(TESRace, unk360) == 0x360);
-static_assert(offsetof(TESRace, unk5C0) == 0x5C0);
-static_assert(offsetof(TESRace, unk5E8) == 0x5E8);
+static_assert(offsetof(TESRace, unk360) == 0x368);
+static_assert(offsetof(TESRace, unk5C0) == 0x5C8);
+static_assert(offsetof(TESRace, unk5E8) == 0x5F0);
 static_assert(offsetof(TESRace::Unk6A8, unk80) == 0x80);
-static_assert(offsetof(TESRace, unk6A8) == 0x6A8);
-static_assert(offsetof(TESRace, unk7B0) == 0x7B0);
-static_assert(offsetof(TESRace, unk7F0) == 0x7F0);
-static_assert(offsetof(TESRace, unk8F0) == 0x8F0);
-static_assert(offsetof(TESRace, bodyPartInfo) == 0x900);
-static_assert(offsetof(TESRace, attachParentA) == 0x928);
-static_assert(offsetof(TESRace, unk940) == 0x940);
-static_assert(offsetof(TESRace, headParts) == 0x9D0);
-static_assert(offsetof(TESRace, unk9F0) == 0x9F0);
-static_assert(offsetof(TESRace, unkA10) == 0xA10);
+static_assert(offsetof(TESRace, unk6A8) == 0x6B0);
+static_assert(offsetof(TESRace, unk7B0) == 0x7B8);
+static_assert(offsetof(TESRace, unk7F0) == 0x7F8);
+static_assert(offsetof(TESRace, unk8F0) == 0x8F8);
+static_assert(offsetof(TESRace, bodyPartInfo) == 0x908);
+static_assert(offsetof(TESRace, attachParentA) == 0x930);
+static_assert(offsetof(TESRace, unk940) == 0x948);
+static_assert(offsetof(TESRace, headParts) == 0x9D8);
+static_assert(offsetof(TESRace, unk9F0) == 0x9F8);
+static_assert(offsetof(TESRace, unkA10) == 0xA18);
 static_assert(sizeof(TESRace::Unk6A8) == 0x100);
 static_assert(sizeof(TESRace::ChargenData::FaceMorphData) == 0x68);
 static_assert(sizeof(TESRace::ChargenData) == 0x150);
-static_assert(sizeof(TESRace) == 0xA18);
+static_assert(sizeof(TESRace) == 0xA20);
 
 class BGSAVMData : public TESForm
 {
@@ -748,4 +748,4 @@ public:
 	Entry*			unk68;		// 68 - Why are there 2 end pointers?
 	u64				unk70;		// 70
 };
-static_assert(sizeof(BGSAVMData) == 0x78);
+static_assert(sizeof(BGSAVMData) == 0x80);
