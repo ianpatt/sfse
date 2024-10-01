@@ -9,11 +9,16 @@
 #include "sfse/GameSettings.h"
 #endif
 
-RelocAddr <uintptr_t> GameDataLoad_Target(0x025D30E0 + 0x1153); // End of this function before the retn
+RelocAddr <uintptr_t> GameDataLoad_Target(0x025D30E0 + 0x1521); // last call
+typedef void (*_Hooks_GameData_Original)(u32 lock);
+RelocAddr <_Hooks_GameData_Original> Hooks_GameData_Original(0x0129D600);
 
-void Hook_GameData_Loaded()
+void Hook_GameData_Loaded(u32 lock)
 {
+	Hooks_GameData_Original(lock);
+
 	auto dataHandler = TESDataHandler::GetSingleton();
+
 #if 0
 	auto settings = &(*SettingT<INISettingCollection>::pCollection)->SettingsA.node;
 	do
@@ -74,41 +79,12 @@ void Hook_GameData_Loaded()
 		}
 	}
 #endif
+
 	PluginManager::dispatchMessage(0, SFSEMessagingInterface::kMessage_PostDataLoad, dataHandler, sizeof(u64), nullptr);
 	PluginManager::dispatchMessage(0, SFSEMessagingInterface::kMessage_PostPostDataLoad, dataHandler, sizeof(u64), nullptr);
 }
 
 void Hooks_Data_Apply()
 {
-	{
-		struct GameDataLoad_Code : Xbyak::CodeGenerator {
-			GameDataLoad_Code(void* buf, uintptr_t origin, uintptr_t target) : Xbyak::CodeGenerator(4096, buf)
-			{
-				Xbyak::Label callLabel;
-				Xbyak::Label retnLabel;
-
-				pop(r12);
-				pop(rdi);
-				pop(rsi);
-				pop(rbx);
-				pop(rbp);
-				sub(rsp, 0x28);
-				call(ptr[rip + callLabel]);
-				add(rsp, 0x28);
-				mov(ecx, 1);
-				jmp(ptr[rip + retnLabel]);
-
-				L(retnLabel);
-				dq(origin + 6);
-
-				L(callLabel);
-				dq(target);
-			}
-		};
-
-		void* codeBuf = g_localTrampoline.startAlloc();
-		GameDataLoad_Code code(codeBuf, GameDataLoad_Target.getUIntPtr(), uintptr_t(Hook_GameData_Loaded));
-		g_localTrampoline.endAlloc(code.getCurr());
-		g_branchTrampoline.write6Branch(GameDataLoad_Target.getUIntPtr(), uintptr_t(code.getCode()));
-	}
+	g_branchTrampoline.write5Call(GameDataLoad_Target.getUIntPtr(), uintptr_t(Hook_GameData_Loaded));
 }
