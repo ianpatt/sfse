@@ -1,3 +1,7 @@
+0.2.13
+- support for 1.14.70
+- note that major changes have been made to the root game form class, so many older plugins will need to be recompiled to work with game version 1.14.70. this is not an SFSE change, Bethesda updated the game code.
+
 0.2.12
 - disabled preliminary serialization API (stability issues to be resolved later)
 
