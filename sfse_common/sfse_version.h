@@ -69,6 +69,7 @@
 #endif
 
 #define LOADER_VERSION_1_0_0	MAKE_EXE_VERSION(1, 0, 0)
-#define LOADER_VERSION			LOADER_VERSION_1_0_0
+#define LOADER_VERSION_1_1_0	MAKE_EXE_VERSION(1, 1, 0)	// code signing
+#define LOADER_VERSION			LOADER_VERSION_1_1_0
 
 #endif /* __SFSE_VERSION_H__ */

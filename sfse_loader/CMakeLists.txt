@@ -6,7 +6,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/versioning.cmake)
 
 project(
 	sfse_loader
-	VERSION 1.0.0
+	VERSION 1.1.0
 	LANGUAGES CXX
 )
 
@@ -77,6 +77,8 @@ target_link_libraries(
 		sfse::sfse_common
 		Shlwapi.lib
 		Version.lib
+		Wintrust.lib
+		Crypt32.lib
 )
 
 # ---- Configure all targets ----

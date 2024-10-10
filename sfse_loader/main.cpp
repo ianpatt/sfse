@@ -11,6 +11,7 @@
 #include "IdentifyEXE.h"
 #include "Inject.h"
 #include "Options.h"
+#include "SigCheck.h"
 #include <string>
 
 int main(int argc, char ** argv)
@@ -188,7 +189,8 @@ int main(int argc, char ** argv)
 				"Either you have not installed SFSE correctly, or a new version of Starfield has been released.\n"
 				"Please make sure you have installed SFSE correctly and are running it from your Starfield folder.\n"
 				"If a game patch was released since you last ran the game, please check the website for updates.\n"
-				"Runtime: %d.%d.%d", dllPath.c_str(), procHookInfo.getVersionMajor(), procHookInfo.getVersionMinor(), procHookInfo.getVersionBuild());
+				"You have game version %d.%d.%d installed. The loader is not lying to you.\n"
+				"Check your game installation if you are still confused.", dllPath.c_str(), procHookInfo.getVersionMajor(), procHookInfo.getVersionMinor(), procHookInfo.getVersionBuild());
 			return 1;
 		}
 	}
@@ -217,6 +219,12 @@ int main(int argc, char ** argv)
 			}
 
 			FreeLibrary(resourceHandle);
+		}
+
+		if(dllOK)
+		{
+			if(!CheckDLLSignature(dllPath))
+				dllOK = false;
 		}
 
 		if(!dllOK)
@@ -294,12 +302,6 @@ int main(int argc, char ** argv)
 
 	bool	injectionSucceeded = false;
 	u32		procType = procHookInfo.procType;
-
-	if(g_options.m_forceSteamLoader)
-	{
-		_MESSAGE("forcing steam loader");
-		procType = kProcType_Steam;
-	}
 
 	// inject the dll
 	switch(procType)

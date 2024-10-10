@@ -16,11 +16,11 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "Starfield Script Extender (SFSE) Loader"
-			VALUE "FileVersion", "1.0.0"
+			VALUE "FileVersion", "1.1.0"
             VALUE "InternalName", "SFSE"
             VALUE "LegalCopyright", "Copyright (C) 2006-2024"
             VALUE "ProductName", "SFSE"
-			VALUE "ProductVersion", "1.0.0"
+			VALUE "ProductVersion", "1.1.0"
         END
     END
     BLOCK "VarFileInfo"
