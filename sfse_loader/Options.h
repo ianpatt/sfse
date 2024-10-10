@@ -22,11 +22,9 @@ public:
 	bool	m_crcOnly;
 	bool	m_waitForClose;
 	bool	m_verbose;
-	bool	m_moduleInfo;
 	bool	m_skipLauncher;
 	bool	m_launchSteam;
 	bool	m_noTimeout;
-	bool	m_forceSteamLoader;
 
 	u64		m_affinity;
 

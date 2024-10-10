@@ -13,11 +13,9 @@ Options::Options()
 	,m_optionsOnly(false)
 	,m_waitForClose(false)
 	,m_verbose(false)
-	,m_moduleInfo(false)
 	,m_skipLauncher(true)
 	,m_launchSteam(false)
 	,m_noTimeout(false)
-	,m_forceSteamLoader(false)
 	,m_affinity(0)
 {
 	//
@@ -145,10 +143,6 @@ bool Options::Read(int argc, char ** argv)
 				{
 					m_verbose = true;
 				}
-				else if(!_stricmp(arg, "minfo"))
-				{
-					m_moduleInfo = true;
-				}
 				else if(!_stricmp(arg, "noskiplauncher"))
 				{
 					m_skipLauncher = false;
@@ -182,7 +176,7 @@ bool Options::Read(int argc, char ** argv)
 				}
 				else if(!_stricmp(arg, "forcesteamloader"))
 				{
-					m_forceSteamLoader = true;
+					// does nothing
 				}
 				else if(!_stricmp(arg, "-"))
 				{
@@ -238,9 +232,9 @@ void Options::PrintUsage(void)
 	_MESSAGE("  -minfo - log information about the DLLs loaded in to the target process");
 	_MESSAGE("  -noskiplauncher - does not skip the default Bethesda launcher window");
 	_MESSAGE("                    note: specifying this option may cause compatibility problems");
-	_MESSAGE("  -launchsteam - attempt to launch steam if it is not running");
+	_MESSAGE("  -launchsteam - ignored for backwards compatibility");
 	_MESSAGE("  -affinity <mask> - set the processor affinity mask");
-	_MESSAGE("  -forcesteamloader - override exe type detection and use steam loader");
+	_MESSAGE("  -forcesteamloader - ignored for backwards compatibility");
 	_MESSAGE("  -- - ignore arguments after this marker");
 }
 
