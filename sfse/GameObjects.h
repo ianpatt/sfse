@@ -25,8 +25,9 @@ public:
     virtual void    Unk_6A(); // 6A
     virtual void    Unk_6B(); // 6B
 
-    BGSSnapTemplateComponent    snapTemplate;   // 30
+    BGSSnapTemplateComponent    snapTemplate;   // 38
 };
+static_assert(sizeof(TESObject) == 0x50);
 
 class TESBoundObject : public TESObject
 {
@@ -59,10 +60,10 @@ public:
     BGSObjectPlacementDefaults  placementDefaults;  // C8
     u32                         unkD8;              // D8
 };
-static_assert(offsetof(TESBoundObject, templateItems) == 0x60);
-static_assert(offsetof(TESBoundObject, previewTransform) == 0x80);
-static_assert(offsetof(TESBoundObject, placementDefaults) == 0xC8);
-static_assert(sizeof(TESBoundObject) == 0xE0);
+static_assert(offsetof(TESBoundObject, templateItems) == 0x68);
+static_assert(offsetof(TESBoundObject, previewTransform) == 0x88);
+static_assert(offsetof(TESBoundObject, placementDefaults) == 0xD0);
+static_assert(sizeof(TESBoundObject) == 0xE8);
 
 class TESBoundAnimObject : public TESBoundObject
 {
@@ -72,7 +73,7 @@ public:
     virtual void    Unk_80(); // 80
     virtual void    Unk_81(); // 81
 };
-static_assert(sizeof(TESBoundAnimObject) == 0xE0);
+static_assert(sizeof(TESBoundAnimObject) == 0xE8);
 
 class TESActorBase : 
     public TESBoundAnimObject,
@@ -175,6 +176,6 @@ public:
     DEFINE_MEMBER_FN_1(DeriveGeneticParentAppearance, void, 0x01BB5548, TESNPC* source);
     DEFINE_MEMBER_FN_1(CopyAppearance, void, 0x01BB3980, TESNPC* source);
 };
-static_assert(sizeof(TESNPC) == 0x450); // Un-verified after 1.10.31
+static_assert(sizeof(TESNPC) == 0x458); // Un-verified after 1.10.31
 static_assert(sizeof(TESNPC::HeadPartData) == 0x28);
 static_assert(sizeof(TESNPC::InstanceData) == 0x158);
