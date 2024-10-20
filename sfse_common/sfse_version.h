@@ -4,10 +4,10 @@
 // these have to be macros so they can be used in the .rc
 #define SFSE_VERSION_INTEGER		0
 #define SFSE_VERSION_INTEGER_MINOR	2
-#define SFSE_VERSION_INTEGER_BETA	14
-#define SFSE_VERSION_VERSTRING		"0, 0, 2, 14"
+#define SFSE_VERSION_INTEGER_BETA	15
+#define SFSE_VERSION_VERSTRING		"0, 0, 2, 15"
 #define SFSE_VERSION_PADDEDSTRING	"0001"
-#define SFSE_VERSION_RELEASEIDX		21
+#define SFSE_VERSION_RELEASEIDX		22
 
 #define MAKE_EXE_VERSION_EX(major, minor, build, sub)	((((major) & 0xFF) << 24) | (((minor) & 0xFF) << 16) | (((build) & 0xFFF) << 4) | ((sub) & 0xF))
 #define MAKE_EXE_VERSION(major, minor, build)			MAKE_EXE_VERSION_EX(major, minor, build, 0)
@@ -54,7 +54,7 @@
 // information about the state of the game at the time of release
 #define SFSE_TARGETING_BETA_VERSION	0
 #define CURRENT_RELEASE_RUNTIME		RUNTIME_VERSION_1_14_70
-#define CURRENT_RELEASE_SFSE_STR	"0.2.14"
+#define CURRENT_RELEASE_SFSE_STR	"0.2.15"
 
 #if GET_EXE_VERSION_SUB(RUNTIME_VERSION) == RUNTIME_TYPE_BETHESDA
 #define SAVE_FOLDER_NAME "Starfield"
@@ -70,6 +70,7 @@
 
 #define LOADER_VERSION_1_0_0	MAKE_EXE_VERSION(1, 0, 0)
 #define LOADER_VERSION_1_1_0	MAKE_EXE_VERSION(1, 1, 0)	// code signing
-#define LOADER_VERSION			LOADER_VERSION_1_1_0
+#define LOADER_VERSION_1_1_1	MAKE_EXE_VERSION(1, 1, 1)	// code signing bugfix
+#define LOADER_VERSION			LOADER_VERSION_1_1_1
 
 #endif /* __SFSE_VERSION_H__ */

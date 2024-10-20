@@ -1,3 +1,6 @@
+0.2.15
+- fixed sign check compatibility
+
 0.2.14
 - in order to reduce virus scanner false positives, the SFSE components now use a code signature. no, plugins will not need signing.
 - removed some unused command line options (mostly ignored rather than removed to reduce end user breakage)

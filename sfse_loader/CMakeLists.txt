@@ -6,7 +6,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/versioning.cmake)
 
 project(
 	sfse_loader
-	VERSION 1.1.0
+	VERSION 1.1.1
 	LANGUAGES CXX
 )
 
