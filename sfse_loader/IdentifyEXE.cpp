@@ -5,7 +5,7 @@
 #include <string>
 #include <Windows.h>
 
-static bool GetFileVersion(const char * path, VS_FIXEDFILEINFO * info, std::string * outProductName, std::string * outProductVersion)
+bool GetFileVersion(const char * path, VS_FIXEDFILEINFO * info, std::string * outProductName, std::string * outProductVersion)
 {
 	bool result = false;
 
@@ -65,7 +65,7 @@ static bool GetFileVersion(const char * path, VS_FIXEDFILEINFO * info, std::stri
 	return result;
 }
 
-static bool VersionStrToInt(const std::string & verStr, u64 * out)
+bool VersionStrToInt(const std::string & verStr, u64 * out)
 {
 	u64 result = 0;
 	int parts[4];
@@ -94,19 +94,7 @@ static bool GetFileVersionData(const char * path, u64 * out, std::string * outPr
 	if(!GetFileVersion(path, &versionInfo, outProductName, &productVersionStr))
 		return false;
 
-	_MESSAGE("dwSignature = %08X", versionInfo.dwSignature);
-	_MESSAGE("dwStrucVersion = %08X", versionInfo.dwStrucVersion);
-	_MESSAGE("dwFileVersionMS = %08X", versionInfo.dwFileVersionMS);
-	_MESSAGE("dwFileVersionLS = %08X", versionInfo.dwFileVersionLS);
-	_MESSAGE("dwProductVersionMS = %08X", versionInfo.dwProductVersionMS);
-	_MESSAGE("dwProductVersionLS = %08X", versionInfo.dwProductVersionLS);
-	_MESSAGE("dwFileFlagsMask = %08X", versionInfo.dwFileFlagsMask);
-	_MESSAGE("dwFileFlags = %08X", versionInfo.dwFileFlags);
-	_MESSAGE("dwFileOS = %08X", versionInfo.dwFileOS);
-	_MESSAGE("dwFileType = %08X", versionInfo.dwFileType);
-	_MESSAGE("dwFileSubtype = %08X", versionInfo.dwFileSubtype);
-	_MESSAGE("dwFileDateMS = %08X", versionInfo.dwFileDateMS);
-	_MESSAGE("dwFileDateLS = %08X", versionInfo.dwFileDateLS);
+	DumpVersionInfo(versionInfo);
 	_MESSAGE("productVersionStr = %s", productVersionStr.c_str());
 
 	u64 version = 0;
@@ -116,6 +104,23 @@ static bool GetFileVersionData(const char * path, u64 * out, std::string * outPr
 	*out = version;
 
 	return true;
+}
+
+void DumpVersionInfo(const VS_FIXEDFILEINFO & info)
+{
+	_MESSAGE("dwSignature = %08X", info.dwSignature);
+	_MESSAGE("dwStrucVersion = %08X", info.dwStrucVersion);
+	_MESSAGE("dwFileVersionMS = %08X", info.dwFileVersionMS);
+	_MESSAGE("dwFileVersionLS = %08X", info.dwFileVersionLS);
+	_MESSAGE("dwProductVersionMS = %08X", info.dwProductVersionMS);
+	_MESSAGE("dwProductVersionLS = %08X", info.dwProductVersionLS);
+	_MESSAGE("dwFileFlagsMask = %08X", info.dwFileFlagsMask);
+	_MESSAGE("dwFileFlags = %08X", info.dwFileFlags);
+	_MESSAGE("dwFileOS = %08X", info.dwFileOS);
+	_MESSAGE("dwFileType = %08X", info.dwFileType);
+	_MESSAGE("dwFileSubtype = %08X", info.dwFileSubtype);
+	_MESSAGE("dwFileDateMS = %08X", info.dwFileDateMS);
+	_MESSAGE("dwFileDateLS = %08X", info.dwFileDateLS);
 }
 
 // non-relocated image

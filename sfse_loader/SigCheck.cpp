@@ -50,13 +50,15 @@ bool FileCertVerifier::verify(const WCHAR * path)
 	winTrustData.dwUnionChoice = WTD_CHOICE_FILE;
 	winTrustData.pFile = &fileInfo;
 	winTrustData.dwStateAction = WTD_STATEACTION_VERIFY;
-	winTrustData.dwProvFlags = WTD_SAFER_FLAG | WTD_DISABLE_MD2_MD4;	// 'safer' mode, disallow old algorithms
+	winTrustData.dwProvFlags = 0;
 
 	GUID authenticodeVerify = WINTRUST_ACTION_GENERIC_VERIFY_V2;
 
 	// validation status is stored in these result codes
 	m_trustResult = WinVerifyTrust(nullptr, &authenticodeVerify, &winTrustData);
 	m_trustError = GetLastError();
+
+	_MESSAGE("WinVerifyTrust: %08X %08X %S", m_trustResult, m_trustError, path);
 
 	// dispose hWVTStateData
 	winTrustData.dwStateAction = WTD_STATEACTION_CLOSE;
@@ -203,14 +205,24 @@ bool CheckDLLSignature(const std::string & dllPath)
 	{
 		DWORD error = GetLastError();
 
-		_ERROR("error converting DLL path to wide characters (%08X)", error);
+		_ERROR("error converting DLL path to wide characters (count) (%08X)", error);
 		return false;
 	}
 
 	std::vector <WCHAR> dllPathWide;
 	dllPathWide.resize(numWideChars);
 
-	MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, dllPath.data(), (int)dllPath.size(), dllPathWide.data(), (int)dllPathWide.size());
+	numWideChars = MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, dllPath.data(), (int)dllPath.size(), dllPathWide.data(), (int)dllPathWide.size());
+	if(!numWideChars)
+	{
+		DWORD error = GetLastError();
+
+		_ERROR("error converting DLL path to wide characters (convert) (%08X)", error);
+		return false;
+	}
+
+	// null terminator
+	dllPathWide.push_back(0);
 
 	FileCertVerifier dllVerifier;
 	if(!dllVerifier.verify(dllPathWide.data()))

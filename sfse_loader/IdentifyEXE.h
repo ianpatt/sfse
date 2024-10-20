@@ -2,6 +2,7 @@
 
 #include "sfse_common/Types.h"
 #include <string>
+#include <Windows.h>
 
 enum
 {
@@ -28,3 +29,7 @@ struct ProcHookInfo
 };
 
 bool IdentifyEXE(const char * procName, bool isEditor, std::string * dllSuffix, ProcHookInfo * hookInfo);
+
+bool GetFileVersion(const char * path, VS_FIXEDFILEINFO * info, std::string * outProductName, std::string * outProductVersion);
+void DumpVersionInfo(const VS_FIXEDFILEINFO & info);
+bool VersionStrToInt(const std::string & verStr, u64 * out);

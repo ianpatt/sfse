@@ -229,10 +229,48 @@ int main(int argc, char ** argv)
 
 		if(!dllOK)
 		{
-			PrintLoaderError(
-				"Bad SFSE DLL (%s).\n"
-				"Do not rename files; it will not magically make anything work.\n"
-				"%08X %08X", dllPath.c_str(), procHookInfo.packedVersion, dllVersion);
+			bool preSigning = false;
+
+			VS_FIXEDFILEINFO info;
+			std::string productName;
+			std::string productVersion;
+
+			if(GetFileVersion(dllPath.c_str(), &info, &productName, &productVersion))
+			{
+				_MESSAGE("SFSE DLL version");
+				DumpVersionInfo(info);
+				_MESSAGE("productName = %s", productName.c_str());
+				_MESSAGE("productVersion = %s", productVersion.c_str());
+
+				u64 fullVersion = (u64(info.dwFileVersionMS) << 32) | info.dwFileVersionLS;
+				u64 kFirstSignedVersion = 0x000000000002000E;
+
+				if(fullVersion < kFirstSignedVersion)
+					preSigning = true;
+			}
+			else
+			{
+				_MESSAGE("couldn't get file version info");
+			}
+
+			if(preSigning)
+			{
+				PrintLoaderError(
+					"Old SFSE DLL (%s).\n"
+					"Please make sure that you have replaced all files with their new versions.\n"
+					"DLL version (%s) EXE version (%d.%d.%d)",
+					dllPath.c_str(),
+					productVersion.c_str(),
+					SFSE_VERSION_INTEGER, SFSE_VERSION_INTEGER_MINOR, SFSE_VERSION_INTEGER_BETA);
+			}
+			else
+			{
+				PrintLoaderError(
+					"Bad SFSE DLL (%s).\n"
+					"Do not rename files; it will not magically make anything work.\n"
+					"%08X %08X", dllPath.c_str(), procHookInfo.packedVersion, dllVersion);
+			}
+
 			return 1;
 		}
 	}
