@@ -9,9 +9,9 @@
 #include "sfse/GameSettings.h"
 #endif
 
-RelocAddr <uintptr_t> GameDataLoad_Target(0x025D30E0 + 0x1521); // last call
+RelocAddr <uintptr_t> GameDataLoad_Target(0x025D3350 + 0x1521); // last call
 typedef void (*_Hooks_GameData_Original)(u32 lock);
-RelocAddr <_Hooks_GameData_Original> Hooks_GameData_Original(0x0129D600);
+RelocAddr <_Hooks_GameData_Original> Hooks_GameData_Original(0x0129D660);
 
 void Hook_GameData_Loaded(u32 lock)
 {

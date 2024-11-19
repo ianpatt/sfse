@@ -107,7 +107,7 @@ public:
 	BSReadWriteLock						extraLock;	// 28
 	BSTArray<NiPointer<NiExtraData>>*	pExtra;		// 30
 
-	DEFINE_MEMBER_FN_1(AddExtraData, bool, 0x037E68CC, NiExtraData* pkExtra);
+	DEFINE_MEMBER_FN_1(AddExtraData, bool, 0x037E6D0C, NiExtraData* pkExtra);
 };
 static_assert(sizeof(NiObjectNET) == 0x38);
 
@@ -201,7 +201,7 @@ public:
 	u32	unk128;						// 128
 	u32	unk12C;						// 12C
 
-	DEFINE_MEMBER_FN_1(Update, void, 0x037DE0E4, NiUpdateData& apData);
+	DEFINE_MEMBER_FN_1(Update, void, 0x037DE524, NiUpdateData& apData);
 };
 static_assert(sizeof(NiAVObject) == 0x130);
 static_assert(offsetof(NiAVObject, m_pkParent) == 0x38);

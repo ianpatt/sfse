@@ -71,7 +71,7 @@ bool GetSFSEVersion_Execute(const SCRIPT_PARAMETER* paramInfo, const char*, TESO
 }
 
 typedef bool (*_ConsoleCommandInit)(void* unk1);
-RelocAddr <_ConsoleCommandInit> ConsoleCommandInit(0x01B78270);
+RelocAddr <_ConsoleCommandInit> ConsoleCommandInit(0x01B78300);
 _ConsoleCommandInit ConsoleCommandInit_Original = nullptr;
 
 void ConsoleCommandInit_Hook(void* unk1)
@@ -109,7 +109,7 @@ void ConsoleCommandInit_Hook(void* unk1)
 			cmd.bInvalidatesCellList = 0;
 		}
 
-		RelocAddr<void*> EmptyFunc(0x012178A0);
+		RelocAddr<void*> EmptyFunc(0x01217900);
 		_MESSAGE("%s (%s)", iter->pFunctionName, iter->pExecuteFunction == EmptyFunc ? "Empty" : "Implemented");
 #endif
 	}

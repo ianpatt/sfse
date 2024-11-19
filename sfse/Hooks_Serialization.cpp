@@ -13,16 +13,16 @@ class BGSSaveLoadGame;
 class BGSSaveLoadManager;
 
 typedef void (*_SaveGame)(BGSSaveLoadGame* a_this, void* a_unk1, void* a_unk2, const char* a_name);
-RelocAddr <_SaveGame> SaveGame_Call(0x02551B80 + 0x12B);
-RelocAddr <_SaveGame> SaveGame_Original(0x02554D60);
+RelocAddr <_SaveGame> SaveGame_Call(0x02551DF0 + 0x12B);
+RelocAddr <_SaveGame> SaveGame_Original(0x02554FD0);
 
 typedef bool (*_LoadGame)(BGSSaveLoadGame* a_this, const char* a_name, void* a_unk1, void* a_unk2);
-RelocAddr <_LoadGame> LoadGame_Call(0x02585990 + 0x572);
-RelocAddr <_LoadGame> LoadGame_Original(0x0255B560);
+RelocAddr <_LoadGame> LoadGame_Call(0x02585C00 + 0x572);
+RelocAddr <_LoadGame> LoadGame_Original(0x0255B7D0);
 
 typedef bool (*_DeleteSaveFile)(const char* a_filePath);
-RelocAddr <_DeleteSaveFile> DeleteSaveFile_Call(0x0258516C + 0x65);
-RelocAddr <_DeleteSaveFile> DeleteSaveFile_Original(0x02583B28);
+RelocAddr <_DeleteSaveFile> DeleteSaveFile_Call(0x025853DC + 0x65);
+RelocAddr <_DeleteSaveFile> DeleteSaveFile_Original(0x02583D98);
 
 typedef bool (*_VM_SaveGame)(void* a_this, void* a_storage, void* a_handleReaderWriter, bool a_flag);
 typedef bool (*_VM_LoadGame)(void* a_this, void* a_storage, void* a_handleReaderWriter, bool* a_flag, bool* b_flag);
@@ -30,7 +30,7 @@ typedef void* (*_VM_DropAllRunningData)(void* a_this);
 _VM_SaveGame VM_SaveGame_Original = nullptr;
 _VM_LoadGame VM_LoadGame_Original = nullptr;
 _VM_DropAllRunningData VM_DropAllRunningData_Original = nullptr;
-RelocAddr <uintptr_t> VirtualMachine_IVMSaveLoadInterface_VTable(0x055DE0B0);
+RelocAddr <uintptr_t> VirtualMachine_IVMSaveLoadInterface_VTable(0x055DDB58);
 
 void SaveGame_Hook(BGSSaveLoadGame* a_this, void* a_unk1, void* a_unk2, const char* a_name)
 {
