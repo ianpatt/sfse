@@ -524,7 +524,7 @@ const char * PluginManager::checkPluginCompatibility(const SFSEPluginVersionData
 		// version compatibility means both address independence and structure independence
 		bool hasAddressIndependence = version.addressIndependence &
 			(SFSEPluginVersionData::kAddressIndependence_Signatures |
-			SFSEPluginVersionData::kAddressIndependence_AddressLibrary);
+			SFSEPluginVersionData::kAddressIndependence_AddressLibraryV2);
 		bool hasStructureIndependence = version.structureIndependence &
 			(SFSEPluginVersionData::kStructureIndependence_NoStructs |
 			SFSEPluginVersionData::kStructureIndependence_1_14_70_Layout);
@@ -540,7 +540,7 @@ const char * PluginManager::checkPluginCompatibility(const SFSEPluginVersionData
 			versionIndependent = false;
 
 		// verify that address library is there to centralize error message
-		if(version.addressIndependence & SFSEPluginVersionData::kAddressIndependence_AddressLibrary)
+		if(version.addressIndependence & (SFSEPluginVersionData::kAddressIndependence_AddressLibrary | SFSEPluginVersionData::kAddressIndependence_AddressLibraryV2))
 		{
 			const char * result = checkAddressLibrary();
 			if(result) return result;

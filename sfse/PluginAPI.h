@@ -215,6 +215,9 @@ struct SFSEPluginVersionData
 		
 		// Address Library v1 (https://www.nexusmods.com/starfield/mods/3256)
 		kAddressIndependence_AddressLibrary = 1 << 1,
+
+		// Address Library for 1.15.216+
+		kAddressIndependence_AddressLibraryV2 = 1 << 2,
 	};
 	
 	// describe your structure compatibility
