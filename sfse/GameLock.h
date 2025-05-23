@@ -21,7 +21,7 @@ public:
 	DEFINE_MEMBER_FN_0(lock_read, void, 0x0224FE60);
 	DEFINE_MEMBER_FN_0(lock_write, void, 0x0224FEE0);
 	DEFINE_MEMBER_FN_0(unlock_read, void, 0x002BE580);
-	// unlock_write was inlined everywhere
+	DEFINE_MEMBER_FN_0(unlock_write, void, 0x002BCE80);
 
 private:
 	// members
