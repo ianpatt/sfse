@@ -38,3 +38,6 @@ build/*
 
 out/*
 CMakeSettings.json
+
+# update temp files
+sfse_update
