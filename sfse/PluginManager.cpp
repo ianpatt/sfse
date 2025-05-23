@@ -443,11 +443,12 @@ void PluginManager::sanitize(SFSEPluginVersionData * version)
 
 enum
 {
-	kCompat_BlockFromRuntime =	1 << 0,
-	kCompat_BlockFromEditor =	1 << 1,
+	kCompat_BlockFromRuntime =		1 << 0,
+	kCompat_BlockFromEditor =		1 << 1,
+	kCompat_NotVersionIndependent =	1 << 2,
 };
 
-struct MinVersionEntry
+struct PluginCompatEntry
 {
 	const char	* name;
 	u32			minVersion;
@@ -455,7 +456,7 @@ struct MinVersionEntry
 	u32			compatFlags;
 };
 
-static const MinVersionEntry	kMinVersionList[] =
+static const PluginCompatEntry	kPluginCompatList[] =
 {
 	{	"BakaAchievementEnabler",	MAKE_EXE_VERSION(2, 0, 0),		"broken before plugin version 2.0.0",	kCompat_BlockFromRuntime	},
 	{	"BakaKillMyGames",			MAKE_EXE_VERSION(2, 0, 0),		"broken before plugin version 2.0.0",	kCompat_BlockFromRuntime	},
@@ -468,6 +469,9 @@ static const MinVersionEntry	kMinVersionList[] =
 	{	"SaveTweaks",				4,			"crashes due to bad version data (update past version 3)",			kCompat_BlockFromRuntime	},
 
 	{	"Starfield-NoAffinityLoss",	10301,		"crashes due to bad version data (update past version 1.3.0)",		kCompat_BlockFromRuntime	},
+
+	// didn't set up version data correctly and implemented its own version check
+	{	"Starfield Engine Fixes - SFSE Plugin by LarannKiar",	0,	"not version independent",	kCompat_NotVersionIndependent },
 
 	{	nullptr, 0, nullptr }
 };
@@ -488,10 +492,14 @@ const char * PluginManager::checkPluginCompatibility(const SFSEPluginVersionData
 		}
 
 		// check for 'known bad' versions of plugins
-		for(const MinVersionEntry * iter = kMinVersionList; iter->name; ++iter)
+		const PluginCompatEntry * compat = nullptr;
+
+		for(const PluginCompatEntry * iter = kPluginCompatList; iter->name; ++iter)
 		{
 			if(!strcmp(iter->name, version.name))
 			{
+				compat = iter;
+
 				if(version.pluginVersion < iter->minVersion)
 				{
 #ifdef RUNTIME
@@ -522,6 +530,10 @@ const char * PluginManager::checkPluginCompatibility(const SFSEPluginVersionData
 			SFSEPluginVersionData::kStructureIndependence_1_14_70_Layout);
 
 		bool versionIndependent = hasAddressIndependence && hasStructureIndependence;
+
+		// plugins with bad version data are not version independent
+		if(compat && compat->compatFlags & kCompat_NotVersionIndependent)
+			versionIndependent = false;
 
 		// currently anything in the "breaking change" field means that compatibility has been broken by an update
 		if(version.reservedBreaking)
