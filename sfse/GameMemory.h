@@ -15,9 +15,9 @@ static_assert(offsetof(ScrapHeap, currentThreadId) == 0x4B8);
 class MemoryManager
 {
 public:
-    DEFINE_MEMBER_FN_3(Allocate, void*, 0x0058D964, size_t size, size_t alignment, bool aligned);
-    DEFINE_MEMBER_FN_2(Free, void, 0x005A39A0, void* buf, bool aligned);
-    DEFINE_MEMBER_FN_0(GetThreadScrapHeap, ScrapHeap*, 0x0079D69C);
+    DEFINE_MEMBER_FN_3(Allocate, void*, 0x0224B570, size_t size, size_t alignment, bool aligned);
+    DEFINE_MEMBER_FN_2(Free, void, 0x0224B7E0, void* buf, bool aligned);
+    // GetThreadScrapHeap appears to be inlined everywhere. did not check all ~2000 instances
 };
 
 using _GetMemoryManager = MemoryManager * (*)();
