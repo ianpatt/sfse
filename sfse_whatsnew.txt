@@ -1,5 +1,6 @@
 0.2.16
 - support for 1.15.216
+- compiler setting changes in the most recent game patch have changed the code enough to invalidate the Address Library and most if not all existing plugins. plugins using the Address Library must flag themselves as using version 2 in their compatibility data (see PluginAPI.h)
 
 0.2.16
 - support for 1.14.74
