@@ -120,7 +120,7 @@ public:
 	enum
 	{
 		kScript_NumScriptCommands = 0x03C0,
-		kScript_NumConsoleCommands = 0x0245,
+		kScript_NumConsoleCommands = 0x0247,
 
 		kScript_ScriptOpBase = 0x1000,
 		kScript_ConsoleOpBase = 0x0100,

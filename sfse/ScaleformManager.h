@@ -13,7 +13,7 @@ public:
 
     static BSScaleformManager* GetSingleton()
     {
-        RelocPtr<BSScaleformManager*> singleton(0x06A2F528);
+        RelocPtr<BSScaleformManager*> singleton(0x060BAE60);
         return *singleton;
     }
 };
