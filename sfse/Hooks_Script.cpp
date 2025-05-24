@@ -71,7 +71,7 @@ bool GetSFSEVersion_Execute(const SCRIPT_PARAMETER* paramInfo, const char*, TESO
 }
 
 typedef bool (*_ConsoleCommandInit)(void* unk1);
-RelocAddr <_ConsoleCommandInit> ConsoleCommandInit(0x01B78300);
+RelocAddr <_ConsoleCommandInit> ConsoleCommandInit(0x00577EE0);
 _ConsoleCommandInit ConsoleCommandInit_Original = nullptr;
 
 void ConsoleCommandInit_Hook(void* unk1)
@@ -124,12 +124,15 @@ void Hooks_Script_Apply()
 				Xbyak::Label retnLabel;
 
 				push(rbx);
-				sub(rsp, 0x20);
+				push(rbp);
+				push(rsi);
+				push(rdi);
+				push(r14);
 
 				jmp(ptr[rip + retnLabel]);
 
 				L(retnLabel);
-				dq(ConsoleCommandInit.getUIntPtr() + 6);
+				dq(ConsoleCommandInit.getUIntPtr() + 7);
 			}
 		};
 

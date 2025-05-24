@@ -20,11 +20,11 @@
 #endif
 
 typedef bool(*_IMenu_LoadMovie)(IMenu* menu, bool addEventDispatcher, bool unk2);
-RelocAddr <_IMenu_LoadMovie> IMenu_LoadMovie(0x031755C4); // IMenu vtable +7
+RelocAddr <_IMenu_LoadMovie> IMenu_LoadMovie(0x024D4740); // IMenu vtable +7
 _IMenu_LoadMovie IMenu_LoadMovie_Original = nullptr;
 
 using _BSScaleformManager_ctor = BSScaleformManager*(*)(BSScaleformManager* __this);
-RelocAddr <_BSScaleformManager_ctor> BSScaleformManager_ctor(0x03177C20);
+RelocAddr <_BSScaleformManager_ctor> BSScaleformManager_ctor(0x024D9620);
 _BSScaleformManager_ctor BSScaleformManager_ctor_Original = nullptr;
 
 static bool s_enableScaleformLog = false;
@@ -119,7 +119,7 @@ void Hooks_Scaleform_Apply()
 			BSScaleformManager_ctor_Code(void* buf) : Xbyak::CodeGenerator(4096, buf)
 			{
 				Xbyak::Label retnLabel;
-				mov(ptr[rsp - 0x08 + 0x10], rcx);
+				mov(ptr[rsp + 0x08], rcx);
 				jmp(ptr[rip + retnLabel]);
 				L(retnLabel);
 				dq(BSScaleformManager_ctor.getUIntPtr() + 5);

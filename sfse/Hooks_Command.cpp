@@ -11,7 +11,7 @@
 #include <vector>
 
 using _Command_Process = bool (*)(void* __this);
-RelocAddr <_Command_Process> Command_Process(0x03459D38);
+RelocAddr <_Command_Process> Command_Process(0x0285C690);
 _Command_Process Command_Process_Original = nullptr;
 
 namespace TaskInterface
@@ -62,11 +62,12 @@ void Hooks_Command_Apply()
 			Command_Process_Code(void* buf) : Xbyak::CodeGenerator(4096, buf)
 			{
 				Xbyak::Label retnLabel;
-				mov(rax, rsp);
-				mov(ptr[rax + 0x10], rbx);
+				mov(ptr[rsp + 0x10], rbx);
+				push(rdi);
+				sub(rsp, 0x20);
 				jmp(ptr[rip + retnLabel]);
 				L(retnLabel);
-				dq(Command_Process.getUIntPtr() + 7);
+				dq(Command_Process.getUIntPtr() + 0x0A);
 			}
 		};
 		void* codeBuf = g_localTrampoline.startAlloc();

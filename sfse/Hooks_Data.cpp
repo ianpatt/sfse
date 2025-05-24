@@ -9,13 +9,13 @@
 #include "sfse/GameSettings.h"
 #endif
 
-RelocAddr <uintptr_t> GameDataLoad_Target(0x025D3350 + 0x1521); // last call
-typedef void (*_Hooks_GameData_Original)(u32 lock);
-RelocAddr <_Hooks_GameData_Original> Hooks_GameData_Original(0x0129D660);
+RelocAddr <uintptr_t> GameDataLoad_Target(0x01821610 + 0xEFA); // last "work" call
+typedef void (*_Hooks_GameData_Original)(void);
+RelocAddr <_Hooks_GameData_Original> Hooks_GameData_Original(0x0093EEA0);
 
-void Hook_GameData_Loaded(u32 lock)
+void Hook_GameData_Loaded()
 {
-	Hooks_GameData_Original(lock);
+	Hooks_GameData_Original();
 
 	auto dataHandler = TESDataHandler::GetSingleton();
 
