@@ -110,9 +110,9 @@ public:
 
     virtual void Unk_01();
 
-    u64 unk178[(0x3F0 - 0x178) >> 3]; // 178
-    BSTArray<IMenu*> openMenus; // 3F0
-    u64 unk400[(0x4F8 - 0x400) >> 3]; // 400
+    u64 unk178[(0x430 - 0x178) >> 3]; // 178
+    BSTArray<IMenu*> openMenus; // 430
+    u64 unk440[(0x4F8 - 0x440) >> 3]; // 440
 
     // This properly locks the data structure, use this
     DEFINE_MEMBER_FN_2(IsMenuOpen, bool, 0x024C7B70, const BSFixedString&);
@@ -123,4 +123,4 @@ public:
         return *singleton;
     }
 };
-static_assert(offsetof(UI, openMenus) == 0x3F0);
+static_assert(offsetof(UI, openMenus) == 0x430);

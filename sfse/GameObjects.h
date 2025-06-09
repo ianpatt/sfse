@@ -153,7 +153,7 @@ public:
         BSFixedStringCS texture; // 18
         struct Color
         {
-            u8 r, g, b, a;
+            u8 a, b, g, r;
         };
         Color color;                    // 20
         u32 intensity;                  // 24 up to 128 for some reason replaces alpha, color.a does nothing?

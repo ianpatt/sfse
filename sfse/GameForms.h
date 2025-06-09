@@ -442,7 +442,8 @@ public:
 		HeadPart10,
 		HeadPart11,
 		HeadPartLeftEye,
-		HeadPartEyelashes
+		HeadPartEyelashes,
+		HeadPartCount
 	};
 
 	BSFixedString unk68; // 68
@@ -738,7 +739,7 @@ public:
 		BSFixedString	textureOrAVM;
 		struct Color
 		{
-			u8 r, g, b, a;
+			u8 a, b, g, r;
 		};
 		Color			color;
 		u32				unk14;

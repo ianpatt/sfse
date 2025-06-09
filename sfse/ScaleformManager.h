@@ -6,10 +6,11 @@ class BSScaleformManager
 {
 public:
     void* unk00;                        // 00
-    Scaleform::GFx::Loader* pLoader;    // 08
-    void* unk10;                        // 10
+    void* unk08;                        // 08
+    Scaleform::GFx::Loader* pLoader;    // 10
     void* unk18;                        // 18
     void* unk20;                        // 20
+    void* unk28;                        // 28
 
     static BSScaleformManager* GetSingleton()
     {
