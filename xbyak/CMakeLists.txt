@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6...3.0.2)
+cmake_minimum_required(VERSION 2.6...4.0.2)
 
 project(xbyak LANGUAGES CXX VERSION 6.73)
 
