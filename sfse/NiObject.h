@@ -108,7 +108,7 @@ public:
 	BSTArray<NiPointer<NiExtraData>>*	pExtra;		// 30
 
 //	DEFINE_MEMBER_FN_1(AddExtraData, bool, 0x037E6D0C, NiExtraData* pkExtra);
-	DEFINE_MEMBER_FN_1(AddExtraData_NoLock, bool, 0x02B628C0, NiExtraData * pkExtra);	// version that doesn't take the lock
+	DEFINE_MEMBER_FN_1(AddExtraData_NoLock, bool, 0x02B65440, NiExtraData * pkExtra);	// version that doesn't take the lock
 };
 static_assert(sizeof(NiObjectNET) == 0x38);
 
@@ -202,7 +202,7 @@ public:
 	u32	unk128;						// 128
 	u32	unk12C;						// 12C
 
-	DEFINE_MEMBER_FN_1(Update, void, 0x02B56F50, NiUpdateData& apData);
+	DEFINE_MEMBER_FN_1(Update, void, 0x02B59AD0, NiUpdateData& apData);
 };
 static_assert(sizeof(NiAVObject) == 0x130);
 static_assert(offsetof(NiAVObject, m_pkParent) == 0x38);

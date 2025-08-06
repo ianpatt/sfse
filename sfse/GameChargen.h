@@ -17,13 +17,13 @@ public:
 
 	static ChargenDataModel* GetSingleton()
 	{
-		RelocPtr<ChargenDataModel*> singleton(0x060BEB70);
+		RelocPtr<ChargenDataModel*> singleton(0x060C3EB0);
 		return *singleton;
 	}
 
 	// Contains main UI data model wrappers, decode these later
 	// This function will pull data from the TESNPC into this wrapper
-	DEFINE_MEMBER_FN_1(Update, void, 0x015D7340, MenuActor*); // unk2 removed in 1.9.51
+	DEFINE_MEMBER_FN_1(Update, void, 0x015D7E30, MenuActor*); // unk2 removed in 1.9.51
 };
 
 extern RelocPtr<MenuActor*> g_actorCheckpoint;
