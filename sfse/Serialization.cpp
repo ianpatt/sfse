@@ -11,37 +11,61 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <io.h>
+#include <atomic>
+#include <mutex>
 
 namespace Serialization
 {
 	const char* kSavegamePath = "\\My Games\\" SAVE_FOLDER_NAME "\\";
-
+	
+	std::mutex changedIDsLock;
 	std::unordered_map<u32, u32> changedIDs;
+
+	std::mutex deletedIDsLock;
 	std::unordered_set<u32> deletedIDs;
+
 	std::string s_savePath;
 
 	struct IDRemapDeleteListener :
 		public BSTEventSink<TESFormIDRemapEvent>,
 		public BSTEventSink<TESFormDeleteEvent>
 	{
-		IDRemapDeleteListener()
+		std::atomic<bool> isRegistered = false;
+
+		void Register()
 		{
+			if (isRegistered.exchange(true))
+				return;
+
 			GetEventSource<TESFormIDRemapEvent>()->RegisterSink(static_cast<BSTEventSink<TESFormIDRemapEvent>*>(this));
 			GetEventSource<TESFormDeleteEvent>()->RegisterSink(static_cast<BSTEventSink<TESFormDeleteEvent>*>(this));
 		}
 
+		void Unregister()
+		{
+			if (!isRegistered.exchange(false))
+				return;
+
+			GetEventSource<TESFormIDRemapEvent>()->UnregisterSink(static_cast<BSTEventSink<TESFormIDRemapEvent>*>(this));
+			GetEventSource<TESFormDeleteEvent>()->UnregisterSink(static_cast<BSTEventSink<TESFormDeleteEvent>*>(this));
+		}
+
 		virtual	EventResult	ProcessEvent(const TESFormIDRemapEvent& arEvent, BSTEventSource<TESFormIDRemapEvent>* eventSource)
 		{
+			std::lock_guard<std::mutex> lock{ changedIDsLock };
 			changedIDs[arEvent.oldID] = arEvent.newID;
 			return EventResult::kContinue;
 		};
 
 		virtual	EventResult	ProcessEvent(const TESFormDeleteEvent& arEvent, BSTEventSource<TESFormDeleteEvent>* eventSource)
 		{
+			std::lock_guard<std::mutex> lock{ deletedIDsLock };
 			deletedIDs.insert(arEvent.formId);
 			return EventResult::kContinue;
 		};
 	};
+
+	IDRemapDeleteListener remapListener;
 
 	void RemoveFileExtension(std::string& path)
 	{
@@ -93,14 +117,16 @@ namespace Serialization
 
 	void HandleBeginLoad()
 	{
-		//if the remap listener isn't already registered, register it now.
-		static IDRemapDeleteListener listener{};
+		std::scoped_lock lock{ deletedIDsLock, changedIDsLock };
+		remapListener.Register();
 		changedIDs.clear();
 		deletedIDs.clear();
 	}
 
 	void HandleEndLoad()
 	{
+		std::scoped_lock lock{ deletedIDsLock, changedIDsLock };
+		remapListener.Unregister();
 		changedIDs.clear();
 		deletedIDs.clear();
 	}
@@ -158,6 +184,7 @@ namespace Serialization
 
 	void HandleLoadGlobalData()
 	{
+		std::scoped_lock lock{ deletedIDsLock, changedIDsLock };
 		_MESSAGE("LoadGlobalData");
 
 		// TODO: add implementation for deserialization & load callbacks.
