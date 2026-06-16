@@ -9,6 +9,7 @@
 
 #include "sfse/Hooks_Scaleform.h"
 #include "sfse/Hooks_Command.h"
+#include "sfse/Serialization.h"
 
 PluginManager	g_pluginManager;
 
@@ -56,6 +57,28 @@ static const SFSETaskInterface g_SFSETaskInterface =
 	SFSETaskInterface::kInterfaceVersion,
 	TaskInterface::addTask,
 	TaskInterface::addTaskPermanent
+};
+
+// extern (external linkage): Serialization.cpp passes &g_SFSESerializationInterface to plugin callbacks
+extern const SFSESerializationInterface g_SFSESerializationInterface =
+{
+	SFSESerializationInterface::kInterfaceVersion,
+
+	Serialization::SetUniqueID,
+	Serialization::SetRevertCallback,
+	Serialization::SetSaveCallback,
+	Serialization::SetLoadCallback,
+	Serialization::SetFormDeleteCallback,
+
+	Serialization::WriteRecord,
+	Serialization::OpenRecord,
+	Serialization::WriteRecordData,
+
+	Serialization::GetNextRecordInfo,
+	Serialization::ReadRecordData,
+
+	Serialization::ResolveHandle,
+	Serialization::ResolveFormId,
 };
 
 PluginManager::PluginManager()
@@ -285,6 +308,9 @@ void * PluginManager::queryInterface(u32 id)
 		break;
 	case kInterface_Task:
 		result = (void*)&g_SFSETaskInterface;
+		break;
+	case kInterface_Serialization:
+		result = (void*)&g_SFSESerializationInterface;
 		break;
 
 	default:

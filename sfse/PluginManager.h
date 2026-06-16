@@ -113,3 +113,5 @@ void * AllocateFromSFSEBranchPool(PluginHandle plugin, size_t size);
 void * AllocateFromSFSELocalPool(PluginHandle plugin, size_t size);
 
 extern PluginManager	g_pluginManager;
+
+extern const SFSESerializationInterface g_SFSESerializationInterface;
